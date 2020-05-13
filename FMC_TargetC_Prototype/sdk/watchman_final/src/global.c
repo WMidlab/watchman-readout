@@ -80,11 +80,16 @@ int fstWindowValue;
 int nmbrWindows;
 /** Value from the GUI for delay in update WR   */
 int  delay_UpdateWR;
-
+/** Value of trigger delay for correction of the window number in the circular buffer  */
+int  delay_RB;
 /** Number of iterations for the average in pedestal calculation**/
 int pedestalAvg;
 /** Value from the GUI for the number of windows for pedestal calculation   */
 int nmbrWindowsPed;
+
+/* data structure from PL */
+InboundRingManager_t inboundRingManager;
+
 
 //******** To test the error detection********************/
 /** @brief Flag raised when the user want to test the autonomous side of the system with a watchdog */

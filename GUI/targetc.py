@@ -13,7 +13,7 @@ import waveform_gen_33600 as wv_gen
 from waveform_gen_33600 import wave_gen
 import os
 from tempfile import TemporaryFile
-from plot_delays_max import plot_pulse
+from plotPulse import plot_pulse
 from waiting import wait
 class targetc():
 
@@ -32,7 +32,7 @@ class targetc():
 ##     List of all the commands
 ##     Flag which indicates if the streaming is running
         self.flag_transfer_done = False
-        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'trigger_mode', 'stop_uC', 'settime', 'recover_data', 'get_windows','write_register','pedestal', 'get_windows_raw', 'restartAll']
+        self.cmd = ['write_all_reg', 'read_all_reg', 'ping', 'trigger_mode', 'stop_uC', 'settime', 'recover_data', 'get_windows','write_register','pedestal', 'get_windows_raw', 'restartAll', 'stopStream']
         self.stream_flag = False
         ## Flag which indicates that the user want to close the GUI (to avoid problem when accessing graphical object after "WM_DELETE_WINDOW" event)
         self.destroy_flag = False 
@@ -108,21 +108,16 @@ class targetc():
     #         #  print(int(numb / 256))
     #         #  print(int(numb % 256))
        if(self.cmd[comando] == 'restartAll'): # restart main()
-           dummy = param1 
+          payload.append(int("0x33", 0)) # frame's end code 0x33CC
+          payload.append(int("0xCC", 0))
        if(self.cmd[comando] == 'trigger_mode'): # restart main() 
           #self.init_UDP_connection_trigger_mode()
           payload.append(int("0x33", 0)) # frame's end code 0x33CC
           payload.append(int("0xCC", 0))
-          self.init_UDP_connection_data()
-        
-          self.thread_trigger_obj=Thread(target=self.thread_trigger, args=())
-        #  #thread_timer_2=Timer(10,thread_timer_int_2)
-          self.thread_trigger_obj.start()
+#          self.init_UDP_connection_data()
+#          self.thread_trigger_obj=Thread(target=self.thread_trigger, args=())
+#          self.thread_trigger_obj.start()
           self.get_windows_flag = True
-        #  self.thread_user_mode_obj=Thread(target=self.thread_user_mode, args=())
-          #thread_timer_2=Timer(10,thread_timer_int_2)
-         # self.thread_user_mode_obj.start()
-         # self.get_windows_flag = True
 
           payload.append(int("0x33", 0)) # frame's end code 0x33CC
           payload.append(int("0xCC", 0))
@@ -317,7 +312,8 @@ class targetc():
         print("dataSaved") 
         self.flag_transfer_done=False
         plot_pulse(self.fileToSave)
-        
+        self.send_command(3,0,0)# send command to PS to start trigger mode
+                
 
     ## Method thread to process the command received by UDP (running all the time)
     # @param : The object pointer
