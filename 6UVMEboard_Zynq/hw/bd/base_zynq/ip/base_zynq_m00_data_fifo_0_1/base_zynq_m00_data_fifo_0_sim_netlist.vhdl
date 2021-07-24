@@ -1,10 +1,10 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
--- Date        : Thu May 27 11:51:14 2021
+-- Date        : Thu Jul  8 16:20:12 2021
 -- Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
--- Command     : write_vhdl -force -mode funcsim -rename_top base_zynq_m00_data_fifo_0 -prefix
---               base_zynq_m00_data_fifo_0_ base_zynq_m00_data_fifo_0_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim
+--               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_m00_data_fifo_0_1/base_zynq_m00_data_fifo_0_sim_netlist.vhdl
 -- Design      : base_zynq_m00_data_fifo_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -28,6 +28,8 @@ entity base_zynq_m00_data_fifo_0_xpm_cdc_sync_rst is
   attribute INIT of base_zynq_m00_data_fifo_0_xpm_cdc_sync_rst : entity is "0";
   attribute INIT_SYNC_FF : integer;
   attribute INIT_SYNC_FF of base_zynq_m00_data_fifo_0_xpm_cdc_sync_rst : entity is 1;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_cdc_sync_rst : entity is "xpm_cdc_sync_rst";
   attribute SIM_ASSERT_CHK : integer;
   attribute SIM_ASSERT_CHK of base_zynq_m00_data_fifo_0_xpm_cdc_sync_rst : entity is 0;
   attribute VERSION : integer;
@@ -125,6 +127,8 @@ entity base_zynq_m00_data_fifo_0_xpm_counter_updn is
     \count_value_i_reg[0]_1\ : in STD_LOGIC_VECTOR ( 0 to 0 );
     wr_clk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_counter_updn : entity is "xpm_counter_updn";
 end base_zynq_m00_data_fifo_0_xpm_counter_updn;
 
 architecture STRUCTURE of base_zynq_m00_data_fifo_0_xpm_counter_updn is
@@ -1328,6 +1332,8 @@ entity base_zynq_m00_data_fifo_0_xpm_fifo_reg_bit is
     wr_clk : in STD_LOGIC;
     rst : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_fifo_reg_bit : entity is "xpm_fifo_reg_bit";
 end base_zynq_m00_data_fifo_0_xpm_fifo_reg_bit;
 
 architecture STRUCTURE of base_zynq_m00_data_fifo_0_xpm_fifo_reg_bit is
@@ -1372,6 +1378,8 @@ entity base_zynq_m00_data_fifo_0_xpm_fifo_rst is
     \grdc.rd_data_count_i_reg[0]\ : in STD_LOGIC_VECTOR ( 1 downto 0 );
     wr_clk : in STD_LOGIC
   );
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_fifo_rst : entity is "xpm_fifo_rst";
 end base_zynq_m00_data_fifo_0_xpm_fifo_rst;
 
 architecture STRUCTURE of base_zynq_m00_data_fifo_0_xpm_fifo_rst is
@@ -1534,6 +1542,8 @@ entity base_zynq_m00_data_fifo_0_xpm_memory_base is
   attribute MESSAGE_CONTROL of base_zynq_m00_data_fifo_0_xpm_memory_base : entity is 0;
   attribute NUM_CHAR_LOC : integer;
   attribute NUM_CHAR_LOC of base_zynq_m00_data_fifo_0_xpm_memory_base : entity is 0;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_memory_base : entity is "xpm_memory_base";
   attribute P_ECC_MODE : string;
   attribute P_ECC_MODE of base_zynq_m00_data_fifo_0_xpm_memory_base : entity is "no_ecc";
   attribute P_ENABLE_BYTE_WRITE_A : integer;
@@ -2046,6 +2056,8 @@ entity base_zynq_m00_data_fifo_0_xpm_fifo_base is
   attribute FULL_RESET_VALUE of base_zynq_m00_data_fifo_0_xpm_fifo_base : entity is 1;
   attribute FULL_RST_VAL : string;
   attribute FULL_RST_VAL of base_zynq_m00_data_fifo_0_xpm_fifo_base : entity is "1'b1";
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_fifo_base : entity is "xpm_fifo_base";
   attribute PE_THRESH_ADJ : integer;
   attribute PE_THRESH_ADJ of base_zynq_m00_data_fifo_0_xpm_fifo_base : entity is 3;
   attribute PE_THRESH_MAX : integer;
@@ -2803,6 +2815,8 @@ entity base_zynq_m00_data_fifo_0_xpm_fifo_axis is
   attribute FIFO_MEMORY_TYPE of base_zynq_m00_data_fifo_0_xpm_fifo_axis : entity is "auto";
   attribute LOG_DEPTH_AXIS : integer;
   attribute LOG_DEPTH_AXIS of base_zynq_m00_data_fifo_0_xpm_fifo_axis : entity is 6;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_xpm_fifo_axis : entity is "xpm_fifo_axis";
   attribute PACKET_FIFO : string;
   attribute PACKET_FIFO of base_zynq_m00_data_fifo_0_xpm_fifo_axis : entity is "false";
   attribute PKT_SIZE_LT8 : string;
@@ -3230,6 +3244,8 @@ entity base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top is
   attribute LP_USE_ADV_FEATURES of base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top : entity is 825503796;
   attribute LP_WR_DATA_COUNT_WIDTH : integer;
   attribute LP_WR_DATA_COUNT_WIDTH of base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top : entity is 7;
+  attribute ORIG_REF_NAME : string;
+  attribute ORIG_REF_NAME of base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top : entity is "axis_data_fifo_v2_0_4_top";
 end base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top;
 
 architecture STRUCTURE of base_zynq_m00_data_fifo_0_axis_data_fifo_v2_0_4_top is

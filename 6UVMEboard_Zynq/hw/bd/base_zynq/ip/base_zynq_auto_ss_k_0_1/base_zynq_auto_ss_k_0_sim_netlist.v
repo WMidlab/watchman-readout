@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Thu May 27 11:52:57 2021
+// Date        : Thu Jul  8 16:20:06 2021
 // Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
-// Command     : write_verilog -force -mode funcsim -rename_top base_zynq_auto_ss_k_0 -prefix
-//               base_zynq_auto_ss_k_0_ base_zynq_auto_ss_k_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim
+//               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_auto_ss_k_0_1/base_zynq_auto_ss_k_0_sim_netlist.v
 // Design      : base_zynq_auto_ss_k_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -138,7 +138,7 @@ endmodule
 (* G_MASK_SS_TDEST = "64" *) (* G_MASK_SS_TID = "32" *) (* G_MASK_SS_TKEEP = "8" *) 
 (* G_MASK_SS_TLAST = "16" *) (* G_MASK_SS_TREADY = "1" *) (* G_MASK_SS_TSTRB = "4" *) 
 (* G_MASK_SS_TUSER = "128" *) (* G_TASK_SEVERITY_ERR = "2" *) (* G_TASK_SEVERITY_INFO = "0" *) 
-(* G_TASK_SEVERITY_WARNING = "1" *) 
+(* G_TASK_SEVERITY_WARNING = "1" *) (* ORIG_REF_NAME = "top_base_zynq_auto_ss_k_0" *) 
 module base_zynq_auto_ss_k_0_top_base_zynq_auto_ss_k_0
    (aclk,
     aresetn,

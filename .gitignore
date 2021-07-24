@@ -7,49 +7,51 @@
 
 watchmanLog.txt
 
-GUI/__pycache__/
+PCsoftware/__pycache__/
 
 *.swm
 
-GUI/.test_triggermode.py.swl
+PCsoftware/.test_triggermode.py.swl
 
-GUI/.test_pulses.py.swn
+PCsoftware/.test_pulses.py.swn
 
-GUI/traffic.pcap
+PCsoftware/traffic.pcap
 
-GUI/untitled
+PCsoftware/untitled
 
 FMC_TargetC_Prototype/vitis/IDE.log
 FMC_TargetC_Prototype/vitis/.analytics
 FMC_TargetC_Prototype/vitis/base_zynq_wrapper/.log/base_zynq_wrapper_.build.ui.log
 FMC_TargetC_Prototype/vitis/.metadata/
 FMC_TargetC_Prototype/vitis/base_zynq_wrapper/logs/platform.log
-GUI/notebooks/
-GUI/data/
-GUI/data/*.ipynb
-GUI/oldScripts/
+PCsoftware/notebooks/
+PCsoftware/data/
+PCsoftware/data/*.ipynb
+PCsoftware/oldScripts/
 FMC_TargetC_Prototype/vitis/6UVME/_ide/
 FMC_TargetC_Prototype/vitis/base_zynq_wrapper/
-GUI/doxygen_doc/
+PCsoftware/doxygen_doc/
 
-GUI/*.pcap
-GUI/*.py.swn
-.GUI/*lookIntoPackets.py.swn
-GUI/*data/
-GUI/*.spyproject/
-GUI/.vscode
-GUI/pulseSweep.ipynb
+PCsoftware/*.pcap
+PCsoftware/*.py.swn
+.PCsoftware/*lookIntoPackets.py.swn
+PCsoftware/*data/
+PCsoftware/*.spyproject/
+PCsoftware/.vscode
+PCsoftware/pulseSweep.ipynb
 
-GUI/Target0_1280avg.png
+PCsoftware/Target0_1280avg.png
 
 FMC_TargetC_Prototype/ip_repo/DummyTrigger_1.0/
 
-GUI/Target0.png
+PCsoftware/Target0.png
 
-GUI/Target1.png
+PCsoftware/Target1.png
 
-GUI/packets.log
+PCsoftware/packets.log
 
 *.png
 
 *.log
+*.jou
+*.str

@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"0.619171",
-   "Default View_TopLeft":"-6,1357",
+   "Default View_ScaleFactor":"0.61917",
+   "Default View_TopLeft":"2195,1534",
    "ExpandedHierarchyInLayout":"",
    "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
@@ -246,18 +246,18 @@ preplace netloc xlconstant_4_dout 1 5 2 2260J 850 2640
 preplace netloc TARGET_C_TopLevel_Sy_0_WLCLK 1 7 1 3290 810n
 preplace netloc util_ds_buf_1_OBUF_DS_P 1 8 2 NJ 1170 4060
 preplace netloc util_ds_buf_1_OBUF_DS_N 1 8 2 3690 1200 NJ
-preplace netloc axis_interconnect_0_M00_AXIS 1 3 1 1520 1790n
-preplace netloc TARGETC_axi_int_1_M00_AXIS 1 2 1 1140 2000n
-preplace netloc ps7_0_axi_periph_M03_AXI 1 3 2 1500J 1910 1930
-preplace netloc processing_system7_0_M_AXI_GP0 1 2 6 1130 1540 NJ 1540 NJ 1540 2270 1560 NJ 1560 3230
-preplace netloc ps7_0_axi_periph_M00_AXI 1 3 4 1480J 750 NJ 750 2250 720 2700
-preplace netloc processing_system7_0_FIXED_IO 1 7 3 NJ 1640 N 1640 NJ
 preplace netloc processing_system7_0_DDR 1 7 3 NJ 1620 N 1620 NJ
-preplace netloc ps7_0_axi_periph_M02_AXI 1 3 4 1510J 1930 NJ 1930 2250 2070 N
-preplace netloc axi_interconnect_0_M00_AXI 1 6 1 2650 1670n
 preplace netloc axi_dma_0_M_AXI_S2MM 1 4 2 1950 1710 2260
 preplace netloc TARGETC_axi_int_0_M00_AXIS 1 2 1 1120 1080n
+preplace netloc axi_interconnect_0_M00_AXI 1 6 1 2650 1670n
+preplace netloc ps7_0_axi_periph_M02_AXI 1 3 4 1510J 1930 NJ 1930 2250 2070 N
+preplace netloc ps7_0_axi_periph_M03_AXI 1 3 2 1500J 1910 1930
+preplace netloc axis_interconnect_0_M00_AXIS 1 3 1 1520 1790n
 preplace netloc ps7_0_axi_periph_M01_AXI 1 3 1 1480 1710n
+preplace netloc TARGETC_axi_int_1_M00_AXIS 1 2 1 1140 2000n
+preplace netloc processing_system7_0_FIXED_IO 1 7 3 NJ 1640 N 1640 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 2 6 1130 1540 NJ 1540 NJ 1540 2270 1560 NJ 1560 3230
+preplace netloc ps7_0_axi_periph_M00_AXI 1 3 4 1480J 750 NJ 750 2250 720 2700
 levelinfo -pg 1 -40 480 910 1310 1750 2110 2470 3000 3530 3920 4280
 pagesize -pg 1 -db -bbox -sgen -200 -380 4470 2700
 "

@@ -1,10 +1,10 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
--- Date        : Thu May 27 11:51:13 2021
+-- Date        : Thu Jul  8 16:20:11 2021
 -- Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
--- Command     : write_vhdl -force -mode synth_stub -rename_top base_zynq_m00_data_fifo_0 -prefix
---               base_zynq_m00_data_fifo_0_ base_zynq_m00_data_fifo_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub
+--               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_m00_data_fifo_0_1/base_zynq_m00_data_fifo_0_stub.vhdl
 -- Design      : base_zynq_m00_data_fifo_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1
