@@ -1,15 +1,9 @@
-#!/usr/bin/env python
 
 from scapy.all import *
 import numpy as np
-import os
 import matplotlib.pyplot as plt
 from matplotlib.image import NonUniformImage
 import pandas as pd
-#from scipy.signal import argrelextrema
-import scipy.stats as stats          
-from scipy import signal
-#from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 num_channels =1
 
 def bin2dec(pkt):

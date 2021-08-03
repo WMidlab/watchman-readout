@@ -14,9 +14,9 @@ tcpdump -ni enx0050b67c1322  udp port 8  -w  $file_name -c 32 &>packets.log &
 
 #python3.8 listenPacketsTrig.py $nofPackets $totalWindows $nofChannels&> packets.log &
 
-python3.8 HMBtriggerMode.py &>triggercmd.log &
+python3 HMBtriggerMode.py &>triggercmd.log &
 
 
-python3.8 listenPacketsTrig.py $file_name $nofpackets
+python3 listenPacketsTrig.py $file_name $nofpackets
 
 
