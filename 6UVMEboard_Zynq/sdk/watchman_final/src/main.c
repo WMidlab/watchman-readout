@@ -443,6 +443,8 @@ int main()
 							}
 				if(get_windows_raw_flag && (!stream_flag) && empty_flag){
 						ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
+						ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
+
 						state_main = GET_WINDOWS_RAW;
 					}
 				if(dividePedestalsFlag){
@@ -454,6 +456,8 @@ int main()
 					usleep(100);
 		     		ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_0);
 					ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_0);
+					ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
+					ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
 					usleep(100);
 					state_main = IDLE;
 				}
@@ -468,6 +472,15 @@ int main()
 
 				usleep(100);
 
+				ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr_1); // mode for selecting the interrupt, 1 for dma
+				usleep(100);
+
+				ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr_1); // 0 for test pattern mode, 1 for sample mode (normal mode)
+				usleep(100);
+
+				ControlRegisterWrite(CPUMODE_MASK,ENABLE, regptr_1); // mode trigger, 0 for usermode (cpu mode), 1 for trigger mode
+
+				usleep(100);
 
 				xil_printf("flag_axidma_rx_done= %d \r\n",flag_axidma_rx_done);
 				usleep(100);
@@ -495,7 +508,9 @@ int main()
 				XAxiDma_SimpleTransfer_hm((UINTPTR)inboundRingManager.writePointer , SIZE_DATA_ARRAY_BYT);
 			     usleep(100);
 				 ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_0); //  register for starting the round buffer in trigger mode
-			     Xil_DCacheInvalidateRange((UINTPTR)inboundRingManager.writePointer , SIZE_DATA_ARRAY_BYT);
+				 ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_1); //  register for starting the round buffer in trigger mode
+
+				 Xil_DCacheInvalidateRange((UINTPTR)inboundRingManager.writePointer , SIZE_DATA_ARRAY_BYT);
 					usleep(100);
 			     xil_printf(" pendingCountBefore: %d \r\n",inboundRingManager.pendingCount);
 			     usleep(100);
