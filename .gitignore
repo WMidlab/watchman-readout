@@ -7,12 +7,51 @@
 
 watchmanLog.txt
 
-GUI/__pycache__/
+PCsoftware/__pycache__/
 
 *.swm
 
-GUI/.test_triggermode.py.swl
+PCsoftware/.test_triggermode.py.swl
 
-GUI/.test_pulses.py.swn
+PCsoftware/.test_pulses.py.swn
 
-GUI/traffic.pcap
+PCsoftware/traffic.pcap
+
+PCsoftware/untitled
+
+FMC_TargetC_Prototype/vitis/IDE.log
+FMC_TargetC_Prototype/vitis/.analytics
+FMC_TargetC_Prototype/vitis/base_zynq_wrapper/.log/base_zynq_wrapper_.build.ui.log
+FMC_TargetC_Prototype/vitis/.metadata/
+FMC_TargetC_Prototype/vitis/base_zynq_wrapper/logs/platform.log
+PCsoftware/notebooks/
+PCsoftware/data/
+PCsoftware/data/*.ipynb
+PCsoftware/oldScripts/
+FMC_TargetC_Prototype/vitis/6UVME/_ide/
+FMC_TargetC_Prototype/vitis/base_zynq_wrapper/
+PCsoftware/doxygen_doc/
+
+PCsoftware/*.pcap
+PCsoftware/*.py.swn
+.PCsoftware/*lookIntoPackets.py.swn
+PCsoftware/*data/
+PCsoftware/*.spyproject/
+PCsoftware/.vscode
+PCsoftware/pulseSweep.ipynb
+
+PCsoftware/Target0_1280avg.png
+
+FMC_TargetC_Prototype/ip_repo/DummyTrigger_1.0/
+
+PCsoftware/Target0.png
+
+PCsoftware/Target1.png
+
+PCsoftware/packets.log
+
+*.png
+
+*.log
+*.jou
+*.str
