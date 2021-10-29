@@ -148,12 +148,14 @@ void end_main(clean_state_en, char* error_txt);
 void updateInboundCircBuffer();
 void restart(void);
 void setupDACs(void);
-void testPattern(void);
+void testPattern(int*regptr);
 void SDcardAndFiles(void);
 void networkInterface(void);
 void setPCaddress(void);
 void initPedestals(void);
+void initTARGETregisters(int* regptr);
 void transferFunctionInit(void);
+
 
 
 int s;
@@ -195,30 +197,20 @@ int main()
 	networkInterface();
 	setPCaddress();
 
-	// Initialise control register
-	ControlRegisterWrite((int)NULL,INIT, regptr_0);
-	// software reset PL side
-	ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_0);
-	// Reset TargetC's registers
-	ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr_0);
-	usleep(100000);
-	ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_0);
-	usleep(1000);
-
-	ControlRegisterWrite((int)NULL,INIT, regptr_1);
-	// software reset PL side
-	ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
-	// Reset TargetC's registers
-	ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr_1);
-	usleep(100000);
-	ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
-	usleep(1000);
+	void initTARGETregisters(regptr_0);
+	void initTARGETregisters(regptr_1);
 
 
 	// Waiting on PL's clocks to be ready
 	while((regptr_0[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
 		sleep(1);
 	}
+
+	// Waiting on PL's clocks to be ready
+	while((regptr_1[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
+		sleep(1);
+	}
+
 	printf("PL's clock ready\r\n");
 	// Initialize TargetC's registers
 	SetTargetCRegisters(regptr_0);
@@ -226,7 +218,9 @@ int main()
 
 	printf("sleep to set the debug core\r\n");
 
-//	testPattern();
+	testPattern(regptr_0);
+//	testPattern(regptr_1);
+
 // 	initPedestals();
 
 	flag_while_loop = true;
@@ -604,9 +598,9 @@ void setupDACs(void){
 
 		}
 }
-		void testPattern(void){
+		void testPattern(int* regptr){
 //			 Test pattern
-			if(test_TPG(regptr_0) == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
+			if(test_TPG(regptr) == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
 			else{
 				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
 			}
@@ -690,6 +684,19 @@ void setupDACs(void){
 				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
 			}
 
+		}
+
+
+
+		void initTARGETregisters(int* regptr){
+			ControlRegisterWrite((int)NULL,INIT, regptr);
+			// software reset PL side
+			ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr);
+			// Reset TargetC's registers
+			ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr);
+			usleep(100000);
+			ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr);
+			usleep(1000);
 		}
 //		void transferFunctionInit(void){
 //
