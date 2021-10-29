@@ -39,6 +39,7 @@ PCsoftware/*data/
 PCsoftware/*.spyproject/
 PCsoftware/.vscode
 PCsoftware/pulseSweep.ipynb
+PCsoftware/__pycache__/*
 
 PCsoftware/Target0_1280avg.png
 
