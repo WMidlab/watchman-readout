@@ -147,6 +147,15 @@ typedef enum dma_stm_enum{
 void end_main(clean_state_en, char* error_txt);
 void updateInboundCircBuffer();
 void restart(void);
+void setupDACs(void);
+void testPattern(void);
+void SDcardAndFiles(void);
+void networkInterface(void);
+void setPCaddress(void);
+void initPedestals(void);
+void transferFunctionInit(void);
+
+
 int s;
 __attribute__((section(".ps7_ddr_0"))) data_axi  DDR_incoming_waveform_ring_buffer[INBOUND_RING_BUFFER_LENGTH_IN_PACKETS];
 
@@ -156,31 +165,12 @@ void clearInboundBuffer(void) {
 
 int main()
 {
-//	XTime tStart, tEnd;
-//    int i,j;
-//    int timeout;
-//    int index;
-//    int window;
-//	uint16_t data_tmp, data_tmp2;
-//	int Windows_triggerMode;
-//    int cnt_avg_number=0;
-
-	//static XTime tStart, tEnd;
-	ip_addr_t ipaddr, netmask, gw, pc_ipaddr;
-	//int pmt;
+	xil_printf("\n\r\n\r------START------\r\n");
     data_list* tmp_ptr_main  = (data_list *)malloc(sizeof(data_list));
            	if(!tmp_ptr_main){
            		printf("malloc for tmp_ptr failed in function, %s!\r\n", __func__);
            		return XST_FAILURE;
            	}
-	dma_stm_en state_main = IDLE;
-
-	/* the mac address of the board. this should be unique per board */
-	unsigned char mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
-
-//	int cnt_pedestal_windows =0;
-
-	xil_printf("\n\r\n\r------START------\r\n");
 
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
@@ -188,128 +178,22 @@ int main()
 		end_main(GLOBAL_VAR, "Global variables initialization failed!");
 		return -1;
 	}
-
-	/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
-	echo_netif = &server_netif;
-
-	/* Mount SD Card and create log file */
-	FRESULT result = mount_sd_card();
-	if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR, "Mounting SD card failed!");
-		return -1;
-	}
-	/* Create log file */
-	if(create_logfile() == FR_OK) xil_printf("Log file creation pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR, "Log file creation failed!");
-		return -1;
-	}
-
-	/* Create time file */
-	if(create_timefile() == FR_OK) xil_printf("Time file creation pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR, "Time file creation failed!");
-		return -1;
-	}
-
-	/* Initialize the devices timer, axidma, ... */
-	if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR | LOG_FILE, "Devices initialization failed!");
-		return -1;
-	}
-
+	SDcardAndFiles();
 	/* Initialize the interrupts */
 	if(interrupts_initialization() == XST_SUCCESS) xil_printf("Interrupts initialization pass!\r\n");
 	else{
 		end_main(GLOBAL_VAR | LOG_FILE, "Interrupts initialization failed!");
 		return -1;
 	}
-
 	/* Initialize the LWip */
 	lwip_init();
-
 	/* now enable interrupts */
 	enable_interrupts();
-//
-//	/* Initialize the DAC (Vped, Comparator value) */
-	if(gpio_init() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC initialization failed!");
-		return -1;
-	}
-
-	if(set_DAC_CHANNEL(DAC_GRP_0,THRESHOLD_CMP_0) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_1,THRESHOLD_CMP_1) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_2,THRESHOLD_CMP_2) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_3,THRESHOLD_CMP_3) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 3 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_4,THRESHOLD_CMP_4) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_5,THRESHOLD_CMP_5) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_6,THRESHOLD_CMP_6) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
-		return -1;
-	}
-	if(set_DAC_CHANNEL(DAC_GRP_7,THRESHOLD_CMP_7) != XST_SUCCESS){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
-		return -1;
-	}
-   usleep(30);
-	if(set_DAC_CHANNEL_8574(VPED_ANALOG) != XST_SUCCESS){
-	    end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting Vped voltage failed!");
-		return -1;
-	}
-
-	/* Add network interface to the netif_list, and set it as default */
-	ipaddr.addr = 0;
-	gw.addr = 0;
-	netmask.addr = 0;
-	if (!xemac_add(echo_netif, &ipaddr, &netmask, &gw, mac_ethernet_address, PLATFORM_EMAC_BASEADDR)) {
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error adding N/W interface");
-		return -1;
-	}
-
-	/* specify that the network if is up */
-	netif_set_default(echo_netif);
-	netif_set_up(echo_netif);
-
-	/* initliaze IP addresses to be used */
-	IP4_ADDR(&(echo_netif->ip_addr),  192, 168,   1, 10);
-	IP4_ADDR(&(echo_netif->netmask), 255, 255, 255,  0);
-	IP4_ADDR(&(echo_netif->gw),      192, 168,   1,  1);
-	ipaddr.addr = echo_netif->ip_addr.addr;
-	gw.addr = echo_netif->gw.addr;
-	netmask.addr = echo_netif->netmask.addr;
-	print_ip_settings(&ipaddr, &netmask, &gw);
-
-	/* Set the PC address */
-	IP4_ADDR(&pc_ipaddr, 192, 168, 1, 11);
-	print_ip("\r\nPC IP: ", &pc_ipaddr);
-
-	/* Set the UDP connections and callback for data and commands */
-	if(setup_udp_settings(pc_ipaddr) < 0){
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error setting up the UDP interface");
-		return -1;
-	}
-	else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
+///  Setup DACs
+	setupDACs();
+/// Network interface
+	networkInterface();
+	setPCaddress();
 
 	// Initialise control register
 	ControlRegisterWrite((int)NULL,INIT, regptr_0);
@@ -322,18 +206,18 @@ int main()
 	usleep(1000);
 
 	ControlRegisterWrite((int)NULL,INIT, regptr_1);
-		// software reset PL side
-		ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
-		// Reset TargetC's registers
-		ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr_1);
-		usleep(100000);
-		ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
-		usleep(1000);
+	// software reset PL side
+	ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
+	// Reset TargetC's registers
+	ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr_1);
+	usleep(100000);
+	ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
+	usleep(1000);
 
 
 	// Waiting on PL's clocks to be ready
 	while((regptr_0[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
-		sleep(1); //sleep 100ms
+		sleep(1);
 	}
 	printf("PL's clock ready\r\n");
 	// Initialize TargetC's registers
@@ -342,43 +226,11 @@ int main()
 
 	printf("sleep to set the debug core\r\n");
 
-/*
-	 Test pattern
-	if(test_TPG() == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
-	else{
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
-		return -1;
-	}
-    sleep(5);
+//	testPattern();
+// 	initPedestals();
 
-*/
-
-	/* Initialize pedestal
-	if(get_pedestal(50, 1) == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
-//	if(init_pedestals() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
-
-	else{
-		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
-		return -1;
-	}*/
-
-//	/* Initialize transfer function coefficients */
-//	if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
-//	else{
-//		end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Transfer function initialization failed!");
-//		return -1;
-//	}
-
-/*
-	// Sweep over SSTOUTFB to get 1.6V in VADJN
-	for (s=59;s<126;s++){
-    	WriteRegister(TC_SSTOUTFB_REG, s);
-    	sleep(.1);
-    }
-	usleep(100);
-*/
-	//get_pedestal(100,4);
 	flag_while_loop = true;
+	dma_stm_en state_main = IDLE;
 //	pedestal_triggerMode_init();
 	usleep(100);
 	int pedestal_Avg=100;
@@ -711,3 +563,140 @@ void restart(void){
 	main();
 
 }
+
+void setupDACs(void){
+	//	/* Initialize the DAC (Vped, Comparator value) */
+		if(gpio_init() == XST_SUCCESS) xil_printf("DAC initialization pass!\r\n");
+		else{
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC initialization failed!");
+		}
+
+		if(set_DAC_CHANNEL(DAC_GRP_0,THRESHOLD_CMP_0) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_1,THRESHOLD_CMP_1) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_2,THRESHOLD_CMP_2) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_3,THRESHOLD_CMP_3) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 3 voltage failed!");
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_4,THRESHOLD_CMP_4) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 0 voltage failed!");
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_5,THRESHOLD_CMP_5) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 1 voltage failed!");
+
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_6,THRESHOLD_CMP_6) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
+
+		}
+		if(set_DAC_CHANNEL(DAC_GRP_7,THRESHOLD_CMP_7) != XST_SUCCESS){
+			end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting group threshold PMT 2 voltage failed!");
+
+		}
+	   usleep(30);
+		if(set_DAC_CHANNEL_8574(VPED_ANALOG) != XST_SUCCESS){
+		    end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "DAC: setting Vped voltage failed!");
+
+		}
+}
+		void testPattern(void){
+//			 Test pattern
+			if(test_TPG(regptr_0) == XST_SUCCESS) printf("TestPattern Generator pass!\r\n");
+			else{
+				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "TestPattern Generator failed!");
+			}
+		    sleep(5);
+		}
+
+		void SDcardAndFiles(void){
+			/* Mount SD Card and create log file */
+				FRESULT result = mount_sd_card();
+				if (result == FR_OK) xil_printf("Mounting SD card pass!\r\n");
+				else{
+					end_main(GLOBAL_VAR, "Mounting SD card failed!");
+				}
+				/* Create log file */
+				if(create_logfile() == FR_OK) xil_printf("Log file creation pass!\r\n");
+				else{
+					end_main(GLOBAL_VAR, "Log file creation failed!");
+				}
+
+				/* Create time file */
+				if(create_timefile() == FR_OK) xil_printf("Time file creation pass!\r\n");
+				else{
+					end_main(GLOBAL_VAR, "Time file creation failed!");
+				}
+
+				/* Initialize the devices timer, axidma, ... */
+				if(devices_initialization() == XST_SUCCESS) xil_printf("Devices initialization pass!\r\n");
+				else{
+					end_main(GLOBAL_VAR | LOG_FILE, "Devices initialization failed!");
+				}
+		}
+
+		void networkInterface(void){
+			/* Initialize "echo_netif" to avoid warnings with function "xemac_add" */
+			echo_netif = &server_netif;
+			ip_addr_t ipaddr, netmask, gw;
+			/* Add network interface to the netif_list, and set it as default */
+
+			/* the mac address of the board. this should be unique per board */
+			unsigned char mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
+			ipaddr.addr = 0;
+			gw.addr = 0;
+			netmask.addr = 0;
+			if (!xemac_add(echo_netif, &ipaddr, &netmask, &gw, mac_ethernet_address, PLATFORM_EMAC_BASEADDR)) {
+				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error adding N/W interface");
+
+			}
+
+			/* specify that the network if is up */
+			netif_set_default(echo_netif);
+			netif_set_up(echo_netif);
+
+			/* initliaze IP addresses to be used */
+			IP4_ADDR(&(echo_netif->ip_addr),  192, 168,   1, 10);
+			IP4_ADDR(&(echo_netif->netmask), 255, 255, 255,  0);
+			IP4_ADDR(&(echo_netif->gw),      192, 168,   1,  1);
+			ipaddr.addr = echo_netif->ip_addr.addr;
+			gw.addr = echo_netif->gw.addr;
+			netmask.addr = echo_netif->netmask.addr;
+			print_ip_settings(&ipaddr, &netmask, &gw);
+		}
+		void setPCaddress(void){
+			ip_addr_t pc_ipaddr;
+			/* Set the PC address */
+			IP4_ADDR(&pc_ipaddr, 192, 168, 1, 11);
+			print_ip("\r\nPC IP: ", &pc_ipaddr);
+
+			/* Set the UDP connections and callback for data and commands */
+			if(setup_udp_settings(pc_ipaddr) < 0){
+				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT, "Error setting up the UDP interface");
+			}
+			else xil_printf("UDP started @ port %d for data and @ port %d for commands\n\r", PORT_DATA, PORT_CMD);
+
+		}
+		void initPedestals(void){
+		// Initialize pedestal
+			if(get_pedestal(50, 1,regptr_0) == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
+		//	if(init_pedestals() == XST_SUCCESS) printf("Pedestal initialization pass!\r\n");
+
+			else{
+				end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Pedestal initialization failed!");
+			}
+
+		}
+//		void transferFunctionInit(void){
+//
+//				/* Initialize transfer function coefficients */
+//				if(init_transfer_function() == XST_SUCCESS) printf("Transfer function initialization pass!\r\n");
+//				else{
+//					end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Transfer function initialization failed!");
+//				}
+//		}
+//

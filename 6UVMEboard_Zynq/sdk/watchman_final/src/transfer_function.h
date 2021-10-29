@@ -19,6 +19,6 @@
 #include "xscuwdt.h"
 
 /*** Function prototypes *********************************************/
-int init_transfer_function(void);
+//int init_transfer_function(void);
 
 #endif /* SRC_TRANSFER_FUNCTION_H_ */
