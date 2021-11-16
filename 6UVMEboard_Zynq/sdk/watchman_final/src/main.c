@@ -153,7 +153,7 @@ void SDcardAndFiles(void);
 void networkInterface(void);
 void setPCaddress(void);
 void initPedestals(void);
-void initTARGETregisters(int* regptr);
+void initTARGETregisters(int*regptr);
 void transferFunctionInit(void);
 
 
@@ -197,8 +197,8 @@ int main()
 	networkInterface();
 	setPCaddress();
 
-	void initTARGETregisters(regptr_0);
-	void initTARGETregisters(regptr_1);
+	initTARGETregisters(regptr_0);
+	initTARGETregisters(regptr_1);
 
 
 	// Waiting on PL's clocks to be ready
