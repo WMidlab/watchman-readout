@@ -1,10 +1,10 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
--- Date        : Thu Jul  8 16:20:58 2021
--- Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
--- Command     : write_vhdl -force -mode synth_stub
---               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_auto_pc_1_1/base_zynq_auto_pc_1_stub.vhdl
+-- Date        : Fri Nov  5 17:04:07 2021
+-- Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
+-- Command     : write_vhdl -force -mode synth_stub -rename_top base_zynq_auto_pc_1 -prefix
+--               base_zynq_auto_pc_1_ base_zynq_auto_pc_1_stub.vhdl
 -- Design      : base_zynq_auto_pc_1
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1

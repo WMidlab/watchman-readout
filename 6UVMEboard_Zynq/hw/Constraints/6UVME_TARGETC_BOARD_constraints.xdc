@@ -286,3 +286,41 @@ set_property IOSTANDARD LVCMOS25 [get_ports {B_DO_8[0]}]
 #set_property IOB TRUE [all_inputs]
 #set_property IOB TRUE [all_outputs]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create_debug_core u_ila_0 ila
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 4 [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER true [get_debug_cores u_ila_0]
+set_property C_DATA_DEPTH 4096 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL true [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property port_width 1 [get_debug_ports u_ila_0/clk]
+connect_debug_port u_ila_0/clk [get_nets [list base_zynq_i/processing_system7_0/inst/FCLK_CLK0]]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+set_property port_width 32 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[0]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[1]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[2]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[3]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[4]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[5]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[6]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[7]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[8]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[9]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[10]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[11]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[12]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[13]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[14]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[15]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[16]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[17]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[18]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[19]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[20]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[21]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[22]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[23]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[24]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[25]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[26]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[27]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[28]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[29]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[30]} {base_zynq_i/TARGET_C_TopLevel_Sy_0/FIFOdata[31]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+set_property port_width 1 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list base_zynq_i/TARGET_C_TopLevel_Sy_0/hmb_trigger]]
+set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
+set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
+set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
+connect_debug_port dbg_hub/clk [get_nets u_ila_0_FCLK_CLK0]
