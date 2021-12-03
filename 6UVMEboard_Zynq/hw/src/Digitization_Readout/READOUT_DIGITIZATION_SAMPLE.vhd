@@ -264,6 +264,11 @@ component SyncBuffer is
 	signal CH13_intl : std_logic_vector(11 downto 0);
 	signal CH14_intl : std_logic_vector(11 downto 0);
 	signal CH15_intl : std_logic_vector(11 downto 0);
+
+	signal state_num : std_logic_vector(4 downto 0);
+	signal rdad_num  : std_logic_vector(3 downto 0);
+	signal wilkin_num : std_logic_vector(3 downto 0);
+
     attribute mark_debug : string;
     
     attribute mark_debug of HSCLK: signal is "true";
@@ -277,7 +282,10 @@ component SyncBuffer is
 --    attribute mark_debug of GCC_RESET: signal is "true";
     attribute mark_debug of SS_INCR: signal is "true";
     attribute mark_debug of WL_CNT_INTL: signal is "true";
---    attribute mark_debug of DO: signal is "true";
+    attribute mark_debug of DO: signal is "true";
+	attribute mark_debug of state_num: signal is "true";
+	attribute mark_debug of rdad_num: signal is "true";
+	attribute mark_debug of wilkin_num: signal is "true";
 
     
 
@@ -286,7 +294,48 @@ component SyncBuffer is
 
 	
 begin
+	state_num <= "00000" when hsout_stm	= IDLE else
+				 "00001" when hsout_stm = READY else
+				 "00010" when hsout_stm = RESPREADY else
+				 "00011" when hsout_stm = SET_RDAD_ADDR else
+				 "00100" when hsout_stm = INCRWAIT  else
+				 "00101" when hsout_stm = LOW_SET0 else
+				 "00110" when hsout_stm = LOW_SET1 else
+				 "00111" when hsout_stm = HIGH_SET1 else
+				 "01000" when hsout_stm = HIGH_SET0 else
+				 "01001" when hsout_stm = REQUEST else
+				 "01010" when hsout_stm = RESP_ACK else
+				 "01011" when hsout_stm = REQ_GRANT else
+				 "01100" when hsout_stm = IDLERESET else
+				 "01101" when hsout_stm = FIFOTEST_DATA else
+				 "01110" when hsout_stm = FIFOTEST_REQUEST else
+				 "01111" when hsout_stm = FIFOTEST_RESP_ACK else
+				 "10000" when hsout_stm = FIFOTEST_REQ_GRANT else
+				 "11111";
+	
+	rdad_num <= "0000" when rdad_stm = IDLE else
+				"0001" when rdad_stm = READY else
+				"0010" when rdad_stm = FIFOREAD else
+				"0011" when rdad_stm = FIFOEVAL else
+				"0100" when rdad_stm = WDO_SET_RDAD_ADDR else
+				"0101" when rdad_stm = WDO_LOW_SET0 else
+				"0110" when rdad_stm = WDO_LOW_SET1 else
+				"0111" when rdad_stm = WDO_HIGH_SET1 else
+				"1000" when rdad_stm = WDO_HIGH_SET0 else
+				"1001" when rdad_stm = WDO_VALID else
+				"1010" when rdad_stm = WDO_RESPVALID else
+				"1111";
 
+	wilkin_num <= 	"0000" when wlstate = IDLE else
+					"0001" when wlstate = READY else
+					"0010" when wlstate = RESPREADY else
+					"0011" when wlstate = CLEAR else
+					"0100" when wlstate = START else
+					"0101" when wlstate = VALID else
+					"0110" when wlstate = RESPVALID else 
+					"0111" when wlstate = SAMPLE_END else
+					"1000" when wlstate = RAMP_DISCH else
+					"1111";
 
 	--Clock Domain Handshake
 	ACK_CLKBUF : clkcrossing_buf
