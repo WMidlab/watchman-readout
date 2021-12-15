@@ -31,7 +31,6 @@ PCsoftware/oldScripts/
 FMC_TargetC_Prototype/vitis/6UVME/_ide/
 FMC_TargetC_Prototype/vitis/base_zynq_wrapper/
 PCsoftware/doxygen_doc/
-
 PCsoftware/*.pcap
 PCsoftware/*.py.swn
 .PCsoftware/*lookIntoPackets.py.swn
@@ -50,6 +49,8 @@ PCsoftware/Target0.png
 PCsoftware/Target1.png
 
 PCsoftware/packets.log
+
+6UVMEboard_Zynq/ip_repo/IPs
 
 *.png
 

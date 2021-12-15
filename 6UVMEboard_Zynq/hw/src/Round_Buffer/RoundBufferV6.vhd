@@ -57,6 +57,7 @@ entity RoundBufferV6 is
 	    DIG_WriteEn	: in	std_logic;
 	    --signals for the HMB roundbuffer
 	    hmb_trigger : std_logic;
+	    mode: std_logic ;
         delay_trigger:    in std_logic_vector(3 downto 0);
         sstin_updateBit:   in std_logic_vector(2 downto 0); 
 	    -- Signal for trigger the acquisition for debugging
@@ -515,7 +516,7 @@ HMBroundBuff : HMB_roundBuffer
   RST  =>             nrst,  
   trigger    =>        hmb_trigger ,
   full_fifo  =>      RDAD_Full_s  ,         
-  mode=>     CtrlBus_IxSL.WindowStorage,  
+  mode=>     mode,  
   enable_write =>   RDAD_WrEn_s ,  -- For fifo to pass RD_ADD
   TriggerInfo => TriggerInfo_i,
   RD_add  =>          RDAD_Data_s ,

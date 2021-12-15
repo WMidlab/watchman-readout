@@ -138,6 +138,7 @@ entity TARGET_C_TopLevel_System is
 
  --signals for the HMB roundbuffer
          hmb_trigger :    in std_logic;
+         mode :  	in std_logic ;
         delay_trigger:    in std_logic_vector(3 downto 0);
         sstin_updateBit:   in std_logic_vector(2 downto 0) 
 
@@ -283,6 +284,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 		   
             --signals for the HMB roundbuffer
             hmb_trigger:  in std_logic;
+            mode: 	in std_logic ;
           delay_trigger:    in std_logic_vector(3 downto 0);
             sstin_updateBit:   in std_logic_vector(2 downto 0); 		   		   
 		   
@@ -671,6 +673,7 @@ begin
 			
 			 --signals for the HMB roundbuffer
 			 hmb_trigger => hmb_trigger,
+			 mode => mode,
         delay_trigger => delay_trigger,
         sstin_updateBit => sstin_updateBit, 
 			
