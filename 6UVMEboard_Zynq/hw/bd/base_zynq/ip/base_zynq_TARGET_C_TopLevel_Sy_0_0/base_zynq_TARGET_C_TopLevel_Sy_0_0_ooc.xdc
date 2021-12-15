@@ -52,7 +52,7 @@
 # #########################################################
 
 
-create_clock -period 8 -name RDAD_CLK [get_ports RDAD_CLK]
+create_clock -period 10 -name RDAD_CLK [get_ports RDAD_CLK]
 
 create_clock -period 10 -name WL_CLK [get_ports WL_CLK]
 

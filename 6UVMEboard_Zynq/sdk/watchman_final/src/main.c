@@ -174,6 +174,8 @@ int main()
            		return XST_FAILURE;
            	}
 
+//    dma_stm_en state_main = IDLE;
+
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
 	else{
@@ -214,12 +216,23 @@ int main()
 	printf("PL's clock ready\r\n");
 	// Initialize TargetC's registers
 	SetTargetCRegisters(regptr_0);
+	usleep(10);
 	SetTargetCRegisters(regptr_1);
 
 	printf("sleep to set the debug core\r\n");
+	GetTargetCStatus(regptr_0);
+	GetTargetCStatus(regptr_1);
+
+	GetTargetCControl(regptr_0);
+	GetTargetCControl(regptr_1);
 
 	testPattern(regptr_0);
 //	testPattern(regptr_1);
+
+	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
+	usleep(100);
+	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_1);
+	usleep(100);
 
 // 	initPedestals();
 
@@ -289,10 +302,12 @@ int main()
 				}
 				if(pedestal_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
+					ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
 					state_main = GET_PEDESTAL;
 				}
 				if(restart_flag){
 								ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
+								ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
 								printf("restarting at idle\r\n");
 								state_main = RESTART;
 							}
@@ -471,6 +486,7 @@ int main()
 				break;
 			case GET_PEDESTAL:
 				if(get_pedestal(pedestalAvg,nmbrWindowsPed, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestalAvg= %d,nmbrWindowsPed = %d, \r\n", pedestalAvg, nmbrWindowsPed);
+			//	if(get_pedestal(pedestalAvg,nmbrWindowsPed, regptr_1) == XST_SUCCESS) printf("Pedestal pass-2! pedestalAvg= %d,nmbrWindowsPed = %d, \r\n", pedestalAvg, nmbrWindowsPed);
 				else{
 					end_main(GLOBAL_VAR | LOG_FILE | INTERRUPT | UDP, "Get pedestal failed!");
 					return -1;
@@ -696,6 +712,8 @@ void setupDACs(void){
 			ControlRegisterWrite(REGCLR_MASK,DISABLE, regptr);
 			usleep(100000);
 			ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr);
+			usleep(1000);
+			ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr);
 			usleep(1000);
 		}
 //		void transferFunctionInit(void){

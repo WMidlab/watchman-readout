@@ -1,8 +1,8 @@
 --Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
---Date        : Thu Jul  8 16:11:06 2021
---Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
+--Date        : Wed Nov 10 16:02:47 2021
+--Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
 --Command     : generate_target base_zynq.bd
 --Design      : base_zynq
 --Purpose     : IP block netlist
@@ -3300,10 +3300,10 @@ architecture STRUCTURE of base_zynq is
   signal axi_dma_0_M_AXI_S2MM_WSTRB : STD_LOGIC_VECTOR ( 3 downto 0 );
   signal axi_dma_0_M_AXI_S2MM_WVALID : STD_LOGIC;
   signal axi_dma_0_s2mm_introut : STD_LOGIC;
-  attribute DEBUG : string;
-  attribute DEBUG of axi_dma_0_s2mm_introut : signal is "true";
   attribute MARK_DEBUG : boolean;
   attribute MARK_DEBUG of axi_dma_0_s2mm_introut : signal is std.standard.true;
+  attribute debug : string;
+  attribute debug of axi_dma_0_s2mm_introut : signal is "true";
   signal axi_interconnect_0_M00_AXI_AWADDR : STD_LOGIC_VECTOR ( 31 downto 0 );
   signal axi_interconnect_0_M00_AXI_AWBURST : STD_LOGIC_VECTOR ( 1 downto 0 );
   signal axi_interconnect_0_M00_AXI_AWCACHE : STD_LOGIC_VECTOR ( 3 downto 0 );

@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Tue Jun  8 09:32:55 2021
-// Host        : flacaVivado running 64-bit Ubuntu 20.04.2 LTS
-// Command     : write_verilog -force -mode synth_stub -rename_top base_zynq_xbar_8 -prefix
-//               base_zynq_xbar_8_ base_zynq_xbar_8_stub.v
+// Date        : Fri Nov  5 17:02:20 2021
+// Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
+// Command     : write_verilog -force -mode synth_stub
+//               /home2/shivang/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_xbar_8/base_zynq_xbar_8_stub.v
 // Design      : base_zynq_xbar_8
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1
