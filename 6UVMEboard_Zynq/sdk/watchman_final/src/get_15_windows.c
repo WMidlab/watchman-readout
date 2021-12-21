@@ -168,9 +168,13 @@ int SendWindows(int firstWindow, int numWindows, int* regptr){
 	regptr[TC_NBRWINDOW_REG] = numWindows;
 //	ControlRegisterWrite(SMODE_MASK ,ENABLE);
 //	ControlRegisterWrite(SS_TPG_MASK ,ENABLE);
-	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-	usleep(1);
-	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
+	windowStorage(ENABLE);
+    usleep(1);
+	windowStorage(DISABLE);
+
+//	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
+//	usleep(1);
+//	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 	//usleep(1);
 	for(window =firstWindow ; window<numWindows+firstWindow; window++){
 
@@ -329,9 +333,12 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 		regptr[TC_NBRWINDOW_REG] = nmbrofWindows;
 		ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
 		ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr);
-		ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-		usleep(1);
-		ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
+		windowStorage(ENABLE);
+	    usleep(1);
+		windowStorage(DISABLE);
+//		ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
+//		usleep(1);
+//		ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 
 		for(window =window_start ; window<nmbrofWindows+window_start; window++){
 
@@ -467,9 +474,13 @@ int get_windows( int startWindow, int nmbrofWindows,int* regptr ){
 	regptr[TC_NBRWINDOW_REG] = nmbrofWindows;
 	ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
 	ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr);
-	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-	usleep(50);
-	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
+	windowStorage(ENABLE);
+    usleep(1);
+	windowStorage(DISABLE);
+
+	//	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
+//	usleep(50);
+//	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 
 	for(window =window_start ; window<nmbrofWindows+window_start; window++){
 

@@ -149,7 +149,7 @@
 //	#define			SS_RESET_MASK	0x00000100
 //	#define			RDAD_MASK		0x00000200
 	/** @brief  PL Control Mask : Sample and Readout of windows depending on the arguments in TC_FSTWINDOW_REG and TC_NBRWINDOW_REG*/
-	#define			WINDOW_MASK		0x00000400
+	#define			WINDOW_MASK		0x00000400  //Deprecated by windowMaskModeON()
 //	#define			SSACK_MASK		0x00000800
 
 	/** @brief  PL Control Mask : Software reset for PL side, 0=enable, 1 disable*/

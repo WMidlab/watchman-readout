@@ -12,7 +12,7 @@ entity TC_Control is
 
 		AxiBusIn:		in AXI_Lite_Inputs;
 		AxiBusOut:		out AXI_Lite_Outputs;
-
+        WindowStorage:   in std_logic ;
 		ClockBus:		in T_ClockBus;
 		CtrlBus_OxMS:		out T_CtrlBus_OxMS;
 		CtrlBus_IxMS:		in 	T_CtrlBus_IxMS
@@ -124,11 +124,10 @@ architecture arch_imp of TC_Control is
 
 	signal TCReg: slv_array(0 to TC_REGISTER_NUMBER);
 	signal Cnt_AXIS_intl: std_logic_vector(9 downto 0);
-	signal WindowStorage_intl : std_logic;
     signal startTriggerModePed_intl: std_logic;
     
     attribute mark_debug : string; 
-    attribute mark_debug of WindowStorage_intl: signal is "true";
+--    attribute mark_debug of WindowStorage: signal is "true";
     
 begin
 	-- I/O Connections assignments
@@ -621,7 +620,7 @@ begin
 
     --CtrlBus_OxMS.WindowStorage		<= '1' when startstorage_stm = PULSE else '0';
 	--CtrlBus_OxMS.WindowStorage		<= '0' when startstorage_stm = IDLE else '1';
-	WindowStorage_intl	<= '0' when (startstorage_stm = IDLE) else '1';
+--	WindowStorage_intl	<= '0' when (startstorage_stm = IDLE) else '1';
 
  ----------------------------------------------------------------------------------
        -- Start Storage Command Start
@@ -809,7 +808,7 @@ begin
 		)
 		port map(
 			nrst	=>	'1',
-			DA(0)	=>	 WindowStorage_intl,
+			DA(0)	=>	 WindowStorage,
 			QB(0)	=> 	CtrlBus_OxMS.WindowStorage,
 			ClkA	=> 	AxiBusIn.ACLK,
 			ClkB	=> ClockBus.CLK125MHz

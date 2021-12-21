@@ -234,9 +234,13 @@ int test_TPG(int* regptr){
 
 	ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
 	ControlRegisterWrite(SS_TPG_MASK ,DISABLE, regptr); // Enable mode TestPattern
-	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-	usleep(50);
-	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
+	windowStorage(ENABLE);
+		usleep(50);
+		windowStorage(DISABLE);
+
+//	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
+//	usleep(50);
+//	ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 
 	/* Wait on DMA transfer to be done */
 	timeout = 200000; // Timeout of 10 sec
@@ -319,10 +323,50 @@ int test_TPG(int* regptr){
 }
 
 
-void trigger(){
+void PStrigger(int actionID){
 //	usleep(1);
-	Xil_Out32(XPAR_START_DIGITIZATION_IP_0_S00_AXI_BASEADDR, (u32) 10);
+	//Send a pulse to PL side
+	if(actionID == ENABLE){
+	Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR, (u32) 10);
 	usleep(1);
-	Xil_Out32(XPAR_START_DIGITIZATION_IP_0_S00_AXI_BASEADDR, (u32) 0);
+	Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR, (u32) 0);
+	}
+	else if (actionID == INIT){
+
+		 Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR, (u32) 0);
+
+	}
 	//usleep(50);
+}
+
+
+void triggerMode(int actionID){
+	//Switch to trigger mode for calorimeters
+
+	if(actionID == ENABLE){
+		 Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR+0x4, (u32) 10);
+	}
+	else if (actionID == DISABLE){
+
+		 Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR+0x4, (u32) 0);
+
+	}
+
+}
+
+
+
+
+void windowStorage(int actionID){
+
+	// Digitization starts with falling edge f PL's windowstorage signal
+	if(actionID == ENABLE){
+			 Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR+0x8, (u32) 10);
+		}
+		else if (actionID == DISABLE){
+
+			 Xil_Out32(XPAR_CONTROL_MULTIPLE_TC_0_S00_AXI_BASEADDR+0x8, (u32) 0);
+
+		}
+
 }

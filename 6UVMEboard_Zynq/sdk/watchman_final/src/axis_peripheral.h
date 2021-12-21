@@ -35,6 +35,11 @@ void XAxiDma_SimpleTransfer_hm(UINTPTR BuffAddr, int LengthOfBytes);
 void StartDmaTransfer( unsigned int *dstAddress, unsigned int len );
 void dma_received_data(int pmt);
 int test_TPG(int* regptr);
-void trigger(void);
+void PStrigger(int actionID);
+void triggerMode(int actionID);
+void windowStorage(int actionID);
+
+
+
 
 #endif /* SRC_AXIS_PERIPHERAL_H_ */

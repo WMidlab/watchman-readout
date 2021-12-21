@@ -118,9 +118,12 @@ int init_pedestals(int* regptr, int targetcID){
 				regptr[TC_Delay_UpdateWR] = 0;
 				ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
 				ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr);
-				ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-				usleep(50);
-				ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
+				windowStorage(ENABLE);
+			    usleep(1);
+				windowStorage(DISABLE);
+				//				ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
+//				usleep(50);
+//				ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 
 				/* Wait on DMA transfer to be done */
 				timeout = 200000; // 10sec

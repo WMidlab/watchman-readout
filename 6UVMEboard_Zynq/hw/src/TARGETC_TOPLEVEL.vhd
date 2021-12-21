@@ -136,11 +136,15 @@ entity TARGET_C_TopLevel_System is
 		-- Interrupt SIGNALS
 		SSVALID_INTR:	out	std_logic;
 
+
+        --MULTIPLE TC ctrl signals
+
  --signals for the HMB roundbuffer
          hmb_trigger :    in std_logic;
-         mode :  	in std_logic ;
         delay_trigger:    in std_logic_vector(3 downto 0);
-        sstin_updateBit:   in std_logic_vector(2 downto 0) 
+        sstin_updateBit:   in std_logic_vector(2 downto 0) ;
+         mode :  	in std_logic ;
+         windowstorage: in std_logic -- Digitization process  start n falling edge of windowstorage (user mode)
 
 
 --		-- DEBUG OUTPUTs
@@ -209,9 +213,9 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 
 		AxiBusIn:		in AXI_Lite_Inputs;
 		AxiBusOut:		out AXI_Lite_Outputs;
+        WindowStorage:   in std_logic ;
 
 		ClockBus:		in T_ClockBus;
---        WS_master_ctrl:   in std_logic;
 		CtrlBus_OxMS:		out T_CtrlBus_OxMS;
 		CtrlBus_IxMS:		in 	T_CtrlBus_IxMS
 	);
@@ -599,13 +603,12 @@ begin
 		AxiBusOut.intr		=> tc_axi_intr,
         
 		ClockBus			=> ClockBus_intl,
-
+		WindowStorage =>  WindowStorage,
 --        WS_master_ctrl      => WS_masterctrl_in,
 		CtrlBus_OxMS			=> CtrlBusOut_intl,
 		CtrlBus_IxMS			=> CtrlBusIn_intl
 	);
 
---       WS_masterctrl_out <= CtrlBusOut_intl.WindowStorage; 
 
 
 	TC_SerialRegCtrl_inst : TARGETX_DAC_CONTROL

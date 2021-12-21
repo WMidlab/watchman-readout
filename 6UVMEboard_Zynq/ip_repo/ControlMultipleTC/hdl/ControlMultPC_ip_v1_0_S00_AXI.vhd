@@ -16,8 +16,9 @@ entity Start_digitization_ip_v1_0_S00_AXI is
 	);
 	port (
 		-- Users to add ports here
-        startDig: out std_logic;
-        WINDOW_MASK_mode: out std_logic;
+        PStrigger: out std_logic;
+        trigger_Mode: out std_logic;
+        windowStorage: out std_logic;
         
 		-- User ports ends
 		-- Do not modify the ports beyond this line
@@ -86,6 +87,7 @@ entity Start_digitization_ip_v1_0_S00_AXI is
 end Start_digitization_ip_v1_0_S00_AXI;
 
 architecture arch_imp of Start_digitization_ip_v1_0_S00_AXI is
+
 
 	-- AXI4LITE signals
 	signal axi_awaddr	: std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
@@ -387,6 +389,8 @@ begin
 
   
 	-- Add user logic here
+	
+-- Trigger for HMB mode from PS
 	process( S_AXI_ACLK ) is
 	begin
 	  if (rising_edge (S_AXI_ACLK)) then
@@ -394,9 +398,9 @@ begin
 	       axi_rdata  <= (others => '0');
 	    else
 	       if ( unsigned(slv_reg0) > 0 ) then
-	           startDig <= '1';
+	           PStrigger <= '1';
 	       else
-	           startDig <= '0';
+	           PStrigger <= '0';
 	       end if;
 	    end if; 
 	    end if;
@@ -411,14 +415,34 @@ begin
 	       axi_rdata  <= (others => '0');
 	    else
 	       if ( unsigned(slv_reg1) > 0 ) then
-	           WINDOW_MASK_mode <= '1';
+	           trigger_Mode <= '1';
 	       else
-	           WINDOW_MASK_mode <= '0';
+	           trigger_Mode <= '0';
 	       end if;
 	    end if; 
 	    end if;
 	    end process;
-	       
+	      
+	      
+	    
+	    process( S_AXI_ACLK ) is
+	begin
+	  if (rising_edge (S_AXI_ACLK)) then
+	    if ( S_AXI_ARESETN = '0' ) then
+	       axi_rdata  <= (others => '0');
+	    else
+	       if ( unsigned(slv_reg2) > 0 ) then
+	           windowStorage <= '1';
+	       else
+	           windowStorage <= '0';
+	       end if;
+	    end if; 
+	    end if;
+	    end process;
+	            
+	      
+	      
+	      
 	-- User logic ends
 
 end arch_imp;

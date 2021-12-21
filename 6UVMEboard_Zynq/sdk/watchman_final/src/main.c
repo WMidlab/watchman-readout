@@ -226,7 +226,7 @@ int main()
 	GetTargetCControl(regptr_0);
 	GetTargetCControl(regptr_1);
 
-	testPattern(regptr_0);
+//	testPattern(regptr_0);
 //	testPattern(regptr_1);
 
 	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
@@ -242,7 +242,7 @@ int main()
 	usleep(100);
 	int pedestal_Avg=100;
 	int nmbr_Windows_Ped=1;
-	if(get_pedestal(pedestal_Avg,nmbr_Windows_Ped, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestal_Avg= %d,nmbrWindows_Ped = %d, \r\n", pedestal_Avg, nmbr_Windows_Ped);
+//	if(get_pedestal(pedestal_Avg,nmbr_Windows_Ped, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestal_Avg= %d,nmbrWindows_Ped = %d, \r\n", pedestal_Avg, nmbr_Windows_Ped);
 	printf("Start while loop\r\n");
 
 	while (run_flag){
@@ -377,8 +377,9 @@ int main()
 
 				XAxiDma_SimpleTransfer_hm((UINTPTR)inboundRingManager.writePointer , SIZE_DATA_ARRAY_BYT);
 			     usleep(100);
-				 ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_0); //  register for starting the round buffer in trigger mode
-				 ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_1); //  register for starting the round buffer in trigger mode
+			     triggerMode(ENABLE);
+			     //ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_0); //  register for starting the round buffer in trigger mode
+//				 ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr_1); //  register for starting the round buffer in trigger mode
 
 				 Xil_DCacheInvalidateRange((UINTPTR)inboundRingManager.writePointer , SIZE_DATA_ARRAY_BYT);
 					usleep(100);
@@ -430,7 +431,7 @@ int main()
 //							printf("inboundRingManager.pendingCount %d \r\n", (uint16_t)(inboundRingManager.pendingCount));
                             if (!trigger_flag){
 							if (i==trigger_freq){
-								trigger();
+								PStrigger(ENABLE);
 								trigger_flag=1;
 								i=0;
 							}

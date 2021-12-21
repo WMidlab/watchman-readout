@@ -606,7 +606,7 @@ begin
 						when READY =>
 							CTRL_CPUBUS <= DIGI_CPUBUS;
 					--		busy_intl <= '0';
-							if(CtrlBus_IxSL.WindowStorage = '1') then
+							if(CtrlBus_IxSL.WindowStorage = '1') then  
 								-- First Window && Counter is on 512 windows (9bits)
 								FstWindow512 	<= CtrlBus_IxSL.FSTWINDOW(8 downto 0);
 								CntWindow512	<= CtrlBus_IxSL.NBRWINDOW(8 downto 0);
@@ -619,7 +619,7 @@ begin
 							end if;
 
 						when RESPREADY =>
-							CTRL_CPUBUS <= DIGI_CPUBUS;
+							CTRL_CPUBUS <= DIGI_CPUBUS; -- Digitization starts at falling edge of windowstorage signal
 							if(CtrlBus_IxSL.WindowStorage = '0') then
 								--storage_stm <= STORAGE;
 					--			busy_intl <= '1';

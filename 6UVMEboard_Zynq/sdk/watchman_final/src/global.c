@@ -175,6 +175,9 @@ int init_global_var(void){
 	flag_scu_timer = false;
 	first_element = (data_list *)malloc(sizeof(data_list));
 	pedestalTriggerModeFlag= false;
+	PStrigger(INIT);
+	triggerMode(DISABLE);
+	windowStorage(DISABLE);
 
 
 	if(!first_element){
