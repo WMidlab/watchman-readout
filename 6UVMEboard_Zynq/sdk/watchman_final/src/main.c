@@ -176,6 +176,13 @@ int main()
 
 //    dma_stm_en state_main = IDLE;
 
+        	GetTargetCStatus(regptr_0);
+        			GetTargetCStatus(regptr_1);
+
+        			GetTargetCControl(regptr_0);
+        			GetTargetCControl(regptr_1);
+        			printf("before init global\r\n");
+
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
 	else{
@@ -199,9 +206,16 @@ int main()
 	networkInterface();
 	setPCaddress();
 
+
 	initTARGETregisters(regptr_0);
 	initTARGETregisters(regptr_1);
+	printf("after INIT\r\n");
 
+	GetTargetCStatus(regptr_0);
+		GetTargetCStatus(regptr_1);
+
+		GetTargetCControl(regptr_0);
+		GetTargetCControl(regptr_1);
 
 	// Waiting on PL's clocks to be ready
 	while((regptr_0[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
@@ -212,6 +226,14 @@ int main()
 	while((regptr_1[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
 		sleep(1);
 	}
+	printf("after LOCKEDmask\r\n");
+
+
+	GetTargetCStatus(regptr_0);
+	GetTargetCStatus(regptr_1);
+
+	GetTargetCControl(regptr_0);
+	GetTargetCControl(regptr_1);
 
 	printf("PL's clock ready\r\n");
 	// Initialize TargetC's registers
@@ -226,13 +248,13 @@ int main()
 	GetTargetCControl(regptr_0);
 	GetTargetCControl(regptr_1);
 
-//	testPattern(regptr_0);
+	testPattern(regptr_0);
 //	testPattern(regptr_1);
 
-	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
-	usleep(100);
-	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_1);
-	usleep(100);
+//	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
+//	usleep(100);
+//	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_1);
+//	usleep(100);
 
 // 	initPedestals();
 
