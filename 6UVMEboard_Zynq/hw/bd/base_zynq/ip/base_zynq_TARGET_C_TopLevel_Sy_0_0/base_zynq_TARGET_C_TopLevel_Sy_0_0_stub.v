@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Tue Oct 26 15:06:24 2021
+// Date        : Tue Dec 21 04:21:09 2021
 // Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
 // Command     : write_verilog -force -mode synth_stub
-//               /home2/shivang/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_TARGET_C_TopLevel_Sy_0_0/base_zynq_TARGET_C_TopLevel_Sy_0_0_stub.v
+//               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_TARGET_C_TopLevel_Sy_0_0/base_zynq_TARGET_C_TopLevel_Sy_0_0_stub.v
 // Design      : base_zynq_TARGET_C_TopLevel_Sy_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1
@@ -22,8 +22,8 @@ module base_zynq_TARGET_C_TopLevel_Sy_0_0(SW_nRST, RefCLK_i1, RefCLK_i2, tc_axi_
   WR_CS_S1, WR_CS_S2, WR_CS_S3, WR_CS_S4, WR_CS_S5, GCC_RESET, WL_CLK, RDAD_CLK, RDAD_SIN, RDAD_DIR, 
   SAMPLESEL_ANY, DO, SS_INCR, DONE, SS_RESET, SS_LD_SIN, SS_LD_DIR, RAMP, SSTIN, MONTIMING_P, 
   MONTIMING_N, Cnt_AXIS_DATA, CNT_CLR, TestStream, FIFOvalid, FIFOdata, StreamReady, TrigA, TrigB, 
-  TrigC, TrigD, SSVALID_INTR, hmb_trigger, delay_trigger, sstin_updateBit)
-/* synthesis syn_black_box black_box_pad_pin="SW_nRST,RefCLK_i1,RefCLK_i2,tc_axi_aclk,tc_axi_aresetn,tc_axi_awaddr[31:0],tc_axi_awprot[2:0],tc_axi_awvalid,tc_axi_awready,tc_axi_wdata[31:0],tc_axi_wstrb[3:0],tc_axi_wvalid,tc_axi_wready,tc_axi_bresp[1:0],tc_axi_bvalid,tc_axi_bready,tc_axi_araddr[31:0],tc_axi_arprot[2:0],tc_axi_arvalid,tc_axi_arready,tc_axi_rdata[31:0],tc_axi_rresp[1:0],tc_axi_rvalid,tc_axi_rready,SIN,SCLK,PCLK,SHOUT,HSCLK_P,HSCLK_N,WR_RS_S0,WR_RS_S1,WR_CS_S0,WR_CS_S1,WR_CS_S2,WR_CS_S3,WR_CS_S4,WR_CS_S5,GCC_RESET,WL_CLK,RDAD_CLK,RDAD_SIN,RDAD_DIR,SAMPLESEL_ANY,DO[15:0],SS_INCR,DONE,SS_RESET,SS_LD_SIN,SS_LD_DIR,RAMP,SSTIN,MONTIMING_P,MONTIMING_N,Cnt_AXIS_DATA[9:0],CNT_CLR,TestStream,FIFOvalid,FIFOdata[31:0],StreamReady,TrigA,TrigB,TrigC,TrigD,SSVALID_INTR,hmb_trigger,delay_trigger[3:0],sstin_updateBit[2:0]" */;
+  TrigC, TrigD, SSVALID_INTR, hmb_trigger, delay_trigger, sstin_updateBit, mode, windowstorage)
+/* synthesis syn_black_box black_box_pad_pin="SW_nRST,RefCLK_i1,RefCLK_i2,tc_axi_aclk,tc_axi_aresetn,tc_axi_awaddr[31:0],tc_axi_awprot[2:0],tc_axi_awvalid,tc_axi_awready,tc_axi_wdata[31:0],tc_axi_wstrb[3:0],tc_axi_wvalid,tc_axi_wready,tc_axi_bresp[1:0],tc_axi_bvalid,tc_axi_bready,tc_axi_araddr[31:0],tc_axi_arprot[2:0],tc_axi_arvalid,tc_axi_arready,tc_axi_rdata[31:0],tc_axi_rresp[1:0],tc_axi_rvalid,tc_axi_rready,SIN,SCLK,PCLK,SHOUT,HSCLK_P,HSCLK_N,WR_RS_S0,WR_RS_S1,WR_CS_S0,WR_CS_S1,WR_CS_S2,WR_CS_S3,WR_CS_S4,WR_CS_S5,GCC_RESET,WL_CLK,RDAD_CLK,RDAD_SIN,RDAD_DIR,SAMPLESEL_ANY,DO[15:0],SS_INCR,DONE,SS_RESET,SS_LD_SIN,SS_LD_DIR,RAMP,SSTIN,MONTIMING_P,MONTIMING_N,Cnt_AXIS_DATA[9:0],CNT_CLR,TestStream,FIFOvalid,FIFOdata[31:0],StreamReady,TrigA,TrigB,TrigC,TrigD,SSVALID_INTR,hmb_trigger,delay_trigger[3:0],sstin_updateBit[2:0],mode,windowstorage" */;
   output SW_nRST;
   input RefCLK_i1;
   input RefCLK_i2;
@@ -92,4 +92,6 @@ module base_zynq_TARGET_C_TopLevel_Sy_0_0(SW_nRST, RefCLK_i1, RefCLK_i2, tc_axi_
   input hmb_trigger;
   input [3:0]delay_trigger;
   input [2:0]sstin_updateBit;
+  input mode;
+  input windowstorage;
 endmodule

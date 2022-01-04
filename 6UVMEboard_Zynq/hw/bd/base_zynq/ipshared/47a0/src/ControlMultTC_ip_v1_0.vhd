@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity Start_digitization_ip_v1_0 is
+entity CtrlMultTC_ip_v1_0 is
 	generic (
 		-- Users to add parameters here
 
@@ -16,11 +16,12 @@ entity Start_digitization_ip_v1_0 is
 	);
 	port (
 		-- Users to add ports here
-        startDig_out: out std_logic;
+        PStrigger: out std_logic;
+        trigger_mode: out std_logic;
+        window_Storage: out std_logic ;
 
 		-- User ports ends
 		-- Do not modify the ports beyond this line
-
 
 		-- Ports of Axi Slave Bus Interface S00_AXI
 		s00_axi_aclk	: in std_logic;
@@ -45,18 +46,20 @@ entity Start_digitization_ip_v1_0 is
 		s00_axi_rvalid	: out std_logic;
 		s00_axi_rready	: in std_logic
 	);
-end Start_digitization_ip_v1_0;
+end CtrlMultTC_ip_v1_0;
 
-architecture arch_imp of Start_digitization_ip_v1_0 is
+architecture arch_imp of CtrlMultTC_ip_v1_0 is
 
 	-- component declaration
-	component Start_digitization_ip_v1_0_S00_AXI is
+	component CtrlMultTC_ip_v1_0_S00_AXI is
 		generic (
 		C_S_AXI_DATA_WIDTH	: integer	:= 32;
 		C_S_AXI_ADDR_WIDTH	: integer	:= 4
 		);
 		port (
-		startDig :  out std_logic;
+		PStrigger :  out std_logic;
+		trigger_Mode: out std_logic ;
+		window_Storage: out std_logic;
 		S_AXI_ACLK	: in std_logic;
 		S_AXI_ARESETN	: in std_logic;
 		S_AXI_AWADDR	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
@@ -79,19 +82,20 @@ architecture arch_imp of Start_digitization_ip_v1_0 is
 		S_AXI_RVALID	: out std_logic;
 		S_AXI_RREADY	: in std_logic
 		);
-	end component Start_digitization_ip_v1_0_S00_AXI;
+	end component CtrlMultTC_ip_v1_0_S00_AXI;
 
 begin
 
 -- Instantiation of Axi Bus Interface S00_AXI
-Start_digitization_ip_v1_0_S00_AXI_inst : Start_digitization_ip_v1_0_S00_AXI
+Start_digitization_ip_v1_0_S00_AXI_inst : CtrlMultTC_ip_v1_0_S00_AXI
 	generic map (
 		C_S_AXI_DATA_WIDTH	=> C_S00_AXI_DATA_WIDTH,
 		C_S_AXI_ADDR_WIDTH	=> C_S00_AXI_ADDR_WIDTH
 	)
 	port map (
-	    startDig => startDig_out,
-
+	    PStrigger => PStrigger,
+	    trigger_Mode => trigger_Mode,
+	    window_Storage => window_Storage,
 		S_AXI_ACLK	=> s00_axi_aclk,
 		S_AXI_ARESETN	=> s00_axi_aresetn,
 		S_AXI_AWADDR	=> s00_axi_awaddr,

@@ -46,16 +46,18 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: user.org:user:Start_digitization_ip:1.0
--- IP Revision: 3
+-- IP VLNV: user.org:user:Control_multiple_TC:1.0
+-- IP Revision: 2
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY base_zynq_Start_digitization_ip_0_0 IS
+ENTITY base_zynq_Control_multiple_TC_0_1 IS
   PORT (
-    startDig_out : OUT STD_LOGIC;
+    PStrigger : OUT STD_LOGIC;
+    trigger_mode : OUT STD_LOGIC;
+    window_Storage : OUT STD_LOGIC;
     s00_axi_aclk : IN STD_LOGIC;
     s00_axi_aresetn : IN STD_LOGIC;
     s00_axi_awaddr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -78,18 +80,20 @@ ENTITY base_zynq_Start_digitization_ip_0_0 IS
     s00_axi_rvalid : OUT STD_LOGIC;
     s00_axi_rready : IN STD_LOGIC
   );
-END base_zynq_Start_digitization_ip_0_0;
+END base_zynq_Control_multiple_TC_0_1;
 
-ARCHITECTURE base_zynq_Start_digitization_ip_0_0_arch OF base_zynq_Start_digitization_ip_0_0 IS
+ARCHITECTURE base_zynq_Control_multiple_TC_0_1_arch OF base_zynq_Control_multiple_TC_0_1 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
-  ATTRIBUTE DowngradeIPIdentifiedWarnings OF base_zynq_Start_digitization_ip_0_0_arch: ARCHITECTURE IS "yes";
-  COMPONENT Start_digitization_ip_v1_0 IS
+  ATTRIBUTE DowngradeIPIdentifiedWarnings OF base_zynq_Control_multiple_TC_0_1_arch: ARCHITECTURE IS "yes";
+  COMPONENT CtrlMultTC_ip_v1_0 IS
     GENERIC (
       C_S00_AXI_DATA_WIDTH : INTEGER; -- Width of S_AXI data bus
       C_S00_AXI_ADDR_WIDTH : INTEGER -- Width of S_AXI address bus
     );
     PORT (
-      startDig_out : OUT STD_LOGIC;
+      PStrigger : OUT STD_LOGIC;
+      trigger_mode : OUT STD_LOGIC;
+      window_Storage : OUT STD_LOGIC;
       s00_axi_aclk : IN STD_LOGIC;
       s00_axi_aresetn : IN STD_LOGIC;
       s00_axi_awaddr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -112,7 +116,7 @@ ARCHITECTURE base_zynq_Start_digitization_ip_0_0_arch OF base_zynq_Start_digitiz
       s00_axi_rvalid : OUT STD_LOGIC;
       s00_axi_rready : IN STD_LOGIC
     );
-  END COMPONENT Start_digitization_ip_v1_0;
+  END COMPONENT CtrlMultTC_ip_v1_0;
   ATTRIBUTE X_INTERFACE_INFO : STRING;
   ATTRIBUTE X_INTERFACE_PARAMETER : STRING;
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_rready: SIGNAL IS "xilinx.com:interface:aximm:1.0 S00_AXI RREADY";
@@ -133,21 +137,23 @@ ARCHITECTURE base_zynq_Start_digitization_ip_0_0_arch OF base_zynq_Start_digitiz
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_awready: SIGNAL IS "xilinx.com:interface:aximm:1.0 S00_AXI AWREADY";
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_awvalid: SIGNAL IS "xilinx.com:interface:aximm:1.0 S00_AXI AWVALID";
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_awprot: SIGNAL IS "xilinx.com:interface:aximm:1.0 S00_AXI AWPROT";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF s00_axi_awaddr: SIGNAL IS "XIL_INTERFACENAME S00_AXI, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 4, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 125000000, ID_WIDTH 0, ADDR_WIDTH 4, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN base_zynq_processing_sy" & 
-"stem7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF s00_axi_awaddr: SIGNAL IS "XIL_INTERFACENAME S00_AXI, WIZ_DATA_WIDTH 32, WIZ_NUM_REG 4, SUPPORTS_NARROW_BURST 0, DATA_WIDTH 32, PROTOCOL AXI4LITE, FREQ_HZ 1.25e+08, ID_WIDTH 0, ADDR_WIDTH 4, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 0, HAS_LOCK 0, HAS_PROT 1, HAS_CACHE 0, HAS_QOS 0, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, NUM_READ_OUTSTANDING 1, NUM_WRITE_OUTSTANDING 1, MAX_BURST_LENGTH 1, PHASE 0.000, CLK_DOMAIN base_zynq_processing_sys" & 
+"tem7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_awaddr: SIGNAL IS "xilinx.com:interface:aximm:1.0 S00_AXI AWADDR";
   ATTRIBUTE X_INTERFACE_PARAMETER OF s00_axi_aresetn: SIGNAL IS "XIL_INTERFACENAME S00_AXI_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_aresetn: SIGNAL IS "xilinx.com:signal:reset:1.0 S00_AXI_RST RST";
-  ATTRIBUTE X_INTERFACE_PARAMETER OF s00_axi_aclk: SIGNAL IS "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0";
+  ATTRIBUTE X_INTERFACE_PARAMETER OF s00_axi_aclk: SIGNAL IS "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 1.25e+08, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0";
   ATTRIBUTE X_INTERFACE_INFO OF s00_axi_aclk: SIGNAL IS "xilinx.com:signal:clock:1.0 S00_AXI_CLK CLK";
 BEGIN
-  U0 : Start_digitization_ip_v1_0
+  U0 : CtrlMultTC_ip_v1_0
     GENERIC MAP (
       C_S00_AXI_DATA_WIDTH => 32,
       C_S00_AXI_ADDR_WIDTH => 4
     )
     PORT MAP (
-      startDig_out => startDig_out,
+      PStrigger => PStrigger,
+      trigger_mode => trigger_mode,
+      window_Storage => window_Storage,
       s00_axi_aclk => s00_axi_aclk,
       s00_axi_aresetn => s00_axi_aresetn,
       s00_axi_awaddr => s00_axi_awaddr,
@@ -170,4 +176,4 @@ BEGIN
       s00_axi_rvalid => s00_axi_rvalid,
       s00_axi_rready => s00_axi_rready
     );
-END base_zynq_Start_digitization_ip_0_0_arch;
+END base_zynq_Control_multiple_TC_0_1_arch;

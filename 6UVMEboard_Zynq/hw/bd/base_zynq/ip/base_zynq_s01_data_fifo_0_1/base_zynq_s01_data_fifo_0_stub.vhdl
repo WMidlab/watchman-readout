@@ -1,11 +1,11 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
--- Date        : Fri Nov  5 17:01:32 2021
--- Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
+-- Date        : Thu Jul  8 16:20:08 2021
+-- Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
 -- Command     : write_vhdl -force -mode synth_stub -rename_top base_zynq_s01_data_fifo_0 -prefix
---               base_zynq_s01_data_fifo_0_ base_zynq_s00_data_fifo_0_stub.vhdl
--- Design      : base_zynq_s00_data_fifo_0
+--               base_zynq_s01_data_fifo_0_ base_zynq_s01_data_fifo_0_stub.vhdl
+-- Design      : base_zynq_s01_data_fifo_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1
 -- --------------------------------------------------------------------------------

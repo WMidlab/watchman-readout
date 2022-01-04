@@ -1,8 +1,8 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Mon May 31 19:24:34 2021
-// Host        : flacaVivado running 64-bit Ubuntu 20.04.2 LTS
+// Date        : Tue Dec 21 03:55:50 2021
+// Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
 // Command     : write_verilog -force -mode synth_stub -rename_top base_zynq_xbar_7 -prefix
 //               base_zynq_xbar_7_ base_zynq_xbar_7_stub.v
 // Design      : base_zynq_xbar_7

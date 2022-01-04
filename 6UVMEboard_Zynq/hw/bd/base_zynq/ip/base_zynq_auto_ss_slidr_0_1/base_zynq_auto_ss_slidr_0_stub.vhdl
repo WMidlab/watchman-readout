@@ -1,8 +1,8 @@
 -- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
--- Date        : Fri Nov  5 17:01:25 2021
--- Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
+-- Date        : Thu Jul  8 16:20:02 2021
+-- Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
 -- Command     : write_vhdl -force -mode synth_stub -rename_top base_zynq_auto_ss_slidr_0 -prefix
 --               base_zynq_auto_ss_slidr_0_ base_zynq_auto_ss_slidr_0_stub.vhdl
 -- Design      : base_zynq_auto_ss_slidr_0

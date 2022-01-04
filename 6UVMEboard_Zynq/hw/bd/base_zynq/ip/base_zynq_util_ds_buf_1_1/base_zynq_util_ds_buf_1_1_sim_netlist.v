@@ -1,26 +1,26 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Wed Jul  7 10:44:36 2021
-// Host        : idlab2 running 64-bit Ubuntu 20.04.2 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home2/salvador/github/watchman-readout/FMC_TargetC_Prototype/hw/bd/base_zynq/ip/base_zynq_util_ds_buf_1_1/base_zynq_util_ds_buf_1_1_sim_netlist.v
-// Design      : base_zynq_util_ds_buf_1_1
+// Date        : Tue Dec 21 03:55:55 2021
+// Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
+// Command     : write_verilog -force -mode funcsim -rename_top base_zynq_util_ds_buf_1_1 -prefix
+//               base_zynq_util_ds_buf_1_1_ base_zynq_util_ds_buf_0_0_sim_netlist.v
+// Design      : base_zynq_util_ds_buf_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
 // Device      : xc7z020clg400-1
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "base_zynq_util_ds_buf_1_1,util_ds_buf,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "util_ds_buf,Vivado 2020.2" *) 
+(* CHECK_LICENSE_TYPE = "base_zynq_util_ds_buf_0_0,util_ds_buf,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "util_ds_buf,Vivado 2020.2" *) 
 (* NotValidForBitStream *)
 module base_zynq_util_ds_buf_1_1
    (OBUF_IN,
     OBUF_DS_P,
     OBUF_DS_N);
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_IN CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_IN, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_TARGET_C_TopLevel_Sy_0_0_WL_CLK, INSERT_VIP 0" *) input [0:0]OBUF_IN;
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_DS_P CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_DS_P, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_TARGET_C_TopLevel_Sy_0_0_WL_CLK, INSERT_VIP 0" *) output [0:0]OBUF_DS_P;
-  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_DS_N CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_DS_N, FREQ_HZ 125000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_TARGET_C_TopLevel_Sy_0_0_WL_CLK, INSERT_VIP 0" *) output [0:0]OBUF_DS_N;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_IN CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_IN, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, INSERT_VIP 0" *) input [0:0]OBUF_IN;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_DS_P CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_DS_P, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_util_ds_buf_0_0_OBUF_DS_P, INSERT_VIP 0" *) output [0:0]OBUF_DS_P;
+  (* x_interface_info = "xilinx.com:signal:clock:1.0 OBUF_DS_N CLK" *) (* x_interface_parameter = "XIL_INTERFACENAME OBUF_DS_N, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN base_zynq_util_ds_buf_0_0_OBUF_DS_N, INSERT_VIP 0" *) output [0:0]OBUF_DS_N;
 
   (* SLEW = "SLOW" *) wire [0:0]OBUF_DS_N;
   (* SLEW = "SLOW" *) wire [0:0]OBUF_DS_P;
@@ -165,7 +165,7 @@ endmodule
 
 (* C_BUFGCE_DIV = "1" *) (* C_BUFG_GT_SYNC = "0" *) (* C_BUF_TYPE = "OBUFDS" *) 
 (* C_OBUFDS_GTE5_ADV = "2'b00" *) (* C_REFCLK_ICNTL_TX = "5'b00000" *) (* C_SIM_DEVICE = "VERSAL_AI_CORE_ES1" *) 
-(* C_SIZE = "1" *) (* ORIG_REF_NAME = "util_ds_buf" *) 
+(* C_SIZE = "1" *) 
 module base_zynq_util_ds_buf_1_1_util_ds_buf
    (IBUF_DS_P,
     IBUF_DS_N,

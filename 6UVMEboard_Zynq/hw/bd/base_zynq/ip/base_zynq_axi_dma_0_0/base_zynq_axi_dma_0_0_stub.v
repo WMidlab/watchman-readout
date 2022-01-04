@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Fri Nov  5 17:02:57 2021
+// Date        : Tue Jan  4 05:45:44 2022
 // Host        : idlab2 running 64-bit Ubuntu 20.04.3 LTS
 // Command     : write_verilog -force -mode synth_stub
-//               /home2/shivang/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_axi_dma_0_0/base_zynq_axi_dma_0_0_stub.v
+//               /home2/salvador/github/watchman-readout/6UVMEboard_Zynq/hw/bd/base_zynq/ip/base_zynq_axi_dma_0_0/base_zynq_axi_dma_0_0_stub.v
 // Design      : base_zynq_axi_dma_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg400-1
