@@ -23,7 +23,7 @@ use work.AXI_Lite_pkg.all;
 -------------------------------------------------------
 --! Entity declaration for TARGETC_IP_Prototype .
 -------------------------------------------------------
-entity TARGET_C_TopLevel_System is
+entity TwoTARGET_C_TopLevel_System is
 	-- Generic Parameters :
 
 	-- Port Parameters :
@@ -65,7 +65,8 @@ entity TARGET_C_TopLevel_System is
 		SIN : 			out	STD_LOGIC;		--! SIN, Serial Input, Pin#35
 		SCLK :	 		out	STD_LOGIC;	
 		WL_CLK: 		out std_logic;		
-
+		DO_A_B: 			in 	std_logic_vector(31 downto 0);	
+        CNT_CLR_A_B:   out std_logic ;
 		-- TARGET C 0
 
 		A_PCLK :	 		out	STD_LOGIC;	
@@ -93,7 +94,6 @@ entity TARGET_C_TopLevel_System is
 
 		A_SAMPLESEL_ANY:	out	std_logic;	
 
-		A_DO: 			in 	std_logic_vector(15 downto 0);	
 
 		A_SS_INCR:		out	std_logic;	
 
@@ -107,6 +107,8 @@ entity TARGET_C_TopLevel_System is
 		A_SS_LD_DIR:		out	std_logic;	
 
 		A_RAMP:			out	std_logic;	
+		Cnt_AXIS_DATA:	in	std_logic_vector(9 downto 0);
+
 
 --                   TARGETC 1
 
@@ -135,7 +137,7 @@ entity TARGET_C_TopLevel_System is
 
 		B_SAMPLESEL_ANY:	out	std_logic;	
 
-		B_DO: 			in 	std_logic_vector(15 downto 0);	
+--		B_DO: 			in 	std_logic_vector(15 downto 0);	
 
 		B_SS_INCR:		out	std_logic;	
 
@@ -154,7 +156,7 @@ entity TARGET_C_TopLevel_System is
 	
 
 
-		B_Cnt_AXIS_DATA:	in	std_logic_vector(9 downto 0);
+--		B_Cnt_AXIS_DATA:	in	std_logic_vector(9 downto 0);
 		
 	
 		-- DATA TO STREAM
@@ -163,7 +165,6 @@ entity TARGET_C_TopLevel_System is
 		FIFOdata:			out std_logic_vector(31 downto 0);
 		StreamReady:		in	std_logic;
 
-	B_CNT_CLR:		out std_logic;
 
 	-- TRIGGER FROM BOARD NOT NEEDED FOR HMB CALORIMETERS EXTERNAL TRIGGER WILL BE PROVIDED
 		-- Trigger
@@ -205,11 +206,11 @@ entity TARGET_C_TopLevel_System is
 	     
 	      
 	      
-end TARGET_C_TopLevel_System;
+end TwoTARGET_C_TopLevel_System;
 
 -------------------------------------------------------
 --! @brief architecture definition of TARGETC_IP_Prototype
-architecture arch_imp of TARGET_C_TopLevel_System is
+architecture arch_imp of TwoTARGET_C_TopLevel_System is
 
 	-------------------------------------------------------
 	-- Component Declaration
@@ -237,8 +238,11 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 		HSCLKdif:		in std_logic;		-- Pin#43 to Pin#44
 
 		-- LVDS Differential Pair
-		HSCLK_P:		out std_logic;		-- Pin#43
-		HSCLK_N:		out std_logic;		-- Pin#44
+		A_HSCLK_P    	:out std_logic;
+		A_HSCLK_N 		:out std_logic;
+		B_HSCLK_P 		:out std_logic;
+		B_HSCLK_N 		:out std_logic;
+
 
 		WLCLK:		out std_logic		-- Pin#57
 --		WL_CLK_N:		out std_logic		-- Pin#58
@@ -250,7 +254,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 	end component TC_ClockManagementV3;
 
 	--! Communication with PS side through AXI Lite and Control Signals
-	component TC_Control is
+	component TwoTC_Control is
 	port (
 	-- TARGET C Ports for control and functi
 
@@ -262,7 +266,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 		CtrlBus_OxMS:		out T_CtrlBus_OxMS;
 		CtrlBus_IxMS:		in 	T_CtrlBus_IxMS
 	);
-	end component TC_Control;
+	end component TwoTC_Control;
 
 	--! Register Communication between FPGA and ASIC
 	component TARGETX_DAC_CONTROL is
@@ -342,7 +346,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 	end component RoundBufferV6;
 	
 
-	component TARGETC_RDAD_WL_SMPL is
+	component TwoTARGETC_RDAD_WL_SMPL is
 		Port (
 		--CLK : 			in  STD_LOGIC;
 		--RST : 			in	STD_Logic;
@@ -373,7 +377,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 
 		HSCLK : 			out  STD_LOGIC;
 
-		DO : 			in std_logic_vector(15 downto 0);
+		DO_A_B : 			in std_logic_vector(31 downto 0);
 		SS_INCR:		out std_logic;
 		SS_RESET:		out std_logic;
 
@@ -381,38 +385,58 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 		--CtrlBus_OxSL:		out	T_CtrlBus_OxSL; --Outputs from Control Master
 		WindowBusy:		out std_logic;
 		RAMP_CNT:		out std_logic;
-		DO_BUS:			out eDO_BUS_TYPE;
+		DO_BUS:			out eDO_BUS_TYPE_2TC;
 		SSvalid:		out std_logic;
 
-		--Channels
-		CH0 :			out	std_logic_vector(11 downto 0);
-		CH1 :			out	std_logic_vector(11 downto 0);
-		CH2 :			out	std_logic_vector(11 downto 0);
-		CH3 :			out	std_logic_vector(11 downto 0);
+	--Channels
+	A_CH0 :			out	std_logic_vector(11 downto 0);
+	A_CH1 :			out	std_logic_vector(11 downto 0);
+	A_CH2 :			out	std_logic_vector(11 downto 0);
+	A_CH3 :			out	std_logic_vector(11 downto 0);
 
-		CH4 :			out	std_logic_vector(11 downto 0);
-		CH5 :			out	std_logic_vector(11 downto 0);
-		CH6 :			out	std_logic_vector(11 downto 0);
-		CH7 :			out	std_logic_vector(11 downto 0);
+	A_CH4 :			out	std_logic_vector(11 downto 0);
+	A_CH5 :			out	std_logic_vector(11 downto 0);
+	A_CH6 :			out	std_logic_vector(11 downto 0);
+	A_CH7 :			out	std_logic_vector(11 downto 0);
 
-		CH8 :			out	std_logic_vector(11 downto 0);
-		CH9 :			out	std_logic_vector(11 downto 0);
-		CH10 :			out	std_logic_vector(11 downto 0);
-		CH11 :			out	std_logic_vector(11 downto 0);
+	A_CH8 :			out	std_logic_vector(11 downto 0);
+	A_CH9 :			out	std_logic_vector(11 downto 0);
+	A_CH10 :			out	std_logic_vector(11 downto 0);
+	A_CH11 :			out	std_logic_vector(11 downto 0);
 
-		CH12 :			out	std_logic_vector(11 downto 0);
-		CH13 :			out	std_logic_vector(11 downto 0);
-		CH14 :			out	std_logic_vector(11 downto 0);
-		CH15 :			out	std_logic_vector(11 downto 0);
+	A_CH12 :			out	std_logic_vector(11 downto 0);
+	A_CH13 :			out	std_logic_vector(11 downto 0);
+	A_CH14 :			out	std_logic_vector(11 downto 0);
+	A_CH15 :			out	std_logic_vector(11 downto 0);
+
+	B_CH0 :			out	std_logic_vector(11 downto 0);
+	B_CH1 :			out	std_logic_vector(11 downto 0);
+	B_CH2 :			out	std_logic_vector(11 downto 0);
+	B_CH3 :			out	std_logic_vector(11 downto 0);
+
+	B_CH4 :			out	std_logic_vector(11 downto 0);
+	B_CH5 :			out	std_logic_vector(11 downto 0);
+	B_CH6 :			out	std_logic_vector(11 downto 0);
+	B_CH7 :			out	std_logic_vector(11 downto 0);
+
+	B_CH8 :			out	std_logic_vector(11 downto 0);
+	B_CH9 :			out	std_logic_vector(11 downto 0);
+	B_CH10 :			out	std_logic_vector(11 downto 0);
+	B_CH11 :			out	std_logic_vector(11 downto 0);
+
+	B_CH12 :			out	std_logic_vector(11 downto 0);
+	B_CH13 :			out	std_logic_vector(11 downto 0);
+	B_CH14 :			out	std_logic_vector(11 downto 0);
+	B_CH15 :			out	std_logic_vector(11 downto 0);
 
 		--Request and Acknowledge -
 		Handshake_IxSEND:	in 	T_Handshake_IxSEND;
 		Handshake_Data:		out T_Handshake_SS_FIFO;
 		Handshake_OxSEND:	out T_Handshake_OxSEND
 	);
-	end component TARGETC_RDAD_WL_SMPL;
+	end component TwoTARGETC_RDAD_WL_SMPL;
 
-	component FifoManagerV4 is
+	component TwoTARGETCs_FifoManager is
 		generic (
 			C_M_AXIS_TDATA_WIDTH	: integer	:= 32
 		);
@@ -437,32 +461,52 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 			FIFO_Empty	: 	in 	std_logic;
 
 			--Channels
-			CH0 :			in	std_logic_vector(11 downto 0);
-			CH1 :			in	std_logic_vector(11 downto 0);
-			CH2 :			in	std_logic_vector(11 downto 0);
-			CH3 :			in	std_logic_vector(11 downto 0);
-
-			CH4 :			in	std_logic_vector(11 downto 0);
-			CH5 :			in	std_logic_vector(11 downto 0);
-			CH6 :			in	std_logic_vector(11 downto 0);
-			CH7 :			in	std_logic_vector(11 downto 0);
-
-			CH8 :			in	std_logic_vector(11 downto 0);
-			CH9 :			in	std_logic_vector(11 downto 0);
-			CH10 :			in	std_logic_vector(11 downto 0);
-			CH11 :			in	std_logic_vector(11 downto 0);
-
-			CH12 :			in	std_logic_vector(11 downto 0);
-			CH13 :			in	std_logic_vector(11 downto 0);
-			CH14 :			in	std_logic_vector(11 downto 0);
-			CH15 :			in	std_logic_vector(11 downto 0);
-
+                	A_CH0 :			in	std_logic_vector(11 downto 0);
+                	A_CH1 :			in	std_logic_vector(11 downto 0);
+                	A_CH2 :			in	std_logic_vector(11 downto 0);
+                	A_CH3 :			in	std_logic_vector(11 downto 0);
+                
+                	A_CH4 :			in	std_logic_vector(11 downto 0);
+                	A_CH5 :			in	std_logic_vector(11 downto 0);
+                	A_CH6 :			in	std_logic_vector(11 downto 0);
+                	A_CH7 :			in	std_logic_vector(11 downto 0);
+                
+                	A_CH8 :			in	std_logic_vector(11 downto 0);
+                	A_CH9 :			in	std_logic_vector(11 downto 0);
+                	A_CH10 :			in	std_logic_vector(11 downto 0);
+                	A_CH11 :			in	std_logic_vector(11 downto 0);
+                
+                	A_CH12 :			in	std_logic_vector(11 downto 0);
+                	A_CH13 :			in	std_logic_vector(11 downto 0);
+                	A_CH14 :			in	std_logic_vector(11 downto 0);
+                	A_CH15 :			in	std_logic_vector(11 downto 0);
+                
+                	B_CH0 :			in	std_logic_vector(11 downto 0);
+                	B_CH1 :			in	std_logic_vector(11 downto 0);
+                	B_CH2 :			in	std_logic_vector(11 downto 0);
+                	B_CH3 :			in	std_logic_vector(11 downto 0);
+                
+                	B_CH4 :			in	std_logic_vector(11 downto 0);
+                	B_CH5 :			in	std_logic_vector(11 downto 0);
+                	B_CH6 :			in	std_logic_vector(11 downto 0);
+                	B_CH7 :			in	std_logic_vector(11 downto 0);
+                
+                	B_CH8 :			in	std_logic_vector(11 downto 0);
+                	B_CH9 :			in	std_logic_vector(11 downto 0);
+                	B_CH10 :			in	std_logic_vector(11 downto 0);
+                	B_CH11 :			in	std_logic_vector(11 downto 0);
+                
+                	B_CH12 :			in	std_logic_vector(11 downto 0);
+                	B_CH13 :			in	std_logic_vector(11 downto 0);
+                	B_CH14 :			in	std_logic_vector(11 downto 0);
+                	B_CH15 :			in	std_logic_vector(11 downto 0);
+			
 			-- DATA TO STREAM
 			FIFOvalid:			out std_logic;
 			FIFOdata:			out std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
 			StreamReady:		in	std_logic
 		);
-	end component FifoManagerV4;
+	end component TwoTARGETCs_FifoManager;
 	--! Input LVDS_25 Buffer to single ended signal
 	component IBUFDS is
 	generic(
@@ -515,6 +559,15 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 	signal WR_RS_S_intl:	std_logic_vector(1 downto 0);
 
 	signal hsclk_dif :		std_logic;
+    signal PCLK_intl: std_logic;
+    signal RDAD_CLK_intl: std_logic ;
+	signal  RDAD_SIN_intl: std_logic;
+	signal RDAD_DIR_intl: std_logic;
+	signal RAMP_intl: std_logic;
+	signal GCC_RESET_intl: std_logic;
+	signal  DO_intl: std_logic_vector(15 downto 0);
+	signal SS_INCR_intl: std_logic;
+	signal SS_RESET_intl: std_logic;
 
 	-- Dummy Signals
 	signal tc_axi_intr:		std_logic;
@@ -531,7 +584,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 	signal GrayTimeCnt_intl:	std_logic_vector(63 downto 0);
 	signal timestamp_intl:		T_timestamp;
 
-	signal nTrigA, nTrigB, nTrigC, nTrigD : std_logic;
+--	signal nTrigA, nTrigB, nTrigC, nTrigD : std_logic;
 
 	signal trigger_intl : std_logic_vector(3 downto 0);
 	signal TriggerInfor_intl : std_logic_vector(11 downto 0);
@@ -547,25 +600,46 @@ architecture arch_imp of TARGET_C_TopLevel_System is
 	signal Handshake_SS_FIFO: T_Handshake_SS_FIFO;
 	signal Handshake_OxSEND_intl : T_Handshake_OxSEND;
 
-	signal CH0_intl : std_logic_vector(11 downto 0);
-	signal CH1_intl : std_logic_vector(11 downto 0);
-	signal CH2_intl : std_logic_vector(11 downto 0);
-	signal CH3_intl : std_logic_vector(11 downto 0);
+	signal A_CH0_intl : std_logic_vector(11 downto 0);
+	signal A_CH1_intl : std_logic_vector(11 downto 0);
+	signal A_CH2_intl : std_logic_vector(11 downto 0);
+	signal A_CH3_intl : std_logic_vector(11 downto 0);
 
-	signal CH4_intl : std_logic_vector(11 downto 0);
-	signal CH5_intl : std_logic_vector(11 downto 0);
-	signal CH6_intl : std_logic_vector(11 downto 0);
-	signal CH7_intl : std_logic_vector(11 downto 0);
+	signal A_CH4_intl : std_logic_vector(11 downto 0);
+	signal A_CH5_intl : std_logic_vector(11 downto 0);
+	signal A_CH6_intl : std_logic_vector(11 downto 0);
+	signal A_CH7_intl : std_logic_vector(11 downto 0);
 
-	signal CH8_intl : std_logic_vector(11 downto 0);
-	signal CH9_intl : std_logic_vector(11 downto 0);
-	signal CH10_intl : std_logic_vector(11 downto 0);
-	signal CH11_intl : std_logic_vector(11 downto 0);
+	signal A_CH8_intl : std_logic_vector(11 downto 0);
+	signal A_CH9_intl : std_logic_vector(11 downto 0);
+	signal A_CH10_intl : std_logic_vector(11 downto 0);
+	signal A_CH11_intl : std_logic_vector(11 downto 0);
 
-	signal CH12_intl : std_logic_vector(11 downto 0);
-	signal CH13_intl : std_logic_vector(11 downto 0);
-	signal CH14_intl : std_logic_vector(11 downto 0);
-	signal CH15_intl : std_logic_vector(11 downto 0);
+	signal A_CH12_intl : std_logic_vector(11 downto 0);
+	signal A_CH13_intl : std_logic_vector(11 downto 0);
+	signal A_CH14_intl : std_logic_vector(11 downto 0);
+	signal A_CH15_intl : std_logic_vector(11 downto 0);
+	
+	signal B_CH0_intl : std_logic_vector(11 downto 0);
+	signal B_CH1_intl : std_logic_vector(11 downto 0);
+	signal B_CH2_intl : std_logic_vector(11 downto 0);
+	signal B_CH3_intl : std_logic_vector(11 downto 0);
+
+	signal B_CH4_intl : std_logic_vector(11 downto 0);
+	signal B_CH5_intl : std_logic_vector(11 downto 0);
+	signal B_CH6_intl : std_logic_vector(11 downto 0);
+	signal B_CH7_intl : std_logic_vector(11 downto 0);
+
+	signal B_CH8_intl : std_logic_vector(11 downto 0);
+	signal B_CH9_intl : std_logic_vector(11 downto 0);
+	signal B_CH10_intl : std_logic_vector(11 downto 0);
+	signal B_CH11_intl : std_logic_vector(11 downto 0);
+
+	signal B_CH12_intl : std_logic_vector(11 downto 0);
+	signal B_CH13_intl : std_logic_vector(11 downto 0);
+	signal B_CH14_intl : std_logic_vector(11 downto 0);
+	signal B_CH15_intl : std_logic_vector(11 downto 0);
+
 
 	--DEBUG Signals
 	signal MONTIMING_s : std_logic;
@@ -576,6 +650,7 @@ architecture arch_imp of TARGET_C_TopLevel_System is
     
     signal address_is_zero_intl :  std_logic;
     signal cnt_clr_intl :  std_logic;
+
 	-- -------------------------------------------------------------
 	-- Constraints on Signals
 	-- -------------------------------------------------------------
@@ -609,8 +684,11 @@ begin
 
 		HSCLKdif		=> HSCLK_dif,
 		-- LVDS Differential Pair
-		HSCLK_P 		=> HSCLK_P,
-		HSCLK_N 		=> HSCLK_N,
+
+		A_HSCLK_P 		=> A_HSCLK_P,
+		A_HSCLK_N 		=> A_HSCLK_N,
+		B_HSCLK_P 		=> A_HSCLK_P,
+		B_HSCLK_N 		=> A_HSCLK_N,
 
 		WLCLK		=> WL_CLK
 --		WL_CLK_N 		=> WL_CLK_N
@@ -619,7 +697,7 @@ begin
 --		SSTIN_N 		=> SSTIN_N
 	);
 
-	TC_Control_inst : TC_Control
+	TC_Control_inst : TwoTC_Control
 	port map(
 		AxiBusIn.ACLK		=> tc_axi_aclk,
 		AxiBusIn.ARESETN	=> tc_axi_aresetn,
@@ -675,8 +753,8 @@ begin
 
 		SIN 	=> SIN,
 		SCLK 	=> SCLK,
-		PCLK 	=> PCLK,
-		SHOUT	=> SHOUT
+		PCLK 	=> PCLK_intl,
+		SHOUT	=> A_SHOUT
 	);
 
 	TC_RoundBuffer : RoundBufferV6
@@ -732,7 +810,7 @@ begin
             
 		);
 
-	TC_RDAD_WL_SS :	 TARGETC_RDAD_WL_SMPL
+	TC_RDAD_WL_SS :	 TwoTARGETC_RDAD_WL_SMPL
 	Port map(
 		--RST 	=> CtrlBusOut_intl.SW_nRST,
 
@@ -741,9 +819,9 @@ begin
 
 		ClockBus	=> ClockBus_intl,
 		--TimeCounter	=> timecounter_intl,
-		RDAD_CLK		=> RDAD_CLK,
-		RDAD_SIN		=> RDAD_SIN,
-		RDAD_DIR		=> RDAD_DIR,
+		RDAD_CLK		=> RDAD_CLK_intl,
+		RDAD_SIN		=> RDAD_SIN_intl,
+		RDAD_DIR		=> RDAD_DIR_intl,
 
 		-- Fifo from storage
 		RDAD_ReadEn	=> RDAD_ReadEn_intl,
@@ -755,15 +833,15 @@ begin
 		DIG_DataIn		=> DIG_DataIn_intl,
 		DIG_WriteEn	=> DIG_WriteEn_intl,
 
-		RAMP			=> RAMP,
-		GCC_RESET		=> GCC_RESET,
+		RAMP			=> RAMP_intl,
+		GCC_RESET		=> GCC_RESET_intl,
 
 		HSCLK		=> HSCLK_dif,
 
 		-- Data Readout
-		DO 		=> DO,
-		SS_INCR	=> SS_INCR,
-		SS_RESET => SS_RESET,
+		DO_A_B 		=> DO_A_B,
+		SS_INCR	=> SS_INCR_intl,
+		SS_RESET => SS_RESET_intl,
 
 		CtrlBus_IxSL		=> CtrlBusOut_intl,
 		--CtrlBus_OxSL		=> CtrlBusIn_intl,
@@ -772,32 +850,52 @@ begin
 		DO_BUS		=> CtrlBusIn_intl.DO_BUS,
 		SSvalid		=> CtrlBusIn_intl.SSvalid,
 		--Channels
-		CH0 	=> CH0_intl,
-		CH1 	=> CH1_intl,
-		CH2 	=> CH2_intl,
-		CH3 	=> CH3_intl,
+		A_CH0 	=> A_CH0_intl,
+		A_CH1 	=> A_CH1_intl,
+		A_CH2 	=> A_CH2_intl,
+		A_CH3 	=> A_CH3_intl,
 
-		CH4 	=> CH4_intl,
-		CH5 	=> CH5_intl,
-		CH6 	=> CH6_intl,
-		CH7 	=> CH7_intl,
+		A_CH4 	=> A_CH4_intl,
+		A_CH5 	=> A_CH5_intl,
+		A_CH6 	=> A_CH6_intl,
+		A_CH7 	=> A_CH7_intl,
 
-		CH8 	=> CH8_intl,
-		CH9 	=> CH9_intl,
-		CH10 	=> CH10_intl,
-		CH11 	=> CH11_intl,
+		A_CH8 	=> A_CH8_intl,
+		A_CH9 	=> A_CH9_intl,
+		A_CH10 	=> A_CH10_intl,
+		A_CH11 	=> A_CH11_intl,
 
-		CH12 	=> CH12_intl,
-		CH13 	=> CH13_intl,
-		CH14 	=> CH14_intl,
-		CH15 	=> CH15_intl,
+		A_CH12 	=> A_CH12_intl,
+		A_CH13 	=> A_CH13_intl,
+		A_CH14 	=> A_CH14_intl,
+		A_CH15 	=> A_CH15_intl,
+
+		B_CH0 	=> B_CH0_intl,
+		B_CH1 	=> B_CH1_intl,
+		B_CH2 	=> B_CH2_intl,
+		B_CH3 	=> B_CH3_intl,
+
+		B_CH4 	=> B_CH4_intl,
+		B_CH5 	=> B_CH5_intl,
+		B_CH6 	=> B_CH6_intl,
+		B_CH7 	=> B_CH7_intl,
+
+		B_CH8 	=> B_CH8_intl,
+		B_CH9 	=> B_CH9_intl,
+		B_CH10 	=> B_CH10_intl,
+		B_CH11 	=> B_CH11_intl,
+
+		B_CH12 	=> B_CH12_intl,
+		B_CH13 	=> B_CH13_intl,
+		B_CH14 	=> B_CH14_intl,
+		B_CH15 	=> B_CH15_intl,
 
 		Handshake_IxSEND	=> Handshake_IxSEND_intl,
 		Handshake_Data 		=> Handshake_SS_FIFO,
 		Handshake_OxSEND	=> Handshake_OxSEND_intl
 	);
 
-	FIFOMANAGER : FifoManagerV4
+	FIFOMANAGER : TwoTARGETCs_FifoManager
 		generic map(
 			C_M_AXIS_TDATA_WIDTH =>  32
 		)
@@ -822,25 +920,45 @@ begin
 			FIFO_Empty			=> FIFO_Empty_intl,
 
 			--Channels
-			CH0 	=> CH0_intl,
-			CH1 	=> CH1_intl,
-			CH2 	=> CH2_intl,
-			CH3 	=> CH3_intl,
-
-			CH4 	=> CH4_intl,
-			CH5 	=> CH5_intl,
-			CH6 	=> CH6_intl,
-			CH7 	=> CH7_intl,
-
-			CH8 	=> CH8_intl,
-			CH9 	=> CH9_intl,
-			CH10 	=> CH10_intl,
-			CH11 	=> CH11_intl,
-
-			CH12 	=> CH12_intl,
-			CH13 	=> CH13_intl,
-			CH14 	=> CH14_intl,
-			CH15 	=> CH15_intl,
+		        A_CH0 	=> A_CH0_intl,
+             		A_CH1 	=> A_CH1_intl,
+             		A_CH2 	=> A_CH2_intl,
+             		A_CH3 	=> A_CH3_intl,
+             
+             		A_CH4 	=> A_CH4_intl,
+             		A_CH5 	=> A_CH5_intl,
+             		A_CH6 	=> A_CH6_intl,
+             		A_CH7 	=> A_CH7_intl,
+             
+             		A_CH8 	=> A_CH8_intl,
+             		A_CH9 	=> A_CH9_intl,
+             		A_CH10 	=> A_CH10_intl,
+             		A_CH11 	=> A_CH11_intl,
+             
+             		A_CH12 	=> A_CH12_intl,
+             		A_CH13 	=> A_CH13_intl,
+             		A_CH14 	=> A_CH14_intl,
+             		A_CH15 	=> A_CH15_intl,
+             
+             		B_CH0 	=> B_CH0_intl,
+             		B_CH1 	=> B_CH1_intl,
+             		B_CH2 	=> B_CH2_intl,
+             		B_CH3 	=> B_CH3_intl,
+             
+             		B_CH4 	=> B_CH4_intl,
+             		B_CH5 	=> B_CH5_intl,
+             		B_CH6 	=> B_CH6_intl,
+             		B_CH7 	=> B_CH7_intl,
+             
+             		B_CH8 	=> B_CH8_intl,
+             		B_CH9 	=> B_CH9_intl,
+             		B_CH10 	=> B_CH10_intl,
+             		B_CH11 	=> B_CH11_intl,
+             
+             		B_CH12 	=> B_CH12_intl,
+             		B_CH13 	=> B_CH13_intl,
+             		B_CH14 	=> B_CH14_intl,
+             		B_CH15 	=> B_CH15_intl,
 
 
 			-- DATA TO STREAM
@@ -849,26 +967,38 @@ begin
 			StreamReady	=> StreamReady
 		);
 
-	SAMPLESEL_ANY <= CtrlBusOut_intl.SmplSl_Any;
+	A_SAMPLESEL_ANY <= CtrlBusOut_intl.SmplSl_Any;
+	B_SAMPLESEL_ANY <= CtrlBusOut_intl.SmplSl_Any;
+
 	--REGCLR <= CtrlBusOut_intl.REGCLR;
 
-	WR_RS_S0	<= WR_RS_S_intl(0);
-	WR_RS_S1	<= WR_RS_S_intl(1);
+	A_WR_RS_S0	<= WR_RS_S_intl(0);
+	A_WR_RS_S1	<= WR_RS_S_intl(1);
 
-	WR_CS_S0	<= WR_CS_S_intl(0);
-	WR_CS_S1	<= WR_CS_S_intl(1);
-	WR_CS_S2	<= WR_CS_S_intl(2);
-	WR_CS_S3	<= WR_CS_S_intl(3);
-	WR_CS_S4	<= WR_CS_S_intl(4);
-	WR_CS_S5	<= WR_CS_S_intl(5);
+	A_WR_CS_S0	<= WR_CS_S_intl(0);
+	A_WR_CS_S1	<= WR_CS_S_intl(1);
+	A_WR_CS_S2	<= WR_CS_S_intl(2);
+	A_WR_CS_S3	<= WR_CS_S_intl(3);
+	A_WR_CS_S4	<= WR_CS_S_intl(4);
+	A_WR_CS_S5	<= WR_CS_S_intl(5);
 
-	SS_LD_SIN <= '0';
-	SS_LD_DIR <= '0';
+	B_WR_RS_S0	<= WR_RS_S_intl(0);
+	B_WR_RS_S1	<= WR_RS_S_intl(1);
+	B_WR_CS_S0	<= WR_CS_S_intl(0);
+	B_WR_CS_S1	<= WR_CS_S_intl(1);
+	B_WR_CS_S2	<= WR_CS_S_intl(2);
+	B_WR_CS_S3	<= WR_CS_S_intl(3);
+	B_WR_CS_S4	<= WR_CS_S_intl(4);
+	B_WR_CS_S5	<= WR_CS_S_intl(5);
 
+	A_SS_LD_SIN <= '0';
+	A_SS_LD_DIR <= '0';
+	B_SS_LD_SIN <= '0';
+	B_SS_LD_DIR <= '0';
 	--DOE <= '1';
 
 
-	CtrlBusIn_intl.Cnt_AXIS <= Cnt_AXIS_DATA;
+	CtrlBusIn_intl.Cnt_AXIS <=Cnt_AXIS_DATA;  -- Signal driven only by TC0
 
 	cnt_clr_intl <= CtrlBusOut_intl.WindowStorage;
 	
@@ -888,7 +1018,7 @@ SyncBitCNT_CLR: SyncBit
           -- Incoming bit, asynchronous
           asyncBit =>  cnt_clr_intl,
           -- Outgoing bit, synced to clk
-          syncBit   => CNT_CLR
+          syncBit   => CNT_CLR_A_B
        );     
 
     
@@ -913,6 +1043,42 @@ SyncBitCNT_CLR: SyncBit
 	);
 -- MONTIMING INVERTED ON THE TARGETC, changed in firmware on 08/15/2019
     MONTIMING_inverted <= not MONTIMING_s;
+
+
+-- FANNING OUT SIGNALS
+    A_PCLK<=PCLK_intl;
+    B_PCLK<=PCLK_intl;
+    
+	A_RDAD_CLK<=RDAD_CLK_intl;
+	B_RDAD_CLK<=RDAD_CLK_intl;
+	A_RDAD_SIN<=RDAD_SIN_intl;
+	B_RDAD_SIN<=RDAD_SIN_intl;
+	A_RDAD_DIR<=RDAD_SIN_intl;
+	B_RDAD_DIR<=RDAD_SIN_intl;
+	
+	A_RAMP<=RAMP_intl;
+	B_RAMP<=RAMP_intl;
+	
+	A_GCC_RESET<=GCC_RESET_intl;
+	B_GCC_RESET<=GCC_RESET_intl;
+	
+	
+	A_SS_INCR<=SS_INCR_intl;
+	B_SS_INCR<=SS_INCR_intl;
+
+	A_SS_INCR<=SS_INCR_intl;
+	B_SS_RESET<=SS_RESET_intl;
+	
+
+--    signal PCLK_intl: std_logic;
+--    signal RDAD_CLK_intl: std_logic ;
+--	signal  RDAD_SIN_intl: std_logic;
+--	signal RDAD_DIR_intl: std_logic;
+--	signal RAMP_intl: std_logic;
+--	signal GCC_RESET_intl: std_logic;
+--	signal  DO_intl: std_logic_vector(15 downto 0);
+--	signal SS_INCR_intl: std_logic;
+--	signal SS_RESET_intl: std_logic;
 
 	-- TRIGGER FROM BOARD NOT NEEDED FOR HMB CALORIMETERS EXTERNAL TRIGGER WILL BE PROVIDED
 	-- Trigger signal to RoundBuffer

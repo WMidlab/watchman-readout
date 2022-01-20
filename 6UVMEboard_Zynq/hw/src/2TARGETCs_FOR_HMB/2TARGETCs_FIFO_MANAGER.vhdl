@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.TARGETC_pkg.all;
 
-entity FifoManagerV4 is
+entity TwoTARGETCs_FifoManager is
 	generic (
 		C_M_AXIS_TDATA_WIDTH	: integer	:= 32
 	);
@@ -73,9 +73,9 @@ entity FifoManagerV4 is
 		FIFOdata:			out std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
 		StreamReady:		in	std_logic
 	);
-end FifoManagerV4;
+end TwoTARGETCs_FifoManager;
 
-architecture rtl of FifoManagerV4 is
+architecture rtl of TwoTARGETCs_FifoManager is
 
 	component GRAY_DECODER is
 		generic(
@@ -151,12 +151,11 @@ type fifostate_wr is (
                RESPVALID
             );
         
-        signal fifo_rd_stm :      fifostate_rd := IDLE;
 
 	component module_fifo_regs_no_flags is
 		generic (
 			g_WIDTH : natural := 32;
-			g_DEPTH : integer := 64; 
+			g_DEPTH : integer := 64
 		);
 		port (
 			i_rst_sync : in std_logic;
@@ -174,15 +173,15 @@ type fifostate_wr is (
 		);
 	end component module_fifo_regs_no_flags;
 
-	component 2TARGETCs_AddressDecoder is
+	component TwoTARGETCs_AddressDecoder is
 	port(
 		 address: 	in	std_logic_vector(4 downto 0);
 		 rd_en:		in std_logic;
 		 decode:	out std_logic_vector(32 downto 0)
 	  );
-	end component 2TARGETCs_AddressDecoder;
+	end component TwoTARGETCs_AddressDecoder;
 
-	component 2TC_DataDecoder is
+	component TwoTC_DataDecoder is
  	port(
 		address: 	in	std_logic_vector(4 downto 0);
 		dataOut :	out std_logic_vector(31 downto 0);
@@ -205,7 +204,7 @@ type fifostate_wr is (
 		A_dataIN_12 :	in std_logic_vector(31 downto 0);
 		A_dataIN_13 :	in std_logic_vector(31 downto 0);
 		A_dataIN_14 :	in std_logic_vector(31 downto 0);
-		A_dataIN_15 :	in std_logic_vector(31 downto 0)
+		A_dataIN_15 :	in std_logic_vector(31 downto 0);
 		
 		B_dataIN_0 :	in std_logic_vector(31 downto 0);
 		B_dataIN_1 :	in std_logic_vector(31 downto 0);
@@ -228,7 +227,7 @@ type fifostate_wr is (
 		B_dataIN_15 :	in std_logic_vector(31 downto 0)
   	
 	);
-	end component 2TC_DataDecoder ;
+	end component TwoTC_DataDecoder ;
 
 	signal FIFO_WR	: T_Handshake_signal;
 	signal FIFO_RD	: T_Handshake_signal;
@@ -265,6 +264,8 @@ type fifostate_wr is (
 	signal acknowledge_intl : std_logic;
 	signal busy_intl : std_logic;
 	signal testfifo_intl : std_logic;
+	signal fifo_rd_stm :      fifostate_rd := IDLE;
+
 
 	signal BIN_TIME : std_logic_vector(59 downto 0);
 begin
@@ -347,7 +348,7 @@ begin
 		);
 
 
-	FIFO_Address : 2TARGETCs_AddressDecoder
+	FIFO_Address : TwoTARGETCs_AddressDecoder
 	port map(
 		 address => cnt_fifo(9 downto 5),
 		 rd_en => rd_en,
@@ -355,11 +356,11 @@ begin
 		 decode => rd_en_v
 	  );
 
-	DataDecoderFIFO :  2TC_DataDecoder   
+	DataDecoderFIFO :  TwoTC_DataDecoder   
  	port map(
 		address => cnt_fifo(9 downto 5),
 		dataOut => DataOut_intlD,
-
+		
 		A_dataIN_0 => rd_data32(0),
 		A_dataIN_1 => rd_data32(1),
 		A_dataIN_2 => rd_data32(2),
@@ -378,7 +379,7 @@ begin
 		A_dataIN_12 => rd_data32(12),
 		A_dataIN_13 => rd_data32(13),
 		A_dataIN_14 => rd_data32(14),
-		A_dataIN_15 => rd_data32(15)
+		A_dataIN_15 => rd_data32(15),
 
 		B_dataIN_0 => rd_data32(16),
 		B_dataIN_1 => rd_data32(17),
@@ -455,12 +456,12 @@ begin
 						wr_data(1)	<=A_CH1; 
 						wr_data(2)	<=A_CH2; 
 						wr_data(3)	<=A_CH3; 
-                                                                       ; 
+                                                                    
 						wr_data(4)	<=A_CH4; 
 						wr_data(5)	<=A_CH5; 
 						wr_data(6)	<=A_CH6; 
 						wr_data(7)	<=A_CH7; 
-                                                                       ; 
+                                                                      
 						wr_data(8)	<=A_CH8; 
 						wr_data(9)	<=A_CH9; 
 						wr_data(10)	<=A_CH10;

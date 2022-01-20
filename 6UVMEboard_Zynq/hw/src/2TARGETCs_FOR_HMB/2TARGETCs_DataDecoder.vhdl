@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity 2TC_DataDecoder is
+entity TwoTC_DataDecoder is
  port(
      address: 	in	std_logic_vector(4 downto 0);
      dataOut :		out std_logic_vector(31 downto 0);
@@ -22,7 +22,7 @@ entity 2TC_DataDecoder is
      A_dataIN_12 :	in std_logic_vector(31 downto 0);
      A_dataIN_13 :	in std_logic_vector(31 downto 0);
      A_dataIN_14 :	in std_logic_vector(31 downto 0);
-     A_dataIN_15 :	in std_logic_vector(31 downto 0)
+     A_dataIN_15 :	in std_logic_vector(31 downto 0);
     
      B_dataIN_0 :		in std_logic_vector(31 downto 0);
      B_dataIN_1 :		in std_logic_vector(31 downto 0);
@@ -45,9 +45,9 @@ entity 2TC_DataDecoder is
      
     
   );
-end DataDecoder;
+end TwoTC_DataDecoder;
 
-architecture bhv of 2TC_DataDecoder is
+architecture bhv of TwoTC_DataDecoder is
 begin
 
 dataOut <=      A_dataIN_0   when address = "00000" else

@@ -2,15 +2,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity 2TARGETCs_AddressDecoder is
+entity TwoTARGETCs_AddressDecoder is
  port(
      address: 	in	std_logic_vector(4 downto 0);
      rd_en:		in	std_logic;
      decode:	out std_logic_vector(32 downto 0)
   );
-end 2TARGETCs_AddressDecoder;
+end TwoTARGETCs_AddressDecoder;
 
-architecture bhv of 2TARGETCs_AddressDecoder is
+architecture bhv of TwoTARGETCs_AddressDecoder is
 begin
 
 	decode(0)	<= '1' when rd_en = '1' and address = "00000" else '0';
