@@ -334,7 +334,7 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 		ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
 		ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr);
 		windowStorage(ENABLE);
-	    usleep(1);
+	    usleep(50);
 		windowStorage(DISABLE);
 //		ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
 //		usleep(1);
@@ -390,7 +390,7 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 					}
 					printf("\r\n");
 				}
-				printf("Timeout on window %d: get 20 windows failed!\r\n", window);
+				printf("Timeout on window %d: get raw windows failed!\r\n", window);
 				return XST_FAILURE;
 			}
 			else flag_axidma_rx_done = false;

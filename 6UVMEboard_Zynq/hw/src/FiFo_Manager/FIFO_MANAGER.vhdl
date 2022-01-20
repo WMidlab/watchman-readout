@@ -131,7 +131,6 @@ type fifostate_wr is (
                RESPVALID
             );
         
-        signal fifo_rd_stm :      fifostate_rd := IDLE;
 
 	component module_fifo_regs_no_flags is
 		generic (
@@ -217,6 +216,7 @@ type fifostate_wr is (
 	signal DataOut_intlH : std_logic_vector(31 downto 0);
 	signal DataOut_intlD : std_logic_vector(31 downto 0);
 	signal rdy_state :	std_logic_vector(1 downto 0) := (others => '1');
+    signal fifo_rd_stm :      fifostate_rd := IDLE;
 
 	--Ack Request signals sets
 	signal request_intl : std_logic;

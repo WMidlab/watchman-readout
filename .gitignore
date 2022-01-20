@@ -58,6 +58,5 @@ PCsoftware/packets.log
 *.jou
 *.str
 
-6UVMEboard_Zynq/hw/bd
 6UVMEboard_Zynq/hw/bd/HMBcal_2TCsBD/*
 6UVMEboard_Zynq/hw/bd/base_zynq/*
