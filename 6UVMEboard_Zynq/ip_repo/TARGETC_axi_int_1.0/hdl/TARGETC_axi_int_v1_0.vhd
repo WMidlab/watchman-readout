@@ -7,7 +7,7 @@ entity axistream is
 		-- Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
 		C_M_AXIS_TDATA_WIDTH	: integer	:= 32;
 		NBRWINDOW_MAX :				integer := 8;
-		FIFO_NBR_MAX :		integer := 518
+		FIFO_NBR_MAX :		integer := 1029
 		);
 	port (
 		-- Users to add ports here

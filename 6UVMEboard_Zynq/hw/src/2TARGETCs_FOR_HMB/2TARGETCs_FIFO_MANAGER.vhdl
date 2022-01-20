@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.TARGETC_pkg.all;
 
-entity FifoManagerV4 is
+entity TwoTARGETCs_FifoManager is
 	generic (
 		C_M_AXIS_TDATA_WIDTH	: integer	:= 32
 	);
@@ -28,34 +28,54 @@ entity FifoManagerV4 is
 		FIFO_Empty	: 	in 	std_logic;
 
 		--Channels
-		CH0 :			in	std_logic_vector(11 downto 0);
-		CH1 :			in	std_logic_vector(11 downto 0);
-		CH2 :			in	std_logic_vector(11 downto 0);
-		CH3 :			in	std_logic_vector(11 downto 0);
+		A_CH0 :			in	std_logic_vector(11 downto 0);
+		A_CH1 :			in	std_logic_vector(11 downto 0);
+		A_CH2 :			in	std_logic_vector(11 downto 0);
+		A_CH3 :			in	std_logic_vector(11 downto 0);
 
-		CH4 :			in	std_logic_vector(11 downto 0);
-		CH5 :			in	std_logic_vector(11 downto 0);
-		CH6 :			in	std_logic_vector(11 downto 0);
-		CH7 :			in	std_logic_vector(11 downto 0);
+		A_CH4 :			in	std_logic_vector(11 downto 0);
+		A_CH5 :			in	std_logic_vector(11 downto 0);
+		A_CH6 :			in	std_logic_vector(11 downto 0);
+		A_CH7 :			in	std_logic_vector(11 downto 0);
 
-		CH8 :			in	std_logic_vector(11 downto 0);
-		CH9 :			in	std_logic_vector(11 downto 0);
-		CH10 :			in	std_logic_vector(11 downto 0);
-		CH11 :			in	std_logic_vector(11 downto 0);
+		A_CH8 :			in	std_logic_vector(11 downto 0);
+		A_CH9 :			in	std_logic_vector(11 downto 0);
+		A_CH10 :		in	std_logic_vector(11 downto 0);
+		A_CH11 :		in	std_logic_vector(11 downto 0);
 
-		CH12 :			in	std_logic_vector(11 downto 0);
-		CH13 :			in	std_logic_vector(11 downto 0);
-		CH14 :			in	std_logic_vector(11 downto 0);
-		CH15 :			in	std_logic_vector(11 downto 0);
+		A_CH12 :		in	std_logic_vector(11 downto 0);
+		A_CH13 :		in	std_logic_vector(11 downto 0);
+		A_CH14 :		in	std_logic_vector(11 downto 0);
+		A_CH15 :		in	std_logic_vector(11 downto 0);
+	
+		B_CH0 :			in	std_logic_vector(11 downto 0);
+		B_CH1 :			in	std_logic_vector(11 downto 0);
+		B_CH2 :			in	std_logic_vector(11 downto 0);
+		B_CH3 :			in	std_logic_vector(11 downto 0);
+
+		B_CH4 :			in	std_logic_vector(11 downto 0);
+		B_CH5 :			in	std_logic_vector(11 downto 0);
+		B_CH6 :			in	std_logic_vector(11 downto 0);
+		B_CH7 :			in	std_logic_vector(11 downto 0);
+
+		B_CH8 :			in	std_logic_vector(11 downto 0);
+		B_CH9 :			in	std_logic_vector(11 downto 0);
+		B_CH10 :		in	std_logic_vector(11 downto 0);
+		B_CH11 :		in	std_logic_vector(11 downto 0);
+
+		B_CH12 :		in	std_logic_vector(11 downto 0);
+		B_CH13 :		in	std_logic_vector(11 downto 0);
+		B_CH14 :		in	std_logic_vector(11 downto 0);
+		B_CH15 :		in	std_logic_vector(11 downto 0);
 
 		-- DATA TO STREAM
 		FIFOvalid:			out std_logic;
 		FIFOdata:			out std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
 		StreamReady:		in	std_logic
 	);
-end FifoManagerV4;
+end TwoTARGETCs_FifoManager;
 
-architecture rtl of FifoManagerV4 is
+architecture rtl of TwoTARGETCs_FifoManager is
 
 	component GRAY_DECODER is
 		generic(
@@ -135,7 +155,7 @@ type fifostate_wr is (
 	component module_fifo_regs_no_flags is
 		generic (
 			g_WIDTH : natural := 32;
-			g_DEPTH : integer := 32
+			g_DEPTH : integer := 64
 		);
 		port (
 			i_rst_sync : in std_logic;
@@ -153,57 +173,78 @@ type fifostate_wr is (
 		);
 	end component module_fifo_regs_no_flags;
 
-	component AddressDecoder is
+	component TwoTARGETCs_AddressDecoder is
 	port(
-		 address: 	in	std_logic_vector(3 downto 0);
+		 address: 	in	std_logic_vector(4 downto 0);
 		 rd_en:		in std_logic;
-		 decode:	out std_logic_vector(15 downto 0)
+		 decode:	out std_logic_vector(32 downto 0)
 	  );
-	end component AddressDecoder;
+	end component TwoTARGETCs_AddressDecoder;
 
-	component DataDecoder is
+	component TwoTC_DataDecoder is
  	port(
-		address: 	in	std_logic_vector(3 downto 0);
+		address: 	in	std_logic_vector(4 downto 0);
 		dataOut :	out std_logic_vector(31 downto 0);
 
-		dataIN_0 :	in std_logic_vector(31 downto 0);
-		dataIN_1 :	in std_logic_vector(31 downto 0);
-		dataIN_2 :	in std_logic_vector(31 downto 0);
-		dataIN_3 :	in std_logic_vector(31 downto 0);
+		A_dataIN_0 :	in std_logic_vector(31 downto 0);
+		A_dataIN_1 :	in std_logic_vector(31 downto 0);
+		A_dataIN_2 :	in std_logic_vector(31 downto 0);
+		A_dataIN_3 :	in std_logic_vector(31 downto 0);
 
-		dataIN_4 :	in std_logic_vector(31 downto 0);
-		dataIN_5 :	in std_logic_vector(31 downto 0);
-		dataIN_6 :	in std_logic_vector(31 downto 0);
-		dataIN_7 :	in std_logic_vector(31 downto 0);
+		A_dataIN_4 :	in std_logic_vector(31 downto 0);
+		A_dataIN_5 :	in std_logic_vector(31 downto 0);
+		A_dataIN_6 :	in std_logic_vector(31 downto 0);
+		A_dataIN_7 :	in std_logic_vector(31 downto 0);
 
-		dataIN_8 :	in std_logic_vector(31 downto 0);
-		dataIN_9 :	in std_logic_vector(31 downto 0);
-		dataIN_10 :	in std_logic_vector(31 downto 0);
-		dataIN_11 :	in std_logic_vector(31 downto 0);
+		A_dataIN_8 :	in std_logic_vector(31 downto 0);
+		A_dataIN_9 :	in std_logic_vector(31 downto 0);
+		A_dataIN_10 :	in std_logic_vector(31 downto 0);
+		A_dataIN_11 :	in std_logic_vector(31 downto 0);
 
-		dataIN_12 :	in std_logic_vector(31 downto 0);
-		dataIN_13 :	in std_logic_vector(31 downto 0);
-		dataIN_14 :	in std_logic_vector(31 downto 0);
-		dataIN_15 :	in std_logic_vector(31 downto 0)
-  	);
-	end component DataDecoder;
+		A_dataIN_12 :	in std_logic_vector(31 downto 0);
+		A_dataIN_13 :	in std_logic_vector(31 downto 0);
+		A_dataIN_14 :	in std_logic_vector(31 downto 0);
+		A_dataIN_15 :	in std_logic_vector(31 downto 0);
+		
+		B_dataIN_0 :	in std_logic_vector(31 downto 0);
+		B_dataIN_1 :	in std_logic_vector(31 downto 0);
+		B_dataIN_2 :	in std_logic_vector(31 downto 0);
+		B_dataIN_3 :	in std_logic_vector(31 downto 0);
+
+		B_dataIN_4 :	in std_logic_vector(31 downto 0);
+		B_dataIN_5 :	in std_logic_vector(31 downto 0);
+		B_dataIN_6 :	in std_logic_vector(31 downto 0);
+		B_dataIN_7 :	in std_logic_vector(31 downto 0);
+
+		B_dataIN_8 :	in std_logic_vector(31 downto 0);
+		B_dataIN_9 :	in std_logic_vector(31 downto 0);
+		B_dataIN_10 :	in std_logic_vector(31 downto 0);
+		B_dataIN_11 :	in std_logic_vector(31 downto 0);
+
+		B_dataIN_12 :	in std_logic_vector(31 downto 0);
+		B_dataIN_13 :	in std_logic_vector(31 downto 0);
+		B_dataIN_14 :	in std_logic_vector(31 downto 0);
+		B_dataIN_15 :	in std_logic_vector(31 downto 0)
+  	
+	);
+	end component TwoTC_DataDecoder ;
 
 	signal FIFO_WR	: T_Handshake_signal;
 	signal FIFO_RD	: T_Handshake_signal;
 
-	signal cnt_fifo:	std_logic_vector(8 downto 0) := (others => '0');
+	signal cnt_fifo:	std_logic_vector(9 downto 0) := (others => '0');
 
-	type T_DataBus12 is array (15 downto 0) of std_logic_vector(11 downto 0);
-	type T_DataBus32 is array (15 downto 0) of std_logic_vector(31 downto 0);
+	type T_DataBus12 is array (31 downto 0) of std_logic_vector(11 downto 0);
+	type T_DataBus32 is array (31 downto 0) of std_logic_vector(31 downto 0);
 	signal wr_data : T_DataBus12;
 	signal rd_data12 : T_DataBus12;
 	signal rd_data32 : T_DataBus32;
 	signal wr_en : std_logic;
 	signal rd_en : std_logic;
 	signal rd_en_dly : std_logic;
-	signal rd_en_v : std_logic_vector(15 downto 0);
-	signal full :	std_logic_vector(15 downto 0);
-	signal empty :	std_logic_vector(15 downto 0);
+	signal rd_en_v : std_logic_vector(32 downto 0);
+	signal full :	std_logic_vector(32 downto 0);
+	signal empty :	std_logic_vector(32 downto 0);
 
 	signal WDOTime_intl	:	std_logic_vector(63 downto 0);
 	signal DIGTime_intl	:	std_logic_vector(63 downto 0);
@@ -216,7 +257,6 @@ type fifostate_wr is (
 	signal DataOut_intlH : std_logic_vector(31 downto 0);
 	signal DataOut_intlD : std_logic_vector(31 downto 0);
 	signal rdy_state :	std_logic_vector(1 downto 0) := (others => '1');
-    signal fifo_rd_stm :      fifostate_rd := IDLE;
 
 	--Ack Request signals sets
 	signal request_intl : std_logic;
@@ -224,6 +264,8 @@ type fifostate_wr is (
 	signal acknowledge_intl : std_logic;
 	signal busy_intl : std_logic;
 	signal testfifo_intl : std_logic;
+	signal fifo_rd_stm :      fifostate_rd := IDLE;
+
 
 	signal BIN_TIME : std_logic_vector(59 downto 0);
 begin
@@ -272,7 +314,7 @@ begin
 	Handshake_OxRECV.ACLK 	<=	ClockBus.AXI_CLK;
 
 	-- 1 FIFO per channel
-	GEN_FIFO: for I in 0 to 15 generate
+	GEN_FIFO: for I in 0 to 31 generate
     FIFOCH : module_fifo_regs_no_flags
 	generic map (
 		g_WIDTH => 12,
@@ -306,38 +348,58 @@ begin
 		);
 
 
-	FIFO_Address : AddressDecoder
+	FIFO_Address : TwoTARGETCs_AddressDecoder
 	port map(
-		 address => cnt_fifo(8 downto 5),
+		 address => cnt_fifo(9 downto 5),
 		 rd_en => rd_en,
 		 --rd_en => rd_en_dly,
 		 decode => rd_en_v
 	  );
 
-	DataDecoderFIFO : DataDecoder
+	DataDecoderFIFO :  TwoTC_DataDecoder   
  	port map(
-		address => cnt_fifo(8 downto 5),
+		address => cnt_fifo(9 downto 5),
 		dataOut => DataOut_intlD,
+		
+		A_dataIN_0 => rd_data32(0),
+		A_dataIN_1 => rd_data32(1),
+		A_dataIN_2 => rd_data32(2),
+		A_dataIN_3 => rd_data32(3),
 
-		dataIN_0 => rd_data32(0),
-		dataIN_1 => rd_data32(1),
-		dataIN_2 => rd_data32(2),
-		dataIN_3 => rd_data32(3),
+		A_dataIN_4 => rd_data32(4),
+		A_dataIN_5 => rd_data32(5),
+		A_dataIN_6 => rd_data32(6),
+		A_dataIN_7 => rd_data32(7),
 
-		dataIN_4 => rd_data32(4),
-		dataIN_5 => rd_data32(5),
-		dataIN_6 => rd_data32(6),
-		dataIN_7 => rd_data32(7),
+		A_dataIN_8 => rd_data32(8),
+		A_dataIN_9 => rd_data32(9),
+		A_dataIN_10 => rd_data32(10),
+		A_dataIN_11 => rd_data32(11),
 
-		dataIN_8 => rd_data32(8),
-		dataIN_9 => rd_data32(9),
-		dataIN_10 => rd_data32(10),
-		dataIN_11 => rd_data32(11),
+		A_dataIN_12 => rd_data32(12),
+		A_dataIN_13 => rd_data32(13),
+		A_dataIN_14 => rd_data32(14),
+		A_dataIN_15 => rd_data32(15),
 
-		dataIN_12 => rd_data32(12),
-		dataIN_13 => rd_data32(13),
-		dataIN_14 => rd_data32(14),
-		dataIN_15 => rd_data32(15)
+		B_dataIN_0 => rd_data32(16),
+		B_dataIN_1 => rd_data32(17),
+		B_dataIN_2 => rd_data32(18),
+		B_dataIN_3 => rd_data32(19),
+
+		B_dataIN_4 => rd_data32(20),
+		B_dataIN_5 => rd_data32(21),
+		B_dataIN_6 => rd_data32(22),
+		B_dataIN_7 => rd_data32(23),
+
+		B_dataIN_8 => rd_data32(24),
+		B_dataIN_9 => rd_data32(25),
+		B_dataIN_10 => rd_data32(26),
+		B_dataIN_11 => rd_data32(27),
+
+		B_dataIN_12 => rd_data32(28),
+		B_dataIN_13 => rd_data32(29),
+		B_dataIN_14 => rd_data32(30),
+		B_dataIN_15 => rd_data32(31)
   	);
 
 	HeaderRead : process(ClockBus.AXI_CLK,CtrlBus_IxSL.SW_nRST)
@@ -390,25 +452,48 @@ begin
 
 						fifo_wr_stm <= ACKNOWLEDGE;
 
-						wr_data(0)	<= CH0;
-						wr_data(1)	<= CH1;
-						wr_data(2)	<= CH2;
-						wr_data(3)	<= CH3;
+						wr_data(0)	<=A_CH0; 
+						wr_data(1)	<=A_CH1; 
+						wr_data(2)	<=A_CH2; 
+						wr_data(3)	<=A_CH3; 
+                                                                    
+						wr_data(4)	<=A_CH4; 
+						wr_data(5)	<=A_CH5; 
+						wr_data(6)	<=A_CH6; 
+						wr_data(7)	<=A_CH7; 
+                                                                      
+						wr_data(8)	<=A_CH8; 
+						wr_data(9)	<=A_CH9; 
+						wr_data(10)	<=A_CH10;
+						wr_data(11)	<=A_CH11;
+                                                                        
+						wr_data(12)	<=A_CH12;
+						wr_data(13)	<=A_CH13;
+						wr_data(14)	<=A_CH14;
+						wr_data(15)	<=A_CH15;
+                                                                        
+                                                wr_data(16)      <=B_CH0; 
+                                                wr_data(17)     <=B_CH1; 
+                                                wr_data(18)     <=B_CH2; 
+                                                wr_data(19)     <=B_CH3; 
+                                                                     
+                                                wr_data(20)     <=B_CH4; 
+                                                wr_data(21)     <=B_CH5; 
+                                                wr_data(22)     <=B_CH6; 
+                                                wr_data(23)     <=B_CH7; 
+                                                                     
+                                                wr_data(24)     <=B_CH8; 
+                                                wr_data(25)     <=B_CH9; 
+                                                wr_data(26)    <=B_CH10;
+                                                wr_data(27)    <=B_CH11;
+                                                                     
+                                                wr_data(28)    <=B_CH12;
+                                                wr_data(29)    <=B_CH13;
+                                                wr_data(30)    <=B_CH14;
+                                                wr_data(31)    <=B_CH15;
+                                                           
 
-						wr_data(4)	<= CH4;
-						wr_data(5)	<= CH5;
-						wr_data(6)	<= CH6;
-						wr_data(7)	<= CH7;
 
-						wr_data(8)	<= CH8;
-						wr_data(9)	<= CH9;
-						wr_data(10)	<= CH10;
-						wr_data(11)	<= CH11;
-
-						wr_data(12)	<= CH12;
-						wr_data(13)	<= CH13;
-						wr_data(14)	<= CH14;
-						wr_data(15)	<= CH15;
 					else
 
 						FIFO_WR.recv.ack <= '0';
@@ -574,31 +659,31 @@ begin
 						cnt_fifo <= std_logic_vector(unsigned(cnt_fifo) + 1);
 
 						case cnt_fifo is
-							when "000000000" =>
+							when "0000000000" =>
 								DataOut_intlH <= WDOTime_intl(31 downto 0);
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
-							when "000000001" =>
+							when "0000000001" =>
 								DataOut_intlH <= WDOTime_intl(63 downto 32);
 
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
-							when "000000010" =>
+							when "0000000010" =>
 								DataOut_intlH <= DIGTime_intl(31 downto 0);
 
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
-							when "000000011" =>
+							when "0000000011" =>
 								DataOut_intlH <= DIGTime_intl(63 downto 32);
 
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
-							when "000000100" =>
+							when "0000000100" =>
 								DataOut_intlH <= Trigger_intl;
 
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
-							when "000000101" =>
+							when "0000000101" =>
 								DataOut_intlH <= x"0000" & "0000000" & WDONBR_intl;
 								FIFOvalid <= '1';
 								fifo_rd_stm <= WRxRD_HEADER;
@@ -616,7 +701,7 @@ begin
 					end if;
 				when WRxRD_DATA =>
 					if(StreamReady = '1') then
-						if(to_integer(unsigned(cnt_fifo)) < 511) then
+						if(to_integer(unsigned(cnt_fifo)) < 1023) then
 							cnt_fifo <= std_logic_vector(unsigned(cnt_fifo) + 1);
 							rd_en	<= '1';
 							FIFOvalid <= '1';
