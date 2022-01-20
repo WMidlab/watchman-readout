@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 entity module_fifo_regs_no_flags is
   generic (
     g_WIDTH : natural := 32;
-    g_DEPTH : integer := 32
+    g_DEPTH : integer := 64
     );
   port (
     i_rst_sync : in std_logic;

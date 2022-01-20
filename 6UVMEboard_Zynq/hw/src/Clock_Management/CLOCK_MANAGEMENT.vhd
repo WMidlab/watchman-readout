@@ -22,8 +22,8 @@ entity TC_ClockManagementV3 is
 	port (
 	-- TARGET C Ports for control and function
 		nrst:			in	std_logic;
-		clk1:			in 	std_logic;	-- Clock for the TARGETC SCLK
-		clk2:			in 	std_logic;	-- Clock for the TARGETC SCLK
+--		clk1:			in 	std_logic;	-- Clock for the TARGETC SCLK
+--		clk2:			in 	std_logic;	-- Clock for the TARGETC SCLK
 		AXI_Clk:		in	std_logic;
 
 		WL_CLK_DIV:		in 	std_logic_vector(31 downto 0); -- Clock Divider Through DFF
@@ -35,16 +35,18 @@ entity TC_ClockManagementV3 is
 		Timecounter:	out std_logic_vector(63 downto 0);
 		Timestamp:		out T_timestamp;
 
-		HSCLKdif:		in std_logic;		-- Pin#43 to Pin#44
+		HSCLKdif:		in std_logic;		
 
 		-- LVDS Differential Pair
-		HSCLK_P:		out std_logic;		-- Pin#43
-		HSCLK_N:		out std_logic;		-- Pin#44
+		A_HSCLK_P:		out std_logic;		
+		A_HSCLK_N:		out std_logic;	
+		B_HSCLK_P:		out std_logic;		
+		B_HSCLK_N:		out std_logic;	
+		
+		WLCLK:		out std_logic		
 
-		WLCLK:		out std_logic		-- Pin#58
-
---		SSTIN_P:		out std_logic;		-- Pin#125
---		SSTIN_N:		out std_logic		-- Pin#126
+--		SSTIN_P:		out std_logic;		
+--		SSTIN_N:		out std_logic		
 
 	);
 end TC_ClockManagementV3;
@@ -406,18 +408,27 @@ WLCLK <= AXI_CLK;
 --		I	=> AXI_CLK
 --	);
 
-	OBUFDF_HSCLK : OBUFDS
+	OBUFDF_HSCLK_A : OBUFDS
 	generic map(
 		IOSTANDARD  => "LVDS_25"
 	)
 	port map(
-		O	=> HSCLK_P,
-		OB	=> HSCLK_N,
+		O	=> A_HSCLK_P,
+		OB	=> A_HSCLK_N,
 
 		I	=> HSCLKdif
 	);
 	
-	
+OBUFDF_HSCLK_B : OBUFDS
+	generic map(
+		IOSTANDARD  => "LVDS_25"
+	)
+	port map(
+		O	=> B_HSCLK_P,
+		OB	=> B_HSCLK_N,
+
+		I	=> HSCLKdif
+	);	
 	-- CLOCK BUS OUTPUTS
 	
     
