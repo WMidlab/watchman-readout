@@ -645,7 +645,7 @@ begin
 						fifo_rd_stm <= WRxRD_HEADER;
 						DataOut_intlH <= WDOTime_intl(31 downto 0);
 						FIFOvalid <= '1';
-						cnt_fifo <= "000000001";
+						cnt_fifo <= "0000000001";
 					else
 						FIFOvalid <= '0';
 						rd_en	<= '0';

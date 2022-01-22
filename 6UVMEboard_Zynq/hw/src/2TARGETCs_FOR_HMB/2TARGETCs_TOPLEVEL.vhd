@@ -221,8 +221,8 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 	port (
 	-- TARGET C Ports for control and function
 		nrst:			in	std_logic;
-		clk1:			in 	std_logic;	-- Clock for the TARGETC SCLK
-		clk2:			in 	std_logic;	-- Clock for the TARGETC SCLK
+	--	clk1:			in 	std_logic;	-- Clock for the TARGETC SCLK
+	--	clk2:			in 	std_logic;	-- Clock for the TARGETC SCLK
 
 		axi_clk:		in	std_logic;
 		WL_CLK_DIV:		in 	std_logic_vector(31 downto 0); -- Clock Divider Through DFF
@@ -669,8 +669,8 @@ begin
 	port map(
 		nrst				=> CtrlBusOut_intl.SW_nRST,
 		--rst				=> tc_axi_aresetn,
-		clk1		 		=> RefCLK_i1,
-		clk2		 		=> RefCLK_i2,
+--		clk1		 		=> RefCLK_i1,
+--		clk2		 		=> RefCLK_i2,
 		axi_clk				=> tc_axi_aclk,
 		WL_CLK_DIV 		=> CtrlBusOut_intl.WL_CLK_DIV,
 		PLL_LOCKED		=> CtrlBusIn_intl.PLL_LOCKED,
