@@ -687,8 +687,8 @@ begin
 
 		A_HSCLK_P 		=> A_HSCLK_P,
 		A_HSCLK_N 		=> A_HSCLK_N,
-		B_HSCLK_P 		=> A_HSCLK_P,
-		B_HSCLK_N 		=> A_HSCLK_N,
+		B_HSCLK_P 		=> B_HSCLK_P,
+		B_HSCLK_N 		=> B_HSCLK_N,
 
 		WLCLK		=> WL_CLK
 --		WL_CLK_N 		=> WL_CLK_N
