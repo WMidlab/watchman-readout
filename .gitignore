@@ -52,6 +52,7 @@ PCsoftware/packets.log
 
 6UVMEboard_Zynq/ip_repo/IPs
 
+
 *.png
 
 *.log
@@ -60,3 +61,6 @@ PCsoftware/packets.log
 
 6UVMEboard_Zynq/hw/bd/HMBcal_2TCsBD/*
 6UVMEboard_Zynq/hw/bd/base_zynq/*
+6UVMEboard_Zynq/hw/bd/.Xil/*
+6UVMEboard_Zynq/hw/bd/NA/*
+
