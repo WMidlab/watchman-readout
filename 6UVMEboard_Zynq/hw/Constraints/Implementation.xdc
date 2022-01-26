@@ -22,5 +22,4 @@
 
 
 
-connect_debug_port u_ila_0/probe3 [get_nets [list {base_zynq_i/TARGET_C_TopLevel_Sy_0/U0/TC_RDAD_WL_SS/SS[valid]}]]
 
