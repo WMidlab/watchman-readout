@@ -236,7 +236,7 @@ int test_TPG(int* regptr){
 	ControlRegisterWrite(SS_TPG_MASK ,DISABLE, regptr); // Enable mode TestPattern
 	windowStorage(ENABLE);
 		usleep(50);
-		windowStorage(DISABLE);
+	windowStorage(DISABLE);
 
 //	ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
 //	usleep(50);

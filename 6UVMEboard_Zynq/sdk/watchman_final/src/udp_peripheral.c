@@ -391,7 +391,7 @@ int command_parser(struct pbuf *p, char* return_buf) {
 					delay_RB = regVal_one_reg;
 					xil_printf("delay_RB = %d\r\n", delay_RB);
 					regptr_0[TC_Delay_RB] = delay_RB;
-					regptr_1[TC_Delay_RB] = delay_RB;
+			//		regptr_1[TC_Delay_RB] = delay_RB;
 
 				}
 
@@ -401,13 +401,13 @@ int command_parser(struct pbuf *p, char* return_buf) {
 
 					xil_printf("PEDESTAL_TRIGGER_AVG = %d\r\n", regID_one_reg);
 					regptr_0[PEDESTAL_TRIGGER_AVG] = regVal_one_reg;
-					regptr_1[PEDESTAL_TRIGGER_AVG] = regVal_one_reg;
+			//		regptr_1[PEDESTAL_TRIGGER_AVG] = regVal_one_reg;
 				}
 
 				else {
 					WriteRegister(regID_one_reg, regVal_one_reg, regptr_0);
 					usleep(100);
-					WriteRegister(regID_one_reg, regVal_one_reg, regptr_1);
+			//		WriteRegister(regID_one_reg, regVal_one_reg, regptr_1);
 
 				}
 				return 6;
@@ -438,21 +438,19 @@ int command_parser(struct pbuf *p, char* return_buf) {
 				avg = payload[i + 1] * 256 + payload[i + 2];
 				//	pedestal_triggerMode_init(avg);
 				regptr_0[PEDESTAL_TRIGGER_AVG] = avg;
-				regptr_1[PEDESTAL_TRIGGER_AVG] = avg;
+		//		regptr_1[PEDESTAL_TRIGGER_AVG] = avg;
 				nbr_avg_ped_triggerMode = avg;
 				usleep(10);
 				pedestalTriggerModeFlag = true;
 				usleep(30);
 				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_0);
-				usleep(10);
-				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_1);
+		//		usleep(10);
+		//		ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_1);
 				usleep(100);
 
-				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE,
-						regptr_0);
+				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE, regptr_0);
 				usleep(100);
-				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE,
-						regptr_1);
+		//		ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE, regptr_1);
 				//	pedestalTriggerModeFlag = true;
 				//	xil_printf("Starting pedestals in trigger mode %d\r\n", avg);
 //						pedestalTriggerModeFlag= true;
@@ -478,21 +476,20 @@ int command_parser(struct pbuf *p, char* return_buf) {
 				avg = payload[i + 1] * 256 + payload[i + 2];
 				//	pedestal_triggerMode_init(avg);
 				regptr_0[PEDESTAL_TRIGGER_AVG] = avg;
-				regptr_1[PEDESTAL_TRIGGER_AVG] = avg;
+		//		regptr_1[PEDESTAL_TRIGGER_AVG] = avg;
 				nbr_avg_ped_triggerMode = avg;
 				usleep(10);
 				pedestalTriggerModeFlag = false;
 				//	usleep(30);
 				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_0);
-				usleep(100);
-				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_1);
+		//		usleep(100);
+		//		ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, ENABLE, regptr_1);
 
 				usleep(100);
 				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE,
 						regptr_0);
-				usleep(100);
-				ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE,
-						regptr_1);
+		//		usleep(100);
+		//		ControlRegisterWrite(C_TRIGGER_MODE_PED_MASK, DISABLE, regptr_1);
 				//	pedestalTriggerModeFlag = true;
 				xil_printf("Starting flat pedestals in trigger mode %d\r\n",
 						avg);
@@ -551,8 +548,8 @@ int setup_udp_settings(ip_addr_t pc_ipaddr) {
 	/* Initialize the regmap for test */
 	for (int i = 0; i < REGMAP_SIZE_UDP; i++)
 		regptr_0[i] = i;
-	for (int i = 0; i < REGMAP_SIZE_UDP; i++)
-		regptr_1[i] = i;
+//	for (int i = 0; i < REGMAP_SIZE_UDP; i++)
+//		regptr_1[i] = i;
 
 	/* create new UDP PCB structure for the data */
 	ret = setup_pcb_data(pc_ipaddr, PORT_DATA);

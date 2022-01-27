@@ -176,12 +176,12 @@ int main()
 
 //    dma_stm_en state_main = IDLE;
 
-        	GetTargetCStatus(regptr_0);
-        			GetTargetCStatus(regptr_1);
+    GetTargetCStatus(regptr_0);
+//  GetTargetCStatus(regptr_1);
 
-        			GetTargetCControl(regptr_0);
-        			GetTargetCControl(regptr_1);
-        			printf("before init global\r\n");
+    GetTargetCControl(regptr_0);
+//  GetTargetCControl(regptr_1);
+  	printf("before init global\r\n");
 
 	/* Initialize the global variables */
 	if(init_global_var() == XST_SUCCESS) xil_printf("Global variables initialization pass!\r\n");
@@ -208,14 +208,14 @@ int main()
 
 
 	initTARGETregisters(regptr_0);
-	initTARGETregisters(regptr_1);
+//	initTARGETregisters(regptr_1);
 	printf("after INIT\r\n");
 
 	GetTargetCStatus(regptr_0);
-		GetTargetCStatus(regptr_1);
+//	GetTargetCStatus(regptr_1);
 
-		GetTargetCControl(regptr_0);
-		GetTargetCControl(regptr_1);
+	GetTargetCControl(regptr_0);
+//	GetTargetCControl(regptr_1);
 
 	// Waiting on PL's clocks to be ready
 	while((regptr_0[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
@@ -223,32 +223,32 @@ int main()
 	}
 
 	// Waiting on PL's clocks to be ready
-	while((regptr_1[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
-		sleep(1);
-	}
+//	while((regptr_1[TC_STATUS_REG] & LOCKED_MASK) != LOCKED_MASK){
+//		sleep(1);
+//	}
 	printf("after LOCKEDmask\r\n");
 
 
 	GetTargetCStatus(regptr_0);
-	GetTargetCStatus(regptr_1);
+//	GetTargetCStatus(regptr_1);
 
 	GetTargetCControl(regptr_0);
-	GetTargetCControl(regptr_1);
+//	GetTargetCControl(regptr_1);
 
 	printf("PL's clock ready\r\n");
 	// Initialize TargetC's registers
 	SetTargetCRegisters(regptr_0);
-	usleep(10);
-	SetTargetCRegisters(regptr_1);
+//	usleep(10);
+//	SetTargetCRegisters(regptr_1);
 
 	printf("sleep to set the debug core\r\n");
 	GetTargetCStatus(regptr_0);
-	GetTargetCStatus(regptr_1);
+//	GetTargetCStatus(regptr_1);
 
 	GetTargetCControl(regptr_0);
-	GetTargetCControl(regptr_1);
+//	GetTargetCControl(regptr_1);
 
-//	testPattern(regptr_0);
+	testPattern(regptr_0);
 //	testPattern(regptr_1);
 
 //	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
@@ -324,18 +324,18 @@ int main()
 				}
 				if(pedestal_flag && (!stream_flag) && empty_flag){
 					ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
-					ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
+				//	ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
 					state_main = GET_PEDESTAL;
 				}
 				if(restart_flag){
 								ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
-								ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
+				//				ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
 								printf("restarting at idle\r\n");
 								state_main = RESTART;
 							}
 				if(get_windows_raw_flag && (!stream_flag) && empty_flag){
 						ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_0);
-						ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
+				//		ControlRegisterWrite(CPUMODE_MASK,DISABLE, regptr_1);
 
 						state_main = GET_WINDOWS_RAW;
 					}
@@ -348,8 +348,8 @@ int main()
 					usleep(100);
 		     		ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_0);
 					ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_0);
-					ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
-					ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
+				//	ControlRegisterWrite(SWRESET_MASK,DISABLE, regptr_1);
+				//	ControlRegisterWrite(SWRESET_MASK,ENABLE, regptr_1);
 					usleep(100);
 					state_main = IDLE;
 				}
@@ -364,15 +364,15 @@ int main()
 
 				usleep(100);
 
-				ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr_1); // mode for selecting the interrupt, 1 for dma
-				usleep(100);
+		//		ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr_1); // mode for selecting the interrupt, 1 for dma
+		//		usleep(100);
 
-				ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr_1); // 0 for test pattern mode, 1 for sample mode (normal mode)
-				usleep(100);
+		//		ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr_1); // 0 for test pattern mode, 1 for sample mode (normal mode)
+		//		usleep(100);
 
-				ControlRegisterWrite(CPUMODE_MASK,ENABLE, regptr_1); // mode trigger, 0 for usermode (cpu mode), 1 for trigger mode
+		//		ControlRegisterWrite(CPUMODE_MASK,ENABLE, regptr_1); // mode trigger, 0 for usermode (cpu mode), 1 for trigger mode
 
-				usleep(100);
+		//		usleep(100);
 
 				xil_printf("flag_axidma_rx_done= %d \r\n",flag_axidma_rx_done);
 				usleep(100);
