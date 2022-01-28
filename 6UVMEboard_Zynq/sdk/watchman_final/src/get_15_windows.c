@@ -262,8 +262,9 @@ int SendWindows(int firstWindow, int numWindows, int* regptr){
 				}
 
 
+/*
 				for(int k=0; k<32; k++){
-					/* Pedestal subtraction */
+					 Pedestal subtraction
 					data_tmp = (uint16_t) (tmp_ptr->data.data_struct.data_1[channel][k]); //-  pedestal_1[window][channel][k]+ offset_avoid_negative);
 
 					frame_buf[index++] = (char)data_tmp;
@@ -273,6 +274,7 @@ int SendWindows(int firstWindow, int numWindows, int* regptr){
 					//printf("int_number >> 8 = %d\r\n", (char)((int_number >> 8)));
 
 				}
+*/
 
 
 				//printf("\r\n");
@@ -384,12 +386,12 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
-				for(j=0; j<32; j++){
-					for(i=0; i<16; i++){
+		/*		for(j=0; j<32; j++){
+					for(i=0; i<32; i++){
 						printf("%d\t", (uint)tmp_ptr->data.data_struct.data[i][j]);
 					}
 					printf("\r\n");
-				}
+				} */
 				printf("Timeout on window %d: get raw windows failed!\r\n", window);
 				return XST_FAILURE;
 			}
@@ -404,10 +406,10 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 			else{
 
 
-				for(i=0; i<16; i++){
+				for(i=0; i<32; i++){
 					for(j=0; j<32; j++){
 						data_raw[window][i][j] += (uint32_t)(tmp_ptr->data.data_struct.data[i][j]);// + VPED_DIGITAL - pedestal[window][i][j]);
-						data_raw_1[window][i][j] += (uint32_t)(tmp_ptr->data.data_struct.data_1[i][j]);// + VPED_DIGITAL - pedestal[window][i][j]);
+					//	data_raw_1[window][i][j] += (uint32_t)(tmp_ptr->data.data_struct.data_1[i][j]);// + VPED_DIGITAL - pedestal[window][i][j]);
 
 						//         if ((uint16_t)(tmp_ptr->data.data_struct.data[i][j]) == 0){
                 //        	printf("Value= 0");

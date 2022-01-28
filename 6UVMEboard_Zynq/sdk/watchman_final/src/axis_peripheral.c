@@ -280,15 +280,15 @@ int test_TPG(int* regptr){
 	/* Test the returned values */
 	if((uint16_t)tmp_ptr->data_struct.wdo_id == 10){
 		for(j=0; j<32; j++){
-			for(i=0; i<16; i++){
-				if((uint16_t)tmp_ptr->data_struct.data[i][j] != 0x50A && (uint16_t)tmp_ptr->data_struct.data_1[i][j] != 0x50A){
+			for(i=0; i<32; i++){
+				if((uint16_t)tmp_ptr->data_struct.data[i][j] != 0x50A ){
 					/* Returned values wrong */
 					printf("wdo_time: %d\r\n", (uint16_t)tmp_ptr->data_struct.wdo_time);
 					printf("PL_spare: %d\r\n", (uint16_t)tmp_ptr->data_struct.PL_spare);
 					printf("info: 0x%X\r\n", (uint16_t)tmp_ptr->data_struct.info);
 					printf("wdo_id: %d\r\n", (uint16_t)tmp_ptr->data_struct.wdo_id);
 					for(j=0; j<32; j++){
-						for(i=0; i<16; i++){
+						for(i=0; i<32; i++){
 							printf("%d\t", (uint16_t)tmp_ptr->data_struct.data[i][j]);
 						}
 						printf("\r\n");
@@ -306,7 +306,7 @@ int test_TPG(int* regptr){
 		printf("info: 0x%X\r\n", (uint16_t)tmp_ptr->data_struct.info);
 		printf("wdo_id: %d\r\n", (uint16_t)tmp_ptr->data_struct.wdo_id);
 		for(j=0; j<32; j++){
-			for(i=0; i<16; i++){
+			for(i=0; i<32; i++){
 				printf("%d\t", (uint16_t)tmp_ptr->data_struct.data[i][j]);
 			}
 			printf("\r\n");
