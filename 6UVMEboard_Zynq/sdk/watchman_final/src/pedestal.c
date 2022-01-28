@@ -287,6 +287,7 @@ for(window = 0; window< 512; window++ ){
 	for(channel = 0; channel< 16; channel++ ){
 		for(sample = 0; sample< 32; sample++ ){
 			pedestal_0[window][channel][sample] = 0;
+			pedestal_1[window][channel][sample] = 0;
 		//	usleep(10);
 		//	printf("%.2f\r\n", pedestal[window][channel][sample]);
 

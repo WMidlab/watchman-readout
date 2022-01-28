@@ -248,7 +248,7 @@ int main()
 	GetTargetCControl(regptr_0);
 //	GetTargetCControl(regptr_1);
 
-	testPattern(regptr_0);
+//	testPattern(regptr_0);
 //	testPattern(regptr_1);
 
 //	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
@@ -264,7 +264,7 @@ int main()
 	usleep(100);
 	int pedestal_Avg=100;
 	int nmbr_Windows_Ped=1;
-    if(get_pedestal(pedestal_Avg,nmbr_Windows_Ped, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestal_Avg= %d,nmbrWindows_Ped = %d, \r\n", pedestal_Avg, nmbr_Windows_Ped);
+//    if(get_pedestal(pedestal_Avg,nmbr_Windows_Ped, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestal_Avg= %d,nmbrWindows_Ped = %d, \r\n", pedestal_Avg, nmbr_Windows_Ped);
 	printf("Start while loop\r\n");
 
 	while (run_flag){

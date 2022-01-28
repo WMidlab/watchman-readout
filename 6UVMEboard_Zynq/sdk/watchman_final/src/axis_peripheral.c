@@ -281,7 +281,7 @@ int test_TPG(int* regptr){
 	if((uint16_t)tmp_ptr->data_struct.wdo_id == 10){
 		for(j=0; j<32; j++){
 			for(i=0; i<16; i++){
-				if((uint16_t)tmp_ptr->data_struct.data[i][j] != 0x50A){
+				if((uint16_t)tmp_ptr->data_struct.data[i][j] != 0x50A && (uint16_t)tmp_ptr->data_struct.data_1[i][j] != 0x50A){
 					/* Returned values wrong */
 					printf("wdo_time: %d\r\n", (uint16_t)tmp_ptr->data_struct.wdo_time);
 					printf("PL_spare: %d\r\n", (uint16_t)tmp_ptr->data_struct.PL_spare);
