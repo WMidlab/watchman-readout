@@ -161,71 +161,27 @@ package TARGETC_pkg is
 	type eDO_LINE is array (11 downto 0) of std_logic;
 	type eDO_ARRAY is array (0 downto 15) of eDO_LINE;
 
-	type eDO_BUS_TYPE is record
-		CH0 :	std_logic_vector(11 downto 0);
-		CH1 :	std_logic_vector(11 downto 0);
-		CH2 :	std_logic_vector(11 downto 0);
-		CH3 :	std_logic_vector(11 downto 0);
+--	type eDO_BUS_TYPE is record
+--		CH0 :	std_logic_vector(11 downto 0);
+--		CH1 :	std_logic_vector(11 downto 0);
+--		CH2 :	std_logic_vector(11 downto 0);
+--		CH3 :	std_logic_vector(11 downto 0);
 
-		CH4 :	std_logic_vector(11 downto 0);
-		CH5 :	std_logic_vector(11 downto 0);
-		CH6 :	std_logic_vector(11 downto 0);
-		CH7 :	std_logic_vector(11 downto 0);
+--		CH4 :	std_logic_vector(11 downto 0);
+--		CH5 :	std_logic_vector(11 downto 0);
+--		CH6 :	std_logic_vector(11 downto 0);
+--		CH7 :	std_logic_vector(11 downto 0);
 
-		CH8 :	std_logic_vector(11 downto 0);
-		CH9 :	std_logic_vector(11 downto 0);
-		CH10 :	std_logic_vector(11 downto 0);
-		CH11 :	std_logic_vector(11 downto 0);
+--		CH8 :	std_logic_vector(11 downto 0);
+--		CH9 :	std_logic_vector(11 downto 0);
+--		CH10 :	std_logic_vector(11 downto 0);
+--		CH11 :	std_logic_vector(11 downto 0);
 
-		CH12 :	std_logic_vector(11 downto 0);
-		CH13 :	std_logic_vector(11 downto 0);
-		CH14 :	std_logic_vector(11 downto 0);
-		CH15 :	std_logic_vector(11 downto 0);
-	end record;
-	
-	type eDO_BUS_TYPE_2TC is record
-
-	A_CH0 :		std_logic_vector(11 downto 0);
-	A_CH1 :		std_logic_vector(11 downto 0);
-	A_CH2 :		std_logic_vector(11 downto 0);
-	A_CH3 :		std_logic_vector(11 downto 0);
-
-	A_CH4 :		std_logic_vector(11 downto 0);
-	A_CH5 :		std_logic_vector(11 downto 0);
-	A_CH6 :		std_logic_vector(11 downto 0);
-	A_CH7 :		std_logic_vector(11 downto 0);
-
-	A_CH8 :		std_logic_vector(11 downto 0);
-	A_CH9 :		std_logic_vector(11 downto 0);
-	A_CH10 :		std_logic_vector(11 downto 0);
-	A_CH11 :		std_logic_vector(11 downto 0);
-
-	A_CH12 :				std_logic_vector(11 downto 0);
-	A_CH13 :				std_logic_vector(11 downto 0);
-	A_CH14 :				std_logic_vector(11 downto 0);
-	A_CH15 :				std_logic_vector(11 downto 0);
-
-	B_CH0 :		std_logic_vector(11 downto 0);
-	B_CH1 :		std_logic_vector(11 downto 0);
-	B_CH2 :		std_logic_vector(11 downto 0);
-	B_CH3 :		std_logic_vector(11 downto 0);
-
-	B_CH4 :		std_logic_vector(11 downto 0);
-	B_CH5 :		std_logic_vector(11 downto 0);
-	B_CH6 :		std_logic_vector(11 downto 0);
-	B_CH7 :		std_logic_vector(11 downto 0);
-
-	B_CH8 :		std_logic_vector(11 downto 0);
-	B_CH9 :		std_logic_vector(11 downto 0);
-	B_CH10 :	std_logic_vector(11 downto 0);
-	B_CH11 :	std_logic_vector(11 downto 0);
-
-	B_CH12 :	std_logic_vector(11 downto 0);
-	B_CH13 :	std_logic_vector(11 downto 0);
-	B_CH14 :	std_logic_vector(11 downto 0);
-	B_CH15 :	std_logic_vector(11 downto 0);
-
-	end record;
+--		CH12 :	std_logic_vector(11 downto 0);
+--		CH13 :	std_logic_vector(11 downto 0);
+--		CH14 :	std_logic_vector(11 downto 0);
+--		CH15 :	std_logic_vector(11 downto 0);
+--	end record;
 
 	-- Ctrl Signals for the TARGETC Operations
 	--type CtrlSignalBus_Outputs is record
@@ -271,7 +227,7 @@ package TARGETC_pkg is
 
 		TC_BUS: 		std_logic_vector(18 downto 0);
 
-		DO_BUS :		eDO_BUS_TYPE_2TC; ---THIS CHANGE BREAKS THE OPERATION OF SEPARATED TCs
+--		DO_BUS :		eDO_BUS_TYPE;
 		BUSY:			std_logic;
 		PLL_LOCKED:		std_logic;
 
