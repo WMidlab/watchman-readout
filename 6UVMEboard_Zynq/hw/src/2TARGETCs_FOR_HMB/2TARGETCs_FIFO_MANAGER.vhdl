@@ -177,7 +177,7 @@ type fifostate_wr is (
 	port(
 		 address: 	in	std_logic_vector(4 downto 0);
 		 rd_en:		in std_logic;
-		 decode:	out std_logic_vector(32 downto 0)
+		 decode:	out std_logic_vector(31 downto 0)
 	  );
 	end component TwoTARGETCs_AddressDecoder;
 
@@ -242,9 +242,9 @@ type fifostate_wr is (
 	signal wr_en : std_logic;
 	signal rd_en : std_logic;
 	signal rd_en_dly : std_logic;
-	signal rd_en_v : std_logic_vector(32 downto 0);
-	signal full :	std_logic_vector(32 downto 0);
-	signal empty :	std_logic_vector(32 downto 0);
+	signal rd_en_v : std_logic_vector(31 downto 0);
+	signal full :	std_logic_vector(31 downto 0);
+	signal empty :	std_logic_vector(31 downto 0);
 
 	signal WDOTime_intl	:	std_logic_vector(63 downto 0);
 	signal DIGTime_intl	:	std_logic_vector(63 downto 0);
@@ -452,45 +452,45 @@ begin
 
 						fifo_wr_stm <= ACKNOWLEDGE;
 
-						wr_data(0)	<=A_CH0; 
-						wr_data(1)	<=A_CH1; 
-						wr_data(2)	<=A_CH2; 
-						wr_data(3)	<=A_CH3; 
+						wr_data(0)	<= A_CH0; 
+						wr_data(1)	<= A_CH1; 
+						wr_data(2)	<= A_CH2; 
+						wr_data(3)	<= A_CH3; 
                                                                     
-						wr_data(4)	<=A_CH4; 
-						wr_data(5)	<=A_CH5; 
-						wr_data(6)	<=A_CH6; 
-						wr_data(7)	<=A_CH7; 
+						wr_data(4)	<= A_CH4; 
+						wr_data(5)	<= A_CH5; 
+						wr_data(6)	<= A_CH6; 
+						wr_data(7)	<= A_CH7; 
                                                                       
-						wr_data(8)	<=A_CH8; 
-						wr_data(9)	<=A_CH9; 
-						wr_data(10)	<=A_CH10;
-						wr_data(11)	<=A_CH11;
+						wr_data(8)	<= A_CH8; 
+						wr_data(9)	<= A_CH9; 
+						wr_data(10)	<= A_CH10;
+						wr_data(11)	<= A_CH11;
                                                                         
-						wr_data(12)	<=A_CH12;
-						wr_data(13)	<=A_CH13;
-						wr_data(14)	<=A_CH14;
-						wr_data(15)	<=A_CH15;
+						wr_data(12)	<= A_CH12;
+						wr_data(13)	<= A_CH13;
+						wr_data(14)	<= A_CH14;
+						wr_data(15)	<= A_CH15;
                                                                         
-                                                wr_data(16)      <=B_CH0; 
-                                                wr_data(17)     <=B_CH1; 
-                                                wr_data(18)     <=B_CH2; 
-                                                wr_data(19)     <=B_CH3; 
-                                                                     
-                                                wr_data(20)     <=B_CH4; 
-                                                wr_data(21)     <=B_CH5; 
-                                                wr_data(22)     <=B_CH6; 
-                                                wr_data(23)     <=B_CH7; 
-                                                                     
-                                                wr_data(24)     <=B_CH8; 
-                                                wr_data(25)     <=B_CH9; 
-                                                wr_data(26)    <=B_CH10;
-                                                wr_data(27)    <=B_CH11;
-                                                                     
-                                                wr_data(28)    <=B_CH12;
-                                                wr_data(29)    <=B_CH13;
-                                                wr_data(30)    <=B_CH14;
-                                                wr_data(31)    <=B_CH15;
+						wr_data(16)      <= B_CH0; 
+						wr_data(17)     <= B_CH1; 
+						wr_data(18)     <= B_CH2; 
+						wr_data(19)     <= B_CH3; 
+											 
+						wr_data(20)     <= B_CH4; 
+						wr_data(21)     <= B_CH5; 
+						wr_data(22)     <= B_CH6; 
+						wr_data(23)     <= B_CH7; 
+											 
+						wr_data(24)     <= B_CH8; 
+						wr_data(25)     <= B_CH9; 
+						wr_data(26)    <= B_CH10;
+						wr_data(27)    <= B_CH11;
+											 
+						wr_data(28)    <= B_CH12;
+						wr_data(29)    <= B_CH13;
+						wr_data(30)    <= B_CH14;
+						wr_data(31)    <= B_CH15;
                                                            
 
 
