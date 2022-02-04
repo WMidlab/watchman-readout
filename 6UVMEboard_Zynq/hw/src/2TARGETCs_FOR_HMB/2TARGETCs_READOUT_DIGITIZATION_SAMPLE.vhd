@@ -45,7 +45,7 @@ entity TwoTARGETC_RDAD_WL_SMPL is
 	--Output for control
 	WindowBusy:		out std_logic;
 	RAMP_CNT:		out std_logic;
-	DO_BUS:			out eDO_BUS_TYPE_2TC;
+--	DO_BUS:			out eDO_BUS_TYPE_2TC;
 	SSvalid:		out std_logic;
 
 	--Channels
@@ -249,7 +249,7 @@ component SyncBuffer is
 	signal ss_incr_flg : std_logic := '0';
 
 
-	signal CtrlDO_intl :	eDO_BUS_TYPE_2TC;
+--	signal CtrlDO_intl :	eDO_BUS_TYPE_2TC;
 	signal TestFIFO_window : integer;
 	signal TestFIFO_cnt : integer;
 
@@ -311,6 +311,8 @@ component SyncBuffer is
 	signal wilkin_num : std_logic_vector(3 downto 0);
 
     attribute mark_debug : string;
+        attribute syn_keep : string;
+
     
     attribute mark_debug of HSCLK: signal is "true";
     attribute mark_debug of SS_CNT_INTL: signal is "true";
@@ -326,7 +328,10 @@ component SyncBuffer is
     attribute mark_debug of DO_A_B: signal is "true";
 	attribute mark_debug of state_num: signal is "true";
 	attribute mark_debug of rdad_num: signal is "true";
-	attribute mark_debug of wilkin_num: signal is "true";
+	attribute mark_debug of wilkin_num: signal is "true";    
+	attribute syn_keep of DO_A_B: signal is "true";
+
+
 
     
 
@@ -1122,7 +1127,7 @@ begin
 	end process;
 
 	--CtrlBus_OxSL.DO_BUS <= CtrlDO_intl;
-	DO_BUS <= CtrlDO_intl;
+--	DO_BUS <= CtrlDO_intl;
 
 	SS_RESET 	<= SS_RESET_intl;
 	--SS_RESET 	<= '0';

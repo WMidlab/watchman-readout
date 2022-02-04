@@ -6,7 +6,7 @@ entity TwoTARGETCs_AddressDecoder is
  port(
      address: 	in	std_logic_vector(4 downto 0);
      rd_en:		in	std_logic;
-     decode:	out std_logic_vector(32 downto 0)
+     decode:	out std_logic_vector(31 downto 0)
   );
 end TwoTARGETCs_AddressDecoder;
 

@@ -385,7 +385,7 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 		--CtrlBus_OxSL:		out	T_CtrlBus_OxSL; --Outputs from Control Master
 		WindowBusy:		out std_logic;
 		RAMP_CNT:		out std_logic;
-		DO_BUS:			out eDO_BUS_TYPE_2TC;
+--		DO_BUS:			out eDO_BUS_TYPE_2TC;
 		SSvalid:		out std_logic;
 
 	--Channels
@@ -393,7 +393,7 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 	A_CH1 :			out	std_logic_vector(11 downto 0);
 	A_CH2 :			out	std_logic_vector(11 downto 0);
 	A_CH3 :			out	std_logic_vector(11 downto 0);
-
+	
 	A_CH4 :			out	std_logic_vector(11 downto 0);
 	A_CH5 :			out	std_logic_vector(11 downto 0);
 	A_CH6 :			out	std_logic_vector(11 downto 0);
@@ -639,7 +639,7 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 	signal B_CH13_intl : std_logic_vector(11 downto 0);
 	signal B_CH14_intl : std_logic_vector(11 downto 0);
 	signal B_CH15_intl : std_logic_vector(11 downto 0);
-
+    signal DO_A_B_intl: std_logic_vector(31 downto 0);
 
 	--DEBUG Signals
 	signal MONTIMING_s : std_logic;
@@ -839,7 +839,7 @@ begin
 		HSCLK		=> HSCLK_dif,
 
 		-- Data Readout
-		DO_A_B 		=> DO_A_B,
+		DO_A_B 		=> DO_A_B_intl,
 		SS_INCR	=> SS_INCR_intl,
 		SS_RESET => SS_RESET_intl,
 
@@ -847,7 +847,7 @@ begin
 		--CtrlBus_OxSL		=> CtrlBusIn_intl,
 		WindowBusy	=> CtrlBusIn_intl.WindowBusy,
 		RAMP_CNT	=> CtrlBusIn_intl.RAMP_CNT,
-		DO_BUS		=> CtrlBusIn_intl.DO_BUS,
+--		DO_BUS		=> CtrlBusIn_intl.DO_BUS,
 		SSvalid		=> CtrlBusIn_intl.SSvalid,
 		--Channels
 		A_CH0 	=> A_CH0_intl,
@@ -1068,6 +1068,7 @@ SyncBitCNT_CLR: SyncBit
 
 	A_SS_INCR<=SS_INCR_intl;
 	B_SS_RESET<=SS_RESET_intl;
+	DO_A_B_intl<=DO_A_B;
 	
 
 --    signal PCLK_intl: std_logic;
