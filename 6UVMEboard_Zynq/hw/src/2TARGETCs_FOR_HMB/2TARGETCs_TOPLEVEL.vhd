@@ -984,6 +984,7 @@ begin
 
 	B_WR_RS_S0	<= WR_RS_S_intl(0);
 	B_WR_RS_S1	<= WR_RS_S_intl(1);
+	
 	B_WR_CS_S0	<= WR_CS_S_intl(0);
 	B_WR_CS_S1	<= WR_CS_S_intl(1);
 	B_WR_CS_S2	<= WR_CS_S_intl(2);
@@ -1053,8 +1054,8 @@ SyncBitCNT_CLR: SyncBit
 	B_RDAD_CLK<=RDAD_CLK_intl;
 	A_RDAD_SIN<=RDAD_SIN_intl;
 	B_RDAD_SIN<=RDAD_SIN_intl;
-	A_RDAD_DIR<=RDAD_SIN_intl;
-	B_RDAD_DIR<=RDAD_SIN_intl;
+	A_RDAD_DIR<=RDAD_DIR_intl;
+	B_RDAD_DIR<=RDAD_DIR_intl;
 	
 	A_RAMP<=RAMP_intl;
 	B_RAMP<=RAMP_intl;
@@ -1066,8 +1067,9 @@ SyncBitCNT_CLR: SyncBit
 	A_SS_INCR<=SS_INCR_intl;
 	B_SS_INCR<=SS_INCR_intl;
 
-	A_SS_INCR<=SS_INCR_intl;
+	A_SS_RESET<=SS_RESET_intl;
 	B_SS_RESET<=SS_RESET_intl;
+	
 	DO_A_B_intl<=DO_A_B;
 	
 
