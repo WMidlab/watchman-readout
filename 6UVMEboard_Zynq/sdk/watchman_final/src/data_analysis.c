@@ -229,8 +229,9 @@ void udp_transfer_WM( volatile InboundRingManager_t *data_to_send )
 				frame_buf[index++] = 0x33;
 			//    xil_printf("Test\r\n");
 				frame_buf[index++] = 0xCC;
-			//	xil_printf("%d\r\n", index);
+			//	xil_printf("PRINTINDEX %d\r\n", index);
 				transfer_data(frame_buf, index);
+				xil_printf("PRINTINDEX AFTER TRANSFER %d\r\n", index);
 			//	sleep(5);
 				free(Data2send);
 //
