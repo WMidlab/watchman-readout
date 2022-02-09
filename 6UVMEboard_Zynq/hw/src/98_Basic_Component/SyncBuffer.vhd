@@ -42,7 +42,7 @@ architecture rtl of SyncBuffer is
     -- ----------------------------------
     -- Signals
 
-    signal syncBuffer_intl : std_logic_vector(NBITS-1 downto 0);
+--    signal syncBuffer_intl : std_logic_vector(NBITS-1 downto 0);
 --  signal B_intl : std_logic_vector(NBITS-1 downto 0);
 --  signal QB_intl : std_logic_vector(NBITS-1 downto 0);
 
@@ -50,7 +50,7 @@ architecture rtl of SyncBuffer is
     -- Constraints on Signals
     -- -------------------------------------------------------------
     attribute DONT_TOUCH : string;
-    attribute DONT_TOUCH of syncBuffer_intl: signal is "TRUE";
+--    attribute DONT_TOUCH of syncBuffer_intl: signal is "TRUE";
 --  attribute DONT_TOUCH of B_intl: signal is "TRUE";
 --  attribute DONT_TOUCH of QB_intl: signal is "TRUE";
 
@@ -78,6 +78,6 @@ begin
 
     end generate;
 
-    syncBuffer <= syncBuffer_intl;
+--    syncBuffer <= syncBuffer_intl;
 end rtl;
 
