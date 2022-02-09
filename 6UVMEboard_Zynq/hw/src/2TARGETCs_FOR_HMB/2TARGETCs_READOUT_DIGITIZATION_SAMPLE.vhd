@@ -312,7 +312,9 @@ component SyncBuffer is
 
     attribute mark_debug : string;
         attribute syn_keep : string;
+attribute keep_hierarchy : string;
 
+attribute keep_hierarchy of Behavioral : architecture is "yes";
     
     attribute mark_debug of HSCLK: signal is "true";
     attribute mark_debug of SS_CNT_INTL: signal is "true";
@@ -330,6 +332,40 @@ component SyncBuffer is
 	attribute mark_debug of rdad_num: signal is "true";
 	attribute mark_debug of wilkin_num: signal is "true";    
 	attribute syn_keep of DO_A_B: signal is "true";
+
+	attribute syn_keep of A_CH0_intl: signal is "true";
+	attribute syn_keep of A_CH1_intl: signal is "true";
+	attribute syn_keep of A_CH2_intl: signal is "true";
+	attribute syn_keep of A_CH3_intl: signal is "true";
+	attribute syn_keep of A_CH4_intl: signal is "true";
+	attribute syn_keep of A_CH5_intl: signal is "true";
+	attribute syn_keep of A_CH6_intl: signal is "true";
+	attribute syn_keep of A_CH7_intl: signal is "true";
+	attribute syn_keep of A_CH8_intl: signal is "true";
+	attribute syn_keep of A_CH9_intl: signal is "true";
+	attribute syn_keep of A_CH10_intl: signal is "true";
+	attribute syn_keep of A_CH11_intl: signal is "true";
+	attribute syn_keep of A_CH12_intl: signal is "true";
+	attribute syn_keep of A_CH13_intl: signal is "true";
+	attribute syn_keep of A_CH14_intl: signal is "true";
+	attribute syn_keep of A_CH15_intl: signal is "true";
+	
+	attribute syn_keep of B_CH0_intl: signal is "true";
+	attribute syn_keep of B_CH1_intl: signal is "true";
+	attribute syn_keep of B_CH2_intl: signal is "true";
+	attribute syn_keep of B_CH3_intl: signal is "true";
+	attribute syn_keep of B_CH4_intl: signal is "true";
+	attribute syn_keep of B_CH5_intl: signal is "true";
+	attribute syn_keep of B_CH6_intl: signal is "true";
+	attribute syn_keep of B_CH7_intl: signal is "true";
+	attribute syn_keep of B_CH8_intl: signal is "true";
+	attribute syn_keep of B_CH9_intl: signal is "true";
+	attribute syn_keep of B_CH10_intl: signal is "true";
+	attribute syn_keep of B_CH11_intl: signal is "true";
+	attribute syn_keep of B_CH12_intl: signal is "true";
+	attribute syn_keep of B_CH13_intl: signal is "true";
+	attribute syn_keep of B_CH14_intl: signal is "true";
+	attribute syn_keep of B_CH15_intl: signal is "true";
 
 
 
@@ -489,8 +525,8 @@ begin
                     NBITS => 32
                 )
                 port map(
-                    clk    =>    ClockBus.HSCLK,
-                    nrst        =>     CtrlBus_IxSL.SW_nRST, --Value of  TimeStamp.samplecnt to update the WR address, 8 to 15 (from falling edge to 8 ns before rising edge)
+                    clk    =>    ClockBus.AXI_CLK,
+                    nrst        =>     CtrlBus_IxSL.SW_nRST, 
                     asyncBuffer    =>     CtrlBus_IxSL.NBRWINDOW,
                     syncBUffer    => NBRWINDOW_clkd
                 );
