@@ -47,9 +47,9 @@ architecture structural of SyncBit is
    -- These attributes will stop Vivado translating the desired flip-flops into an
    -- SRL based shift register.
    attribute ASYNC_REG                                  : string;
---   attribute ASYNC_REG of "G_RisingEdgeClock.cdc_reg1"  : label is "TRUE";
+   attribute ASYNC_REG of G_FallingEdgeClock: label is "TRUE";
 --   attribute ASYNC_REG of "G_RisingEdgeClock.cdc_reg2"  : label is "TRUE";
---   attribute ASYNC_REG of syncBitPipe  : signal is "TRUE";
+   attribute ASYNC_REG of syncBitPipe  : signal is "TRUE";
 
 --   attribute ASYNC_REG of "G_FallingEdgeClock.cdc_reg1" : label is "TRUE";
 --   attribute ASYNC_REG of "G_FallingEdgeClock.cdc_reg2" : label is "TRUE";
