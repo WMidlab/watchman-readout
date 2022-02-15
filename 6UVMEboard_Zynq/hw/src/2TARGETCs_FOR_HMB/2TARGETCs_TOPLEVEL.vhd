@@ -461,45 +461,44 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 			FIFO_Empty	: 	in 	std_logic;
 
 			--Channels
-                	A_CH0 :			in	std_logic_vector(11 downto 0);
-                	A_CH1 :			in	std_logic_vector(11 downto 0);
-                	A_CH2 :			in	std_logic_vector(11 downto 0);
-                	A_CH3 :			in	std_logic_vector(11 downto 0);
-                
-                	A_CH4 :			in	std_logic_vector(11 downto 0);
-                	A_CH5 :			in	std_logic_vector(11 downto 0);
-                	A_CH6 :			in	std_logic_vector(11 downto 0);
-                	A_CH7 :			in	std_logic_vector(11 downto 0);
-                
-                	A_CH8 :			in	std_logic_vector(11 downto 0);
-                	A_CH9 :			in	std_logic_vector(11 downto 0);
-                	A_CH10 :			in	std_logic_vector(11 downto 0);
-                	A_CH11 :			in	std_logic_vector(11 downto 0);
-                
-                	A_CH12 :			in	std_logic_vector(11 downto 0);
-                	A_CH13 :			in	std_logic_vector(11 downto 0);
-                	A_CH14 :			in	std_logic_vector(11 downto 0);
-                	A_CH15 :			in	std_logic_vector(11 downto 0);
-                
-                	B_CH0 :			in	std_logic_vector(11 downto 0);
-                	B_CH1 :			in	std_logic_vector(11 downto 0);
-                	B_CH2 :			in	std_logic_vector(11 downto 0);
-                	B_CH3 :			in	std_logic_vector(11 downto 0);
-                
-                	B_CH4 :			in	std_logic_vector(11 downto 0);
-                	B_CH5 :			in	std_logic_vector(11 downto 0);
-                	B_CH6 :			in	std_logic_vector(11 downto 0);
-                	B_CH7 :			in	std_logic_vector(11 downto 0);
-                
-                	B_CH8 :			in	std_logic_vector(11 downto 0);
-                	B_CH9 :			in	std_logic_vector(11 downto 0);
-                	B_CH10 :			in	std_logic_vector(11 downto 0);
-                	B_CH11 :			in	std_logic_vector(11 downto 0);
-                
-                	B_CH12 :			in	std_logic_vector(11 downto 0);
-                	B_CH13 :			in	std_logic_vector(11 downto 0);
-                	B_CH14 :			in	std_logic_vector(11 downto 0);
-                	B_CH15 :			in	std_logic_vector(11 downto 0);
+        CH0 :			in	std_logic_vector(11 downto 0);
+		CH1 :			in	std_logic_vector(11 downto 0);
+		CH2 :			in	std_logic_vector(11 downto 0);
+		CH3 :			in	std_logic_vector(11 downto 0);
+
+		CH4 :			in	std_logic_vector(11 downto 0);
+		CH5 :			in	std_logic_vector(11 downto 0);
+		CH6 :			in	std_logic_vector(11 downto 0);
+		CH7 :			in	std_logic_vector(11 downto 0);
+
+		CH8 :			in	std_logic_vector(11 downto 0);
+		CH9 :			in	std_logic_vector(11 downto 0);
+		CH10 :			in	std_logic_vector(11 downto 0);
+		CH11 :			in	std_logic_vector(11 downto 0);
+
+		CH12 :			in	std_logic_vector(11 downto 0);
+		CH13 :			in	std_logic_vector(11 downto 0);
+		CH14 :			in	std_logic_vector(11 downto 0);
+		CH15 :			in	std_logic_vector(11 downto 0);
+		CH16 :			in	std_logic_vector(11 downto 0);
+		CH17 :			in	std_logic_vector(11 downto 0);
+		CH18 :			in	std_logic_vector(11 downto 0);
+		CH19 :			in	std_logic_vector(11 downto 0);
+
+		CH20 :			in	std_logic_vector(11 downto 0);
+		CH21 :			in	std_logic_vector(11 downto 0);
+		CH22 :			in	std_logic_vector(11 downto 0);
+		CH23 :			in	std_logic_vector(11 downto 0);
+
+		CH24 :			in	std_logic_vector(11 downto 0);
+		CH25 :			in	std_logic_vector(11 downto 0);
+		CH26 :			in	std_logic_vector(11 downto 0);
+		CH27 :			in	std_logic_vector(11 downto 0);
+
+		CH28 :			in	std_logic_vector(11 downto 0);
+		CH29 :			in	std_logic_vector(11 downto 0);
+		CH30 :			in	std_logic_vector(11 downto 0);
+		CH31 :			in	std_logic_vector(11 downto 0);
 			
 			-- DATA TO STREAM
 			FIFOvalid:			out std_logic;
@@ -920,45 +919,45 @@ begin
 			FIFO_Empty			=> FIFO_Empty_intl,
 
 			--Channels
-		        A_CH0 	=> A_CH0_intl,
-             		A_CH1 	=> A_CH1_intl,
-             		A_CH2 	=> A_CH2_intl,
-             		A_CH3 	=> A_CH3_intl,
+		            CH0 => A_CH0_intl,
+             		CH1 => A_CH1_intl,
+             		CH2 => A_CH2_intl,
+             		CH3 => A_CH3_intl,
              
-             		A_CH4 	=> A_CH4_intl,
-             		A_CH5 	=> A_CH5_intl,
-             		A_CH6 	=> A_CH6_intl,
-             		A_CH7 	=> A_CH7_intl,
+             		CH4 => A_CH4_intl,
+             		CH5 => A_CH5_intl,
+             		CH6 => A_CH6_intl,
+             		CH7 => A_CH7_intl,
              
-             		A_CH8 	=> A_CH8_intl,
-             		A_CH9 	=> A_CH9_intl,
-             		A_CH10 	=> A_CH10_intl,
-             		A_CH11 	=> A_CH11_intl,
+             		CH8  => A_CH8_intl,
+             		CH9  => A_CH9_intl,
+             		CH10 => A_CH10_intl,
+             		CH11 => A_CH11_intl,
              
-             		A_CH12 	=> A_CH12_intl,
-             		A_CH13 	=> A_CH13_intl,
-             		A_CH14 	=> A_CH14_intl,
-             		A_CH15 	=> A_CH15_intl,
-             
-             		B_CH0 	=> B_CH0_intl,
-             		B_CH1 	=> B_CH1_intl,
-             		B_CH2 	=> B_CH2_intl,
-             		B_CH3 	=> B_CH3_intl,
-             
-             		B_CH4 	=> B_CH4_intl,
-             		B_CH5 	=> B_CH5_intl,
-             		B_CH6 	=> B_CH6_intl,
-             		B_CH7 	=> B_CH7_intl,
-             
-             		B_CH8 	=> B_CH8_intl,
-             		B_CH9 	=> B_CH9_intl,
-             		B_CH10 	=> B_CH10_intl,
-             		B_CH11 	=> B_CH11_intl,
-             
-             		B_CH12 	=> B_CH12_intl,
-             		B_CH13 	=> B_CH13_intl,
-             		B_CH14 	=> B_CH14_intl,
-             		B_CH15 	=> B_CH15_intl,
+             		CH12 => A_CH12_intl,
+             		CH13 => A_CH13_intl,
+             		CH14 => A_CH14_intl,
+             		CH15 => A_CH15_intl,
+                   
+             	    CH16 => B_CH0_intl,
+             	    CH17 => B_CH1_intl,
+             	    CH18 => B_CH2_intl,
+             	    CH19 => B_CH3_intl,
+                    
+             		CH20 => B_CH4_intl,
+             		CH21 => B_CH5_intl,
+             		CH22 => B_CH6_intl,
+             		CH23 => B_CH7_intl,
+                    
+             		CH24 => B_CH8_intl,
+             		CH25 => B_CH9_intl,
+             		CH26 => B_CH10_intl,
+             		CH27 => B_CH11_intl,
+                    
+             		CH28 => B_CH12_intl,
+             		CH29 => B_CH13_intl,
+             		CH30 => B_CH14_intl,
+             		CH31 => B_CH15_intl,
 
 
 			-- DATA TO STREAM

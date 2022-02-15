@@ -281,8 +281,10 @@ END COMPONENT;
 	signal testfifo_intl : std_logic;
 	
 attribute keep : string;
+attribute DONT_TOUCH : string;
 
-attribute keep of rd_data32 : signal is "true";
+attribute DONT_TOUCH of rd_data32 : signal is "true";
+--attribute keep of rd_data32 : signal is "true";
 	signal BIN_TIME : std_logic_vector(59 downto 0);
 begin
 	-- --------------------------------------------------------------------------------
@@ -372,9 +374,51 @@ begin
   );
 	
 
-		reg_rd_data32(I) <= x"00000" & rd_data12(I);
+	reg_rd_data32(I) <= x"00000" & rd_data12(I);
    end generate GEN_FIFO;
-rd_data32 <= reg_rd_data32;
+ 
+ rd_data32 <= reg_rd_data32;
+
+--    rd_data32(0) <= x"00000" & rd_data12(0);
+--    rd_data32(1) <= x"00000" & rd_data12(1);  
+--    rd_data32(2) <= x"00000" & rd_data12(2); 
+--    rd_data32(3) <= x"00000" & rd_data12(3);
+               
+--    rd_data32(4) <= x"00000" & rd_data12(4);  
+--    rd_data32(5) <= x"00000" & rd_data12(5);  
+--    rd_data32(6) <= x"00000" & rd_data12(6);  
+--    rd_data32(7) <= x"00000" & rd_data12(7); 
+               
+--    rd_data32(8)  <= x"00000" & rd_data12(8);  
+--    rd_data32(9)  <= x"00000" & rd_data12(9);  
+--    rd_data32(10) <= x"00000" & rd_data12(10);
+--    rd_data32(11) <= x"00000" & rd_data12(11);
+               
+--    rd_data32(12) <= x"00000" & rd_data12(12);
+--    rd_data32(13) <= x"00000" & rd_data12(13);
+--    rd_data32(14) <= x"00000" & rd_data12(14);
+--    rd_data32(15) <= x"00000" & rd_data12(15);
+               
+--    rd_data32(16) <= x"00000" & rd_data12(16);
+--    rd_data32(17) <= x"00000" & rd_data12(17);
+--    rd_data32(18) <= x"00000" & rd_data12(18);
+--    rd_data32(19) <= x"00000" & rd_data12(19);
+               
+--    rd_data32(20) <= x"00000" & rd_data12(20);
+--    rd_data32(21) <= x"00000" & rd_data12(21);
+--    rd_data32(22) <= x"00000" & rd_data12(22);
+--    rd_data32(23) <= x"00000" & rd_data12(23);
+               
+--    rd_data32(24) <= x"00000" & rd_data12(24);
+--    rd_data32(25) <= x"00000" & rd_data12(25);
+--    rd_data32(26) <= x"00000" & rd_data12(26);
+--    rd_data32(27) <= x"00000" & rd_data12(27);
+               
+--    rd_data32(28) <= x"00000" & rd_data12(28);
+--    rd_data32(29) <= x"00000" & rd_data12(29);
+--    rd_data32(30) <= x"00000" & rd_data12(30);
+--    rd_data32(31) <= x"00000" & rd_data12(31);
+
 
 	TIME_GRAYDECODE : GRAY_DECODER
 		generic map(
@@ -569,7 +613,7 @@ rd_data32 <= reg_rd_data32;
 
 				WHEN REQUEST =>
 
-					if(full = x"FFFF") then
+					if(full = x"FFFFFFFF") then
 						FIFO_WR.send.REQ <= '1';	-- The FiFOS are Full of data, all samples got
 						-- WDOTime_intl	<= WDOTime;
 						-- DIGTime_intl	<= DIGTime;
