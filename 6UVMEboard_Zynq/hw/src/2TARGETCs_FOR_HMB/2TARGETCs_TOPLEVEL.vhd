@@ -385,7 +385,7 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 		--CtrlBus_OxSL:		out	T_CtrlBus_OxSL; --Outputs from Control Master
 		WindowBusy:		out std_logic;
 		RAMP_CNT:		out std_logic;
---		DO_BUS:			out eDO_BUS_TYPE_2TC;
+		DO_BUS:			out eDO_BUS_TYPE_2TC;
 		SSvalid:		out std_logic;
 
 	--Channels
@@ -846,7 +846,7 @@ begin
 		--CtrlBus_OxSL		=> CtrlBusIn_intl,
 		WindowBusy	=> CtrlBusIn_intl.WindowBusy,
 		RAMP_CNT	=> CtrlBusIn_intl.RAMP_CNT,
---		DO_BUS		=> CtrlBusIn_intl.DO_BUS,
+		DO_BUS		=> CtrlBusIn_intl.DO_BUS,
 		SSvalid		=> CtrlBusIn_intl.SSvalid,
 		--Channels
 		A_CH0 	=> A_CH0_intl,

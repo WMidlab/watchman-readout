@@ -45,7 +45,7 @@ entity TwoTARGETC_RDAD_WL_SMPL is
 	--Output for control
 	WindowBusy:		out std_logic;
 	RAMP_CNT:		out std_logic;
---	DO_BUS:			out eDO_BUS_TYPE_2TC;
+	DO_BUS:			out eDO_BUS_TYPE_2TC;
 	SSvalid:		out std_logic;
 
 	--Channels
@@ -249,7 +249,7 @@ component SyncBuffer is
 	signal ss_incr_flg : std_logic := '0';
 
 
---	signal CtrlDO_intl :	eDO_BUS_TYPE_2TC;
+	signal CtrlDO_intl :	eDO_BUS_TYPE_2TC;
 	signal TestFIFO_window : integer;
 	signal TestFIFO_cnt : integer;
 
@@ -1163,7 +1163,7 @@ begin
 	end process;
 
 	--CtrlBus_OxSL.DO_BUS <= CtrlDO_intl;
---	DO_BUS <= CtrlDO_intl;
+	DO_BUS <= CtrlDO_intl;
 
 	SS_RESET 	<= SS_RESET_intl;
 	--SS_RESET 	<= '0';
