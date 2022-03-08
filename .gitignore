@@ -51,7 +51,7 @@ PCsoftware/Target1.png
 PCsoftware/packets.log
 
 6UVMEboard_Zynq/ip_repo/IPs
-6UVMEboard_Zynq/ip_repo/bkup
+6UVMEboard_Zynq/ip_repo/bkup/*
 
 
 *.png
