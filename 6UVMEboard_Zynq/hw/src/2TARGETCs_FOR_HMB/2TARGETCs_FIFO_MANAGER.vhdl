@@ -151,40 +151,40 @@ type fifostate_wr is (
             );
         
 
---	component module_fifo_regs_no_flags is
---		generic (
---			g_WIDTH : natural := 32;
---			g_DEPTH : integer := 32
---		);
---		port (
---			i_rst_sync : in std_logic;
---			i_clk      : in std_logic;
+	component module_fifo_regs_no_flags is
+		generic (
+			g_WIDTH : natural := 12;
+			g_DEPTH : integer := 32
+		);
+		port (
+			i_rst_sync : in std_logic;
+			i_clk      : in std_logic;
 
---			-- FIFO Write Interface
---			i_wr_en   : in  std_logic;
---			i_wr_data : in  std_logic_vector(g_WIDTH-1 downto 0);
---			o_full    : out std_logic;
+			-- FIFO Write Interface
+			i_wr_en   : in  std_logic;
+			i_wr_data : in  std_logic_vector(g_WIDTH-1 downto 0);
+			o_full    : out std_logic;
 
---			-- FIFO Read Interface
---			i_rd_en   : in  std_logic;
---			o_rd_data : out std_logic_vector(g_WIDTH-1 downto 0);
---			o_empty   : out std_logic
---		);
---	end component module_fifo_regs_no_flags;
+			-- FIFO Read Interface
+			i_rd_en   : in  std_logic;
+			o_rd_data : out std_logic_vector(g_WIDTH-1 downto 0);
+			o_empty   : out std_logic
+		);
+	end component module_fifo_regs_no_flags;
 	
 		
-		COMPONENT FIFO12bits
-  PORT (
-    clk : IN STD_LOGIC;
-    srst : IN STD_LOGIC;
-    din : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-    wr_en : IN STD_LOGIC;
-    rd_en : IN STD_LOGIC;
-    dout : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-    full : OUT STD_LOGIC;
-    empty : OUT STD_LOGIC
-  );
-END COMPONENT;
+--		COMPONENT FIFO12bits
+--  PORT (
+--    clk : IN STD_LOGIC;
+--    srst : IN STD_LOGIC;
+--    din : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+--    wr_en : IN STD_LOGIC;
+--    rd_en : IN STD_LOGIC;
+--    dout : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+--    full : OUT STD_LOGIC;
+--    empty : OUT STD_LOGIC
+--  );
+--END COMPONENT;
 
 	component TwoTARGETCs_AddressDecoder is
 	port(
@@ -279,14 +279,40 @@ END COMPONENT;
 	signal acknowledge_intl : std_logic;
 	signal busy_intl : std_logic;
 	signal testfifo_intl : std_logic;
+
+	signal rd_st_num : std_logic_vector(3 downto 0);
 	
 attribute keep : string;
 attribute DONT_TOUCH : string;
+attribute mark_debug : string;
+    attribute mark_debug of rd_st_num: signal is "true";
+	attribute mark_debug of cnt_fifo: signal is "true";
+	attribute mark_debug of DataOut_intl: signal is "true";
 
-attribute DONT_TOUCH of rd_data32 : signal is "true";
+
+--attribute DONT_TOUCH of rd_data32 : signal is "true";
 --attribute keep of rd_data32 : signal is "true";
 	signal BIN_TIME : std_logic_vector(59 downto 0);
+	
+attribute fsm_encoding : string;
+attribute fsm_encoding of fifo_wr_stm   : signal is "sequential";
+attribute fsm_encoding of fifo_rd_stm   : signal is "sequential";	
+	
 begin
+	rd_st_num <= "0000" when fifo_rd_stm = IDLE 			  else
+				 "0001" when fifo_rd_stm = READY 			  else
+				 "0010" when fifo_rd_stm = ACKNOWLEDGE 		  else
+				 "0011" when fifo_rd_stm = PROC_REQ 		  else
+				 "0100" when fifo_rd_stm = WRxRD_INIT		  else
+				 "0101" when fifo_rd_stm = WRxRD_HEADER		  else
+				 "0110" when fifo_rd_stm = WRxRD_DATA		  else
+				 "0111" when fifo_rd_stm = VALID 			  else
+				 "1000" when fifo_rd_stm = STALL_WRxRD_HEADER else
+				 "1001" when fifo_rd_stm = STALL_WRxRD_DATA   else
+				 "1010" when fifo_rd_stm = RESPVALID		  else
+				 "1111";
+
+               
 	-- --------------------------------------------------------------------------------
 	-- Unused signals from Bus
 	-- CtrlBus_OxSL.TC_BUS	<= (others => 'Z');
@@ -335,43 +361,43 @@ begin
 	Handshake_OxRECV.ACLK 	<=	ClockBus.AXI_CLK;
 
 --	-- 1 FIFO per channel
---	GEN_FIFO: for I in 0 to 31 generate
---    FIFOCH : module_fifo_regs_no_flags
---	generic map (
---		g_WIDTH => 12,
---		g_DEPTH => 32
---		)
---	  port map (
---		i_rst_sync	=> CtrlBus_IxSL.SW_nRST,
---		i_clk  		=> ClockBus.AXI_CLK,
+	GEN_FIFO: for I in 0 to 31 generate
+    FIFOCH : module_fifo_regs_no_flags
+	generic map (
+		g_WIDTH => 12,
+		g_DEPTH => 32
+		)
+	  port map (
+		i_rst_sync	=> CtrlBus_IxSL.SW_nRST,
+		i_clk  		=> ClockBus.AXI_CLK,
 
---		-- FIFO Write Interface
---		i_wr_en   => wr_en,
---		i_wr_data	=> wr_data(I),
---		o_full    => full(I),
+		-- FIFO Write Interface
+		i_wr_en   => wr_en,
+		i_wr_data	=> wr_data(I),
+		o_full    => full(I),
 
---		-- FIFO Read Interface
---		i_rd_en   => rd_en_v(I),
---		o_rd_data => rd_data12(I),
---		o_empty  => empty(I)
+		-- FIFO Read Interface
+		i_rd_en   => rd_en_v(I),
+		o_rd_data => rd_data12(I),
+		o_empty  => empty(I)
 		
---		);
+		);
 	
-      GEN_FIFO: for I in 0 to 31 generate
-    FIFOCH : FIFO12bits
-	port map (
+--      GEN_FIFO: for I in 0 to 31 generate
+--    FIFOCH : FIFO12bits
+--	port map (
 	
-    clk => ClockBus.AXI_CLK,
-    srst =>  CtrlBus_IxSL.SW_nRST,
-    din => wr_data(I),
-    wr_en => wr_en,
-    rd_en => rd_en_v(I),
-    dout =>  rd_data12(I),
-    full => full(I),
-    empty => empty(I)
+--    clk => ClockBus.AXI_CLK,
+--    srst =>  CtrlBus_IxSL.SW_nRST,
+--    din => wr_data(I),
+--    wr_en => wr_en,
+--    rd_en => rd_en_v(I),
+--    dout =>  rd_data12(I),
+--    full => full(I),
+--    empty => empty(I)
     
     
-  );
+--  );
 	
 
 	reg_rd_data32(I) <= x"00000" & rd_data12(I);

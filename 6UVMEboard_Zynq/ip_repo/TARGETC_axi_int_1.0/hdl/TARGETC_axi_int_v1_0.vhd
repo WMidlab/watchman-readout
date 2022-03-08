@@ -7,7 +7,7 @@ entity axistream is
 		-- Width of S_AXIS address bus. The slave accepts the read and write addresses of width C_M_AXIS_TDATA_WIDTH.
 		C_M_AXIS_TDATA_WIDTH	: integer	:= 32;
 		NBRWINDOW_MAX :				integer := 8;
-		FIFO_NBR_MAX :		integer := 1029
+		FIFO_NBR_MAX :		integer := 1030     --518+512
 		);
 	port (
 		-- Users to add ports here
@@ -79,7 +79,7 @@ architecture implementation of axistream is
 	signal M_AXIS_TDATA_last	: std_logic_vector(C_M_AXIS_TDATA_WIDTH-1 downto 0);
 
 	signal tx_en	: std_logic;
-	signal tx_state	:	std_logic_vector(1 downto 0);
+	signal tx_state	:	std_logic_vector(1 downto 0) := (Others => '1');
 	signal StreamReady_intl :	std_logic := '0';
 	signal TDI_intl : std_logic_vector(1 downto 0 );
 	
@@ -247,7 +247,7 @@ begin
 					M_AXIS_TDATA_intl when tx_state = "00" else
 					M_AXIS_TDATA_last when tx_state = "01" else
 					M_AXIS_TDATA_intl when tx_state = "11" else
-					M_AXIS_TDATA_intl when tx_state = "10" else
+					M_AXIS_TDATA_last when tx_state = "10" else
 					(others => '0');
 
 	--tvalid generation
