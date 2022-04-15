@@ -1,7 +1,7 @@
 
 # GitIgonre for the Vivado Project
 
-XilinxBuild/
+#XilinxBuild/
 #sdk/watchman_final/Debug/watchman_final.elf
 #sdk/watchman_final/Debug/src/
 
