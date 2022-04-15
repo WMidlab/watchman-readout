@@ -34,7 +34,7 @@ extern uint32_t  pedestal_A[512][16][32];
 extern uint32_t  pedestal_B[512][16][32];
 
 /** @brief Array containing the pedestal correction for every sample TARGETC_0 */
-extern uint32_t  pedestal_0[512][16][32];
+extern uint32_t  pedestal_0[512][32][32];
 /** @brief Array containing the pedestal correction for every sample TARGETC_1 */
 extern uint32_t  pedestal_1[512][16][32];
 
@@ -182,7 +182,7 @@ void udp_transfer_WM( volatile InboundRingManager_t *data_to_send )
  int channelToSend=5;
  window = Data2send->wdo_id;
 // window_order = Data2send-> info;
-// xil_printf("windowNumber:%d \r\n",window);
+ xil_printf("windowNumber:%d \r\n",window);
 //	xil_printf(".Pulse...\r\n");
 	index = 0;
 				frame_buf[index++] = 0x55;
@@ -193,10 +193,11 @@ void udp_transfer_WM( volatile InboundRingManager_t *data_to_send )
 //				xil_printf("\r\n w=%d\r\n",window);
 			//	xil_printf("%d,%d\r\n",window, window_order);
 
-		//		for(i=0; i<16; i++){
+				for(i=0; i<32; i++){
 					for(sample = 0; sample <32; sample++){
 						/* Pedestal subtraction */
-						data_tmp = (uint16_t)  (Data2send->data[channelToSend][sample]- pedestal_0[window][channelToSend][sample]+ offset_avoid_negative );
+						data_tmp = (uint16_t)  (Data2send->data[i][sample]- pedestal_0[window][i][sample]+ offset_avoid_negative );
+					//	data_tmp = (uint16_t)  (Data2send->data[channelToSend][sample]- pedestal_0[window][channelToSend][sample]+ offset_avoid_negative );
 //						data_tmp = (uint16_t)  (pedestal_0[window][channelToSend][sample]);
 
 //						data_tmp = (uint16_t)  (Data2send->data[15][sample]); //-  pedestal_A[window][15][sample]+ offset_avoid_negative);
@@ -206,7 +207,7 @@ void udp_transfer_WM( volatile InboundRingManager_t *data_to_send )
 						frame_buf[index++] = (char)(data_tmp >> 8);
 						//xil_printf("int_number >> 8 = %d\r\n", (char)((int_number >> 8)));
 					}
-
+				}
 /*
 					for(sample = 0; sample <32; sample++){
 						 Pedestal subtraction
@@ -231,7 +232,7 @@ void udp_transfer_WM( volatile InboundRingManager_t *data_to_send )
 				frame_buf[index++] = 0xCC;
 			//	xil_printf("PRINTINDEX %d\r\n", index);
 				transfer_data(frame_buf, index);
-				xil_printf("PRINTINDEX AFTER TRANSFER %d\r\n", index);
+			//	xil_printf("PRINT INDEX AFTER TRANSFER %d\r\n", index);
 			//	sleep(5);
 				free(Data2send);
 //

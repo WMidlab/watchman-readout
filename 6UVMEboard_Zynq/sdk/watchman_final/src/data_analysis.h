@@ -20,7 +20,7 @@
 /** @brief SIZE_DATA_ARRAY but in bytes (int32_t is 4 bytes) */
 #define SIZE_DATA_ARRAY_BYT (SIZE_DATA_ARRAY)*4
 /** @brief Number of channels per TARGET C*/
-#define CHANNEL 		16
+#define CHANNEL 		32//16
 /** @brief Number of sample per window */
 #define SAMPLE 			32
 /** @brief Maximum number of window to represent a pulse */

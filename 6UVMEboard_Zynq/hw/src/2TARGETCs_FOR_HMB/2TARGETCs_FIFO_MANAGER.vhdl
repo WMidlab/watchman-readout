@@ -286,8 +286,8 @@ attribute keep : string;
 attribute DONT_TOUCH : string;
 attribute mark_debug : string;
     attribute mark_debug of rd_st_num: signal is "true";
-	attribute mark_debug of cnt_fifo: signal is "true";
-	attribute mark_debug of DataOut_intl: signal is "true";
+--	attribute mark_debug of cnt_fifo: signal is "true";
+--	attribute mark_debug of DataOut_intl: signal is "true";
 
 
 --attribute DONT_TOUCH of rd_data32 : signal is "true";

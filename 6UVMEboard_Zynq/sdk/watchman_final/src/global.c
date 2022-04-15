@@ -69,7 +69,7 @@ int* regptr_1;
 uint32_t  pedestal[512][16][32];
 /** @brief Array containing the pedestal correction for every sample TARGETC_0 */
 uint32_t  pedestal_0[512][32][32];
-
+//uint32_t  pedestal_0[1024][32][32];  //for both TC_0 and TC_1
 /** @brief Array containing the pedestal correction for every sample TARGETC_1 */
 uint32_t  pedestal_1[512][16][32];
 
@@ -93,7 +93,8 @@ volatile bool pedestalTriggerModeFlag;
 /** Flag to start division by  nbr_avg_ped_triggerMode */
 volatile bool dividePedestalsFlag;
 /** @brief Array containing raw data of the whole array TARGETC_0 */
-uint32_t  data_raw[512][32][32];
+uint32_t  data_raw[512][32][32];      // Ch = 32 (windows should be 512 only)
+//uint32_t  data_raw[1024][32][32];  //For containing raw data of the both TC_0 and TC_1
 /** @brief Array containing raw data of the whole array TARGETC_1 */
 uint32_t  data_raw_1[512][16][32];
 /** @brief Array containing raw data of the whole array */
@@ -191,7 +192,7 @@ int init_global_var(void){
 	flag_axidma_error = false;
 	flag_axidma_rx_done = false;
 	for(i=0; i<4; i++) flag_axidma_rx[i] = 0;
-	frame_buf_tmp = (char *)malloc(MAX_DATA_SIZE+BUF_HEADER_SIZE);
+	frame_buf_tmp = (char *)malloc(MAX_DATA_SIZE + BUF_HEADER_SIZE);
 	if(!frame_buf_tmp){
 		xil_printf("malloc for frame_buf_tmp failed in function, %s!\r\n", __func__);
 		return XST_FAILURE;

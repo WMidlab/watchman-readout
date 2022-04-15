@@ -78,7 +78,7 @@ begin
       nrst 	=> nrst   
    );
    	
-   	for I in 1 to 4 generate
+Gen: for I in 1 to 4 generate
 	   	MX : MUX2x1
 		port map(
 			A	=> Q(I-1),
@@ -104,10 +104,10 @@ begin
 	tb : process
 		variable test : integer	:= 0;	
 	begin
-		rst <= '0';
+		nrst <= '0';
 		simulation_end_s <= '0';  
 		wait for 2* CLK_PERIOD;
-		rst <= '1';
+		nrst <= '1';
 		wait for 10 * CLK_PERIOD;
 		ss_dir <= '0';
 		ss_sin <= '0';

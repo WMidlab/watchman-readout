@@ -164,8 +164,8 @@ entity TwoTARGET_C_TopLevel_System is
 		FIFOvalid:			out std_logic;
 		FIFOdata:			out std_logic_vector(31 downto 0);
 		StreamReady:		in	std_logic;
-
-
+        NbrWindow:		    out std_logic_vector(31 downto 0);
+        
 	-- TRIGGER FROM BOARD NOT NEEDED FOR HMB CALORIMETERS EXTERNAL TRIGGER WILL BE PROVIDED
 		-- Trigger
 --		TrigA :			in std_logic;
@@ -659,8 +659,8 @@ architecture arch_imp of TwoTARGET_C_TopLevel_System is
 	attribute mark_debug : string; 
     attribute mark_debug of WR_CS_S_intl: signal is "true";
     attribute mark_debug of WR_RS_S_intl: signal is "true";
-    attribute mark_debug of tc_axi_aclk: signal is "true";
-    attribute mark_debug of tc_axi_aresetn: signal is "true";
+--    attribute mark_debug of tc_axi_aclk: signal is "true";
+--    attribute mark_debug of tc_axi_aresetn: signal is "true";
 begin
 
 
@@ -1024,7 +1024,7 @@ SyncBitCNT_CLR: SyncBit
     
     
     
-	--NbrWindow	<= CtrlBusOut_intl.NBRWINDOW;
+	NbrWindow	<= CtrlBusOut_intl.NBRWINDOW;
 	SW_nRST <= CtrlBusOut_intl.SW_nRST;
 
 	-- Interrupt Interface

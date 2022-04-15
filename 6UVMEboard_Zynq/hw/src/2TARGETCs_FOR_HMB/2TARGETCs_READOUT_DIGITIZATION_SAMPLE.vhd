@@ -19,7 +19,7 @@ entity TwoTARGETC_RDAD_WL_SMPL is
 
 	-- Fifo from storage
     RDAD_ReadEn  :	out	std_logic;
-    RDAD_DataOut : 	in	std_logic_vector(8 downto 0);
+    RDAD_DataOut : 	in	std_logic_vector(8 downto 0); 
     --RDAD_CLK     :	out	std_logic;	-- RDAD CLK
     RDAD_Empty	: 	in 	std_logic;
 
@@ -327,14 +327,14 @@ attribute keep_hierarchy of Behavioral : architecture is "yes";
 --    attribute mark_debug of GCC_RESET: signal is "true";
     attribute mark_debug of SS_INCR: signal is "true";
     attribute mark_debug of WL_CNT_INTL: signal is "true";
-    attribute mark_debug of DO_A_B: signal is "true";
+--    attribute mark_debug of DO_A_B: signal is "true";
 	attribute mark_debug of state_num: signal is "true";
 	attribute mark_debug of rdad_num: signal is "true";
 	attribute mark_debug of wilkin_num: signal is "true";    
-	attribute syn_keep of DO_A_B: signal is "true";
-    attribute mark_debug of SSBitCnt: signal is "true";    
-	attribute mark_debug of SSCnt: signal is "true"; 
-	attribute mark_debug of A_CH0_intl: signal is "true"; 
+--	attribute syn_keep of DO_A_B: signal is "true";
+--    attribute mark_debug of SSBitCnt: signal is "true";    
+--	attribute mark_debug of SSCnt: signal is "true"; 
+--	attribute mark_debug of A_CH0_intl: signal is "true"; 
    
 
 	

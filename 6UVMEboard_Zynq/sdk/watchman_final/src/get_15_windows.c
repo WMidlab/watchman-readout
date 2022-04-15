@@ -19,7 +19,7 @@ extern volatile bool flag_axidma_rx_done;
 /** @brief Array containing the pedestal correction for every sample */
 extern uint32_t  pedestal[512][16][32];
 /** @brief Array containing the pedestal correction for every sample TARGETC_0 */
-extern uint32_t  pedestal_0[512][16][32];
+extern uint32_t  pedestal_0[512][32][32];
 /** @brief Array containing the pedestal correction for every sample TARGETC_1 */
 extern uint32_t  pedestal_1[512][16][32];
 
@@ -311,7 +311,6 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 		int window,i,j;
 
 
-
 		/* Create an element for the DMA */
 		data_list* tmp_ptr  = (data_list *)malloc(sizeof(data_list));
 		if(!tmp_ptr){
@@ -332,21 +331,27 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 
 		/* Initiate transfer and measure */
 		regptr[TC_FSTWINDOW_REG] = startWindow;
+	//	usleep(10);
 		regptr[TC_NBRWINDOW_REG] = nmbrofWindows;
+	//	usleep(10);
 		ControlRegisterWrite(SMODE_MASK ,ENABLE, regptr);
+	//	usleep(10);
 		ControlRegisterWrite(SS_TPG_MASK ,ENABLE, regptr);
+	//	usleep(10);
 		windowStorage(ENABLE);
-	    usleep(50);
+	    usleep(100);
 		windowStorage(DISABLE);
+//		usleep(50);
 //		ControlRegisterWrite(WINDOW_MASK,ENABLE, regptr);
-//		usleep(1);
+//		usleep(50);
 //		ControlRegisterWrite(WINDOW_MASK,DISABLE, regptr); // PL side starts on falling edge
 
 		for(window =window_start ; window<nmbrofWindows+window_start; window++){
 
 			//XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
-			if(window != window_start) XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
+			if(window != window_start)
+				XAxiDma_SimpleTransfer_hm((UINTPTR)tmp_ptr->data.data_array, SIZE_DATA_ARRAY_BYT);
 
 			/* Wait on DMA transfer to be done */
 			timeout = 200000; // Timeout of 10 sec
@@ -386,7 +391,7 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 				printf("PL_spare: %d\r\n", (uint)tmp_ptr->data.data_struct.PL_spare);
 				printf("info: 0x%X\r\n", (uint)tmp_ptr->data.data_struct.info);
 				printf("wdo_id: %d\r\n", (uint)tmp_ptr->data.data_struct.wdo_id);
-		/*		for(j=0; j<32; j++){
+			/*	for(j=0; j<32; j++){
 					for(i=0; i<32; i++){
 						printf("%d\t", (uint)tmp_ptr->data.data_struct.data[i][j]);
 					}
@@ -396,7 +401,7 @@ int get_windowsRaw(int startWindow, int nmbrofWindows,int* regptr){
 				return XST_FAILURE;
 			}
 			else flag_axidma_rx_done = false;
-     //       xil_printf("wdo_id=%d \r\n", (uint16_t)tmp_ptr-> data.data_struct.wdo_id );
+           // xil_printf("wdo_id=%d \r\n", (uint16_t)tmp_ptr-> data.data_struct.wdo_id );
 
 			/* Test the returned values */
 			if(tmp_ptr->data.data_struct.wdo_id != window){

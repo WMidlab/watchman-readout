@@ -67,8 +67,8 @@ signal stm_read: stmachine_read;
 signal long_pulse_sig: std_logic;
 signal cnt_wr_en: std_logic_vector(3 downto 0);
 signal rd_add_intl: integer; -- unsigned(7 downto 0); 
-signal wait_cntr: std_logic_vector(17 downto 0);
-attribute mark_debug : string;
+signal wait_cntr: std_logic_vector(15 downto 0);
+--attribute mark_debug : string;
 type longPulse_type is(
    IDLE,
    LONGPULSE
@@ -77,16 +77,24 @@ type longPulse_type is(
 signal longpulse_stm : longpulse_type := IDLE;
 signal sstin_cntr_intl: std_logic_vector(2 downto 0);
 
+attribute mark_debug : string; 
+attribute mark_debug of wait_cntr: signal is "true";
+attribute mark_debug of rd_add_intl: signal is "true";
+attribute mark_debug of trigger_intl: signal is "true";
+attribute mark_debug of cnt_wr_en: signal is "true";
+attribute mark_debug of wr_intl: signal is "true";
 --attribute mark_debug of subBuffer_triggered: signal is "true";
 --attribute mark_debug of trigger: signal is "true";
---attribute mark_debug of WR_CS: signal is "true";
---attribute mark_debug of WR_RS: signal is "true";
+attribute mark_debug of WR_CS: signal is "true";
+attribute mark_debug of WR_RS: signal is "true";
 --attribute mark_debug of ptr_wr: signal is "true";
 --attribute mark_debug of ptr_1st_window_of_subBuffer: signal is "true";
 --attribute mark_debug of cycle_number_corrected: signal is "true";
 
 attribute fsm_encoding : string;
 attribute fsm_encoding of stm_circularBuffer   : signal is "sequential"; 
+attribute fsm_encoding of stm_read   : signal is "sequential"; 
+attribute fsm_encoding of longpulse_stm   : signal is "sequential";
  -- variable flagNumber : std_logic_vector(3 downto 0);
 
 begin
@@ -186,7 +194,7 @@ if (RST = '0') or (mode='0') then
 	when wait_for_dig=>
 	
 	   if (sstin_cntr=sstin_updateBit) then
-	   		if (wait_cntr< X"3FFF") then
+	   		if (wait_cntr< X"3FFF") then                        --"3FFF" : (3FFF= 16383, 7FFF=32767) 
 	   			wait_cntr <= std_logic_vector (unsigned( wait_cntr) + 1);
 	   			stm_circularBuffer <= wait_for_dig;
 	   		    wr_intl <= X"FF"; --255
@@ -245,7 +253,7 @@ if (RST = '0') or (mode='0') then
 	  	
 			if ( (sstin_cntr="100") or (sstin_cntr= "000")  ) then
 	
-				if ( (rd_add_intl) < (31 + offset_v  ) ) then
+				if ( (rd_add_intl) < (0 + offset_v  ) ) then
 					rd_add_intl <= rd_add_intl + 1 ;
 					fifo_wr_en_intl <= '1';
 					stm_read <=read_address_st;

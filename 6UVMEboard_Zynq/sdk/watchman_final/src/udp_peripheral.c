@@ -101,12 +101,12 @@ extern bool pedestalTriggerModeFlag;
 extern bool dividePedestalsFlag;
 /****************************************************************************/
 /**
- * @brief	Send a frame trought UDP
+ * @brief	Send a frame through UDP
  *
  * @param	frame: pointer to the frame to send
  * @param	length: size of the frame
  *
- * @return	type err_enum_t: enumaration from err.h file
+ * @return	type err_enum_t: enumeration from err.h file
  *
  * @note		frame must take in consideration the header ex:
  * 			for a buffer of size 6

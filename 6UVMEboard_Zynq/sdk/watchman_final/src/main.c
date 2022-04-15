@@ -112,6 +112,8 @@ extern int nmbrWindowsPed;
 
  extern int *regptr_1;
 
+ extern uint32_t pedestal_0[512][32][32];
+
 /*********************** Global variables ****************/
 /*********************************************************/
 /** @brief Network interface */
@@ -198,6 +200,8 @@ int main()
 	}
 	/* Initialize the LWip */
 	lwip_init();
+
+	disable_interrupts();
 	/* now enable interrupts */
 	enable_interrupts();
 ///  Setup DACs
@@ -247,14 +251,14 @@ int main()
 
 	GetTargetCControl(regptr_0);
 //	GetTargetCControl(regptr_1);
-
+//	usleep(100);
 //	testPattern(regptr_0);
 //	testPattern(regptr_1);
 
 //	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_0);
 //	usleep(100);
 //	ControlRegisterWrite(SS_TPG_MASK,ENABLE, regptr_1);
-//	usleep(100);
+	usleep(100);
 
 // 	initPedestals();
 
@@ -265,7 +269,18 @@ int main()
 	int pedestal_Avg=100;
 	int nmbr_Windows_Ped=1;
 //    if(get_pedestal(pedestal_Avg,nmbr_Windows_Ped, regptr_0) == XST_SUCCESS) printf("Pedestal pass! pedestal_Avg= %d,nmbrWindows_Ped = %d, \r\n", pedestal_Avg, nmbr_Windows_Ped);
-	printf("Start while loop\r\n");
+//    int window,channel,sample;
+//    for(window = 0; window< 1; window++ ){
+//    	for(channel = 0; channel< 32; channel++ ){
+//    		for(sample = 0; sample< 32; sample++ ){
+//    			//pedestal_0[window][channel][sample] = 0;
+//    			printf("Channel = %u, %d\r\n",channel, pedestal_0[window][channel][sample]);
+//
+//    	}
+//    	}
+//  }
+
+    printf("Start while loop\r\n");
 
 	while (run_flag){
 		/* Simulate a infinity loop to trigger the watchdog  */
@@ -409,7 +424,7 @@ int main()
 			     usleep(100);
 				printf("after inboundRingManager print, starting while loop \r\n");
 				 usleep(100);
-                 int i;
+                 int i = 0;
                  int trigger_freq=10000;
                  bool trigger_flag;
 			//	 XTime_GetTime(&tStart);
@@ -445,11 +460,11 @@ int main()
 							}
 
 							/* The DMA had a problem */
-//							if(flag_axidma_error){
-//								printf("Error with DMA interrupt: TPG !\r\n");
-//								return XST_FAILURE;
-//
-//					    	}
+							if(flag_axidma_error){
+								printf("Error with DMA interrupt: TPG !\r\n");
+								return XST_FAILURE;
+
+					    	}
 //							printf("inboundRingManager.pendingCount %d \r\n", (uint16_t)(inboundRingManager.pendingCount));
                             if (!trigger_flag){
 							if (i==trigger_freq){

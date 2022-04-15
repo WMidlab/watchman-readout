@@ -12,7 +12,7 @@
 /** @brief Array containing registers of AXI-lite */
 //extern int* regptr;
 /** @brief Array containing the pedestal correction for every sample TARGETC_0 */
-extern uint32_t  pedestal_0[512][16][32];
+extern uint32_t  pedestal_0[512][32][32];
 /** @brief Array containing the pedestal correction for every sample TARGETC_1*/
 extern uint32_t  pedestal_1[512][16][32];
 /** @brief Array containing raw data of the whole array */
@@ -302,9 +302,9 @@ for (i=0; i<avg; i++ ){
 
          if (get_windowsRaw(j,nmbrofWindows,regptr)== XST_SUCCESS);
              else { printf("get Windows raw failed\r\n");
-    //     usleep(300);
+     //        usleep(100);
          }
-
+     //    usleep(200);
 	}
   //  printf("avg %d of  %d\r\n", i, avg);
 
