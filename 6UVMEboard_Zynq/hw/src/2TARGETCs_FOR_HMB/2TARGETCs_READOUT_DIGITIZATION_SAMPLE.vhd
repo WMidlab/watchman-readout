@@ -1049,53 +1049,53 @@ begin
 --						hsout_stm <= HIGH_SET0;
 					when HIGH_SET0 =>
 						-- SAmple the output of TARGETC
-						if SSBitCnt > 1 then
+						if SSBitCnt > 2 then
 
-							A_CH0_intl(SSBitCnt-2) <= DO_A_B(0);
-							A_CH1_intl(SSBitCnt-2) <= DO_A_B(1);
-							A_CH2_intl(SSBitCnt-2) <= DO_A_B(2);
-							A_CH3_intl(SSBitCnt-2) <= DO_A_B(3);
+							A_CH0_intl(SSBitCnt-3) <= DO_A_B(0);
+							A_CH1_intl(SSBitCnt-3) <= DO_A_B(1);
+							A_CH2_intl(SSBitCnt-3) <= DO_A_B(2);
+							A_CH3_intl(SSBitCnt-3) <= DO_A_B(3);
 
-							A_CH4_intl(SSBitCnt-2) <= DO_A_B(4);
-							A_CH5_intl(SSBitCnt-2) <= DO_A_B(5);
-							A_CH6_intl(SSBitCnt-2) <= DO_A_B(6);
-							A_CH7_intl(SSBitCnt-2) <= DO_A_B(7);
+							A_CH4_intl(SSBitCnt-3) <= DO_A_B(4);
+							A_CH5_intl(SSBitCnt-3) <= DO_A_B(5);
+							A_CH6_intl(SSBitCnt-3) <= DO_A_B(6);
+							A_CH7_intl(SSBitCnt-3) <= DO_A_B(7);
 
-							A_CH8_intl(SSBitCnt-2) <= DO_A_B(8);
-							A_CH9_intl(SSBitCnt-2) <= DO_A_B(9);
-							A_CH10_intl(SSBitCnt-2) <=DO_A_B(10);
-							A_CH11_intl(SSBitCnt-2) <= DO_A_B(11);
+							A_CH8_intl(SSBitCnt-3) <= DO_A_B(8);
+							A_CH9_intl(SSBitCnt-3) <= DO_A_B(9);
+							A_CH10_intl(SSBitCnt-3) <=DO_A_B(10);
+							A_CH11_intl(SSBitCnt-3) <= DO_A_B(11);
 
-							A_CH12_intl(SSBitCnt-2) <= DO_A_B(12);
-							A_CH13_intl(SSBitCnt-2) <= DO_A_B(13);
-							A_CH14_intl(SSBitCnt-2) <= DO_A_B(14);
-							A_CH15_intl(SSBitCnt-2) <= DO_A_B(15);
+							A_CH12_intl(SSBitCnt-3) <= DO_A_B(12);
+							A_CH13_intl(SSBitCnt-3) <= DO_A_B(13);
+							A_CH14_intl(SSBitCnt-3) <= DO_A_B(14);
+							A_CH15_intl(SSBitCnt-3) <= DO_A_B(15);
 							
-							B_CH0_intl(SSBitCnt-2) <= DO_A_B(16);
-							B_CH1_intl(SSBitCnt-2) <= DO_A_B(17);
-							B_CH2_intl(SSBitCnt-2) <= DO_A_B(18);
-							B_CH3_intl(SSBitCnt-2) <= DO_A_B(19);
+							B_CH0_intl(SSBitCnt-3) <= DO_A_B(16);
+							B_CH1_intl(SSBitCnt-3) <= DO_A_B(17);
+							B_CH2_intl(SSBitCnt-3) <= DO_A_B(18);
+							B_CH3_intl(SSBitCnt-3) <= DO_A_B(19);
 
-							B_CH4_intl(SSBitCnt-2) <= DO_A_B(20);
-							B_CH5_intl(SSBitCnt-2) <= DO_A_B(21);
-							B_CH6_intl(SSBitCnt-2) <= DO_A_B(22);
-							B_CH7_intl(SSBitCnt-2) <= DO_A_B(23);
+							B_CH4_intl(SSBitCnt-3) <= DO_A_B(20);
+							B_CH5_intl(SSBitCnt-3) <= DO_A_B(21);
+							B_CH6_intl(SSBitCnt-3) <= DO_A_B(22);
+							B_CH7_intl(SSBitCnt-3) <= DO_A_B(23);
 
-							B_CH8_intl(SSBitCnt-2) <= DO_A_B(24);
-							B_CH9_intl(SSBitCnt-2) <= DO_A_B(25);
-							B_CH10_intl(SSBitCnt-2) <=DO_A_B(26);
-							B_CH11_intl(SSBitCnt-2) <= DO_A_B(27);
+							B_CH8_intl(SSBitCnt-3) <= DO_A_B(24);
+							B_CH9_intl(SSBitCnt-3) <= DO_A_B(25);
+							B_CH10_intl(SSBitCnt-3) <=DO_A_B(26);
+							B_CH11_intl(SSBitCnt-3) <= DO_A_B(27);
 
-							B_CH12_intl(SSBitCnt-2) <= DO_A_B(28);
-							B_CH13_intl(SSBitCnt-2) <= DO_A_B(29);
-							B_CH14_intl(SSBitCnt-2) <= DO_A_B(30);
-							B_CH15_intl(SSBitCnt-2) <= DO_A_B(31);
+							B_CH12_intl(SSBitCnt-3) <= DO_A_B(28);
+							B_CH13_intl(SSBitCnt-3) <= DO_A_B(29);
+							B_CH14_intl(SSBitCnt-3) <= DO_A_B(30);
+							B_CH15_intl(SSBitCnt-3) <= DO_A_B(31);
 
 						end if;
 
 						HSCLK_intl <= '0';
 
-						if SSBitCnt = 13 then
+						if SSBitCnt = 14 then
 						--if SSBitCnt = 13 then
 						--if SSBitCnt = 11 then
 							hsout_stm <= REQUEST;
