@@ -9,11 +9,13 @@ num_channels =1
 def bin2dec(pkt):
     raw = pkt[Raw].load
     payload= np.frombuffer(raw, dtype=np.uint16)  
+    print(payload)
     payload=np.delete(payload,[0,-1]) # at this point the content is  WindowNumber + payload
+    print(payload)
     return payload
 
 
-def process_packet_pulseSweep(filename,nmbrWin, nofChannels):
+""" def process_packet_pulseSweep(filename,nmbrWin, nofChannels):
     nofTargets=2 # number of digitizers
     windowSize=32 #number of samples per window
     nofSamplesPerPacket= nofTargets*windowSize*num_channels
@@ -67,4 +69,110 @@ def process_packet_pulseSweep(filename,nmbrWin, nofChannels):
     print("ALL PACKETS CONVERTED")
     
     return df_0, df_1
+ """
+"""
+def process_packet_pulseSweep(filename,nmbrWin, nofChannels):
+    nofTargets=1 # number of digitizers
+    windowSize=32 #number of samples per window
+    nofSamplesPerPacket= 2*windowSize*num_channels
+    scapy_cap = rdpcap(filename)
+    targets_data=[[] for i in range(nofTargets)]
+    target_0=[[] for i in range(nofChannels)]
+    #target_1=[[] for i in range(nofChannels)]
 
+    #  num_elements = (500*num_channels) + 2
+    window_numbers=[]
+    numberofwindows=0
+  #  average=[]
+    for packet in scapy_cap:
+        packetDec = bin2dec(packet)
+        window_numbers.append(packetDec[0]) # Taking the window number only
+        packetDec= np.delete(packetDec,0) # delete window number
+        for j in range(nofTargets):
+            targets_data[j] = packetDec[j*windowSize*nofChannels:nofSamplesPerPacket*nofChannels*(j+1)] # Taking the targets_data only
+            targets_data[j] = [targets_data[j][i:i+nofSamplesPerPacket*nofChannels] for i in range(0, len(targets_data[j]), nofSamplesPerPacket*nofChannels)] # Make a nested list with channels
+        # Dump data channel into two lists for data from each targetc digitizer.
+        # target_0 and targetc_1 are list of lists, the index k is for different channels.
+        for k in range(nofChannels):
+            target_0[k].append(targets_data[0][k])
+            #target_1[k].append(targets_data[1][k])
+    # Flat list of channels
+    for l in range(nofChannels):
+       target_0[l] = [item for sublist in target_0[l] for item in sublist]
+       #target_1[l] = [item for sublist in target_1[l] for item in sublist]
+    print(window_numbers)
+    df_0=pd.DataFrame(np.transpose(target_0))
+    #df_1=pd.DataFrame(np.transpose(target_1))
+    print(targets_data[0])
+    #print(targets_data[1])
+
+    df_0 = df_0-200.
+    
+    ax0=df_0.plot()
+    #ax0.set_ylim(-2000,2000)
+    ax0.set_title("{}".format(window_numbers), fontsize=5)
+    ax0.grid(linewidth=2)
+    #ax0.set_xlim(127,(32*totalWindows)-1)
+    plt.show()
+    fig0 = ax0.get_figure()
+    fig0.savefig('Target0_.png')
+    
+    
+   
+    print("ALL PACKETS CONVERTED")
+    
+    return df_0
+"""
+ 
+
+def process_packet_pulseSweep(filename,nmbrWin, nofChannels):
+    nofTargets=2 # number of digitizers
+    windowSize=32 #number of samples per window
+    nofSamplesPerPacket= nofTargets*windowSize*num_channels
+    scapy_cap = rdpcap(filename)
+    targets_data=[[] for i in range(nofTargets)]
+    target_0=[[] for i in range(nofChannels)]
+    #target_1=[[] for i in range(nofChannels)]
+
+    #  num_elements = (500*num_channels) + 2
+    window_numbers=[]
+    numberofwindows=0
+  #  average=[]
+    for packet in scapy_cap:
+        packetDec = bin2dec(packet)
+        window_numbers.append(packetDec[0]) # Taking the window number only
+        packetDec= np.delete(packetDec,0) # delete window number
+        for j in range(nofTargets):
+            targets_data[j] = packetDec[j*windowSize*nofChannels:windowSize*nofChannels*(j+1)] # Taking the targets_data only
+            targets_data[j] = [targets_data[j][i:i+windowSize*num_channels] for i in range(0, len(targets_data[j]), windowSize*num_channels)] # Make a nested list with channels
+        # Dump data channel into two lists for data from each targetc digitizer.
+        # target_0 and targetc_1 are list of lists, the index k is for different channels.
+        for k in range(nofChannels):
+            target_0[k].append(targets_data[0][k])
+            #target_1[k].append(targets_data[1][k])
+    # Flat list of channels
+    for l in range(nofChannels):
+       target_0[l] = [item for sublist in target_0[l] for item in sublist]
+       #target_1[l] = [item for sublist in target_1[l] for item in sublist]
+    print(window_numbers)
+    df_0=pd.DataFrame(np.transpose(target_0))
+    #df_1=pd.DataFrame(np.transpose(target_1))
+    print(targets_data[0])
+    #print(targets_data[1])
+
+    df_0 = df_0-200.
+    
+    ax0=df_0.plot()
+    #ax0.set_ylim(-2000,2000)
+    ax0.set_title("{}".format(window_numbers), fontsize=5)
+    ax0.grid(linewidth=2)
+    #ax0.set_xlim(127,(32*totalWindows)-1)
+    plt.show()
+    fig0 = ax0.get_figure()
+    fig0.savefig('Target0_.png')
+    
+    
+   
+    print("ALL PACKETS CONVERTED")
+    
+    return df_0
